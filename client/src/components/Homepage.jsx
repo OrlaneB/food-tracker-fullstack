@@ -8,16 +8,6 @@ import '../styles/NavBar.css'
 // Each meal
 let objMeal1 = {
   ingredients : [
-<<<<<<< HEAD
-    {ingredientName : "rice", numberAmount : '30', measurement : "g", protein : "3", carbs : "12", fat : "2" },
-    {ingredientName : "chicken", numberAmount : "40", measurement : "g", protein : "4", carbs : "12", fat : "2" },
-    {ingredientName : "broccoli", numberAmount : "50", measurement : "g", protein : "3", carbs : "12", fat : "2" },
-    //...
-  ],
-  protein : '10',
-  carbs : '23',
-  fat : "3"
-=======
     {ingredientName : "rice", numberAmount : "1", measurement : "portion", protein : "x g", carbs : "y g", fat : "z g" },
     {ingredientName : "tomato", numberAmount : "3", measurement : "portion", protein : "x g", carbs : "y g", fat : "z g" },
     {ingredientName : "cheese", numberAmount : "30", measurement : "g", protein : "x g", carbs : "y g", fat : "z g" },
@@ -27,7 +17,6 @@ let objMeal1 = {
   protein : '10g',
   carbs : '15g',
   fat : "1g"
->>>>>>> 6e01fe0e990d4d517d723526a575eb9973e390b6
 }
 
 /* Calculate the nutrient in a method inside the meal object
@@ -36,17 +25,6 @@ let objMeal1 = {
 */
 
 let objMeal2 = {
-<<<<<<< HEAD
-  protein : '15',
-  carbs : '8',
-  fat : "7"
-}
-
-let objMeal3 = {
-  protein : '12',
-  carbs : '4',
-  fat : "11"
-=======
   ingredients : [
     {ingredientName : "rice", numberAmount : "1", measurement : "portion", protein : "x g", carbs : "y g", fat : "z g" }],
   protein : '17g',
@@ -60,7 +38,6 @@ let objMeal3 = {
   protein : '10g',
   carbs : '5g',
   fat : "8g"
->>>>>>> 6e01fe0e990d4d517d723526a575eb9973e390b6
 }
 
 // Meals for the day
@@ -84,52 +61,6 @@ function Day() {
     )                                
 }
 
-<<<<<<< HEAD
-// function Results(obj) {
-//     const [test,setTest] = useState({});
-//     const [count,setCount] = useState([1,2,3])
-
-//     return (
-//       <div>
-//           {count.map((e)=>{
-//             // setTest(obj);
-//             // console.log(test);
-//             console.log(e)}
-//           )}
-//       </div>
-//     )
-// }
-
-/* Pseudo code for meal component
-
-  Display the numberAmount of the ingredient, 
-  The measurement and the ingredientName on the same line
-  In an unordered list
-
-  And then, display the total amount of three nutrients for the whole meal.
-  This info will come from the nutrient data in each ingredient
-*/
-function Meals({meal}) {
-
-  const mealCopy = {...meal}
-  // console.log(mealCopy.ingredients)
-  const proteinCopy = mealCopy.protein;
-
-  return(
-    <div>
-      <ul>
-       { mealCopy.ingredients.map((item,index) => {
-        return(      
-          <li key={index}>{item.numberAmount} {item.measurement} {item.ingredientName}</li>
-        )
-       
-        })}
-      </ul>
-
-      <p>{proteinCopy}g {mealCopy.carbs}g {mealCopy.fat}g</p>
-    </div>
-  )
-=======
 function Results() {
     //const [test,setTest] = useState({});
     // const [count,setCount] = useState([1,2,3])
@@ -148,7 +79,6 @@ function Results() {
 function Meals() {
  // copy dummy data
  const arrMeals = objDay.meals;
->>>>>>> 6e01fe0e990d4d517d723526a575eb9973e390b6
 
  //render meal information
  return (
@@ -176,16 +106,11 @@ function Meals() {
  )
 }
 
+
+//This should be on its own component
 function NavBar() {
-// this will have state to change views between Day, AddMeal, and Profile
 
   return (
-<<<<<<< HEAD
-    <div>
-    <CurrentDay />
-    {/* <Results /> */}
-    <Meals meal={objMeal1}/>
-=======
     <div className= "NavBar">
       <button><i class="fi fi-rr-home"></i></button>
       <button><i class="fi fi-rr-add"></i></button>
@@ -201,7 +126,6 @@ export default function Homepage() {
     <Results />
     <Meals />
     <NavBar />
->>>>>>> 6e01fe0e990d4d517d723526a575eb9973e390b6
     </div>
   )
 }

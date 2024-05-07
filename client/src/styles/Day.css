@@ -1,0 +1,25 @@
+/* Div */
+
+.Day {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: 1;
+    place-items:center;
+    margin: 10px;
+    padding: 5px;
+}
+
+
+/* Buttons */
+
+.Day button {
+    aspect-ratio: 1;
+    border:none;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.Day button:hover {
+    color:white;
+    background-color: darkgrey;
+}

@@ -1,0 +1,55 @@
+.Homepage {
+    height: 100vh;
+    position: relative;
+}
+
+.Results {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: 1;
+    border: solid 1px gray;
+    margin: 10px;
+    padding: 5px;
+}
+
+.Results p {
+    text-align: center;
+    border: solid 1px black;
+    margin: 10px;
+    padding: 10px;
+}
+
+
+/* .Meals {
+    color: red;
+    font-size: 20px;
+    width: 50%;
+    margin: 0px auto;
+} */
+
+/* .mealNutrients {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: 1;
+    border: solid 1px gray;
+    margin: 10px;
+    padding: 5px;
+} */
+
+/* .NavBar {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: 1;
+    border: solid 1px gray;
+    margin-left: 5%;
+    padding: 5px;
+    position: fixed;
+    bottom: 0px;
+    width: 90%;
+} */
+
+/* .NavBar button {
+    width: 25%;
+    height: 50%;
+    cursor: pointer;
+} */

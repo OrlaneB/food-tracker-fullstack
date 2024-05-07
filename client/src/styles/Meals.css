@@ -1,0 +1,39 @@
+.Meals {
+    width:50%;
+    margin: 50px auto;
+}
+
+.mealContainer {
+    background-color: rgb(237, 237, 237);
+    padding:15px;
+    border-radius: 5px;
+    margin:15px 0;
+}
+
+.mealContainer ul {
+    padding:5px 25px;
+}
+
+.mealContainer ul li {
+    margin: 2px;
+}
+
+.mealContainer ul li:hover {
+    color:blue;
+}
+
+.mealNutrients {
+    display: flex;
+    text-align: center;
+    background-color: white;
+    margin:10px 0;
+    border-radius: 3px;
+}
+
+.mealNutrients p {
+    flex:33%;
+}
+
+.mealNutrients p:hover {
+    color:blue;
+}

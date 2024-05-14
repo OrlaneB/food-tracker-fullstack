@@ -2,7 +2,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 
-//Laura static V2
 
 function AddAnIngredient({ingredientObj,cbUpdateListIngredients}){
     const [ingredient,setIngredient]=useState(ingredientObj)

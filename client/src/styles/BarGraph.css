@@ -1,0 +1,15 @@
+.BarGraph {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    grid-template-rows: 1;
+    border: solid 1px gray;
+    margin: 10px;
+    padding: 5px;
+}
+
+.BarGraph p {
+    text-align: center;
+    border: solid 1px black;
+    margin: 10px;
+    padding: 10px;
+}

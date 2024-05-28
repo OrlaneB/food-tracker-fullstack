@@ -1,11 +1,15 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React, { useState, createContext, useContext } from 'react';
 
-//Laura static V2
+// const ingredientsContext = createContext(null);
+const listIngredientsContext = createContext(null);
 
-function AddAnIngredient({ingredientObj,cbUpdateListIngredients}){
+
+function AddAnIngredient({ingredientObj}){
     const [ingredient,setIngredient]=useState(ingredientObj)
+
+    const {listIngredients,setListIngredients} = useContext(listIngredientsContext);
 
     function handleChange(event){
         //Input value is connected to newIngredients keys.
@@ -22,7 +26,20 @@ function AddAnIngredient({ingredientObj,cbUpdateListIngredients}){
         setIngredient(newIngredient);
         console.log(ingredient.id);
 
-        cbUpdateListIngredients(newIngredient);
+        // cbUpdateListIngredients(newIngredient);
+         //Create a shallow copy of list ingredients
+
+         let newList = [...listIngredients];
+        
+         //Find in the list this ingredient by the id+
+         let indexIng = newList.findIndex((item)=>item.id===newIngredient.id);
+         if(indexIng!==-1){
+             //Update with the parameter of the function
+             newList[indexIng]=newIngredient;
+             setListIngredients(newList);
+         } 
+         
+         console.log(listIngredients);
         
     }
 
@@ -43,22 +60,6 @@ export default function AddMeal() {
     const [listIngredients, setListIngredients] = useState([]);
     const [nextId, setNextId] = useState(1);
 
-    function updateListIngredients (newIngredient){
-        //Create a shallow copy of list ingredients
-
-        let newList = [...listIngredients];
-        
-        //Find in the list this ingredient by the id+
-        let indexIng = newList.findIndex((item)=>item.id===newIngredient.id);
-        if(indexIng!==-1){
-            //Update with the parameter of the function
-            newList[indexIng]=newIngredient;
-            setListIngredients(newList);
-        } 
-        
-        console.log(listIngredients);
-
-    }
 
     function handleAddIngredientButton(){
         //Called when a new component is created (+ button)
@@ -91,10 +92,13 @@ export default function AddMeal() {
         */}
 
 
+      <listIngredientsContext.Provider value={{listIngredients,setListIngredients}} >
+
         {listIngredients.map((ingredientObj)=>(
-            <AddAnIngredient ingredientObj={ingredientObj}  key={ingredientObj.id} cbUpdateListIngredients={(newIngredient)=>updateListIngredients(newIngredient)}/>
+            <AddAnIngredient ingredientObj={ingredientObj}  key={ingredientObj.id} />
 
         ))}
+        </listIngredientsContext.Provider>
         
         <button onClick={()=>handleAddIngredientButton()}>Add an ingredient</button>
 

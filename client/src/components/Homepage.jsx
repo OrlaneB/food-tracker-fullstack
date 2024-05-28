@@ -48,12 +48,14 @@ let objDay = {
   fat : "21"
 }
 
+
 export default function Homepage() {
   return (
     <div className='Homepage'>
       <Day />
       <BarGraph objDay = {objDay}/>
       <MealCards objDay = {objDay}/>
+
     </div>
   )
 }

@@ -70,6 +70,15 @@ export default function AddMeal() {
         setNextId(nextId+1);
     }
 
+
+    function calculateNutrients (){
+        //Loop through the array listIngredients
+        //Fetch in API with query = name (of ingredient)
+        //Get the "amount" of the 3 nutrients : "Protein", 'Total lipid (fat)' and 'Carbohydrate, by difference'
+        //Calculate based on the amount of ingredient : amountNutrient * amountIngredient / 100
+        //Store in the database in the table ingredients -- POST
+    }
+
   return (
     <div>
         {/* 

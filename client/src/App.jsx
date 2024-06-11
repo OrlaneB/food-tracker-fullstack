@@ -15,7 +15,7 @@ function App() {
   // set default state to homepage
   const [view, setView] = useState("Homepage");
 
-  const authKey = process.env.API_KEY;
+  const authKey = import.meta.env.VITE_APP_API_KEY;
 
   function changeView(viewName){
     setView(viewName);

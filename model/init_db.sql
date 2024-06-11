@@ -18,7 +18,7 @@ CREATE TABLE profiles(
     nutrient_2 VARCHAR(50) not null, 
     nutrient_3 VARCHAR(50) not null, 
     medical_condition VARCHAR(50) not null,
-    date_of_birth date not null, --Format for date for values : YYYY-MM-DD
+    date_of_birth date not null, 
     gender VARCHAR(20) not null,
     `weight` INT not null,
     height INT not null
@@ -31,13 +31,15 @@ CREATE TABLE profiles(
 
 CREATE TABLE users(
     user_id INT not null AUTO_INCREMENT PRIMARY KEY,
-    CONSTRAINT fk_profile_id FOREIGN KEY (profile_id) REFERENCES profiles(profile_id),
-        --[ON DELETE reference_option]
-        --[ON UPDATE reference_option]
+    profile_id INT,
     username VARCHAR(50) not null,
     email VARCHAR(50) not null,
     `password` VARCHAR(50) not null
 );
+
+ALTER TABLE users
+ADD CONSTRAINT fk_profile
+FOREIGN KEY (profile_id) REFERENCES profiles(profile_id);
 
 --
 -- Create Table meals
@@ -45,9 +47,13 @@ CREATE TABLE users(
 
 CREATE TABLE meals (
     meal_id INT not null AUTO_INCREMENT PRIMARY KEY,
-    CONSTRAINT fk_profile_id FOREIGN KEY (profile_id) REFERENCES profiles(profile_id),
+    profile_id INT,
     `day` date not null
-)
+);
+
+ALTER TABLE meals
+ADD CONSTRAINT fk_profile_meal
+FOREIGN KEY (profile_id) REFERENCES profiles(profile_id);
 
 
 --
@@ -56,7 +62,15 @@ CREATE TABLE meals (
 
 CREATE TABLE ingredients (
     ingredient_id INT not null AUTO_INCREMENT PRIMARY KEY,
-    CONSTRAINT fk_meal_id FOREIGN KEY (meal_id) REFERENCES meals(meal_id),
+    meal_id INT,
     `name` VARCHAR(50) not null,
-    number_amount INT not null --See if we need decimals and if so, how to get that (string ?)
-)
+    number_amount INT not null,
+    nutrient_1 INT,
+    nutrient_2 INT,
+    nutrient_3 INT
+);
+
+ALTER TABLE ingredients
+ADD CONSTRAINT fk_meal
+FOREIGN KEY (meal_id) REFERENCES meals(meal_id);
+ -- See if we need decimals and if so, how to get that (string ?)

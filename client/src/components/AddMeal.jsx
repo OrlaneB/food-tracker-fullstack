@@ -70,14 +70,35 @@ export default function AddMeal() {
         setNextId(nextId+1);
     }
 
+    function postIngredients(ingList){
+        // POST axios
+        // data: {ingList}
+    }
 
     function calculateNutrients (){
+        // declare var of nutrient1, nutrient2,nutrient3
+        //let totalNutrient1 = 0;
         //Loop through the array listIngredients
-        //Fetch in API with query = name (of ingredient)
-        //Get the "amount" of the 3 nutrients : "Protein", 'Total lipid (fat)' and 'Carbohydrate, by difference'
-        //Calculate based on the amount of ingredient : amountNutrient * amountIngredient / 100
-        //Store in the database in the table ingredients -- POST
+        
+        //Fetch in API with GET query for the nutrients of the current ingredient => this returns an object
+        //.then const {protein, TotalLipidFat, Carbohydrate} = results.data;
+            //Get the values from the destructured  variables for example: 'Protein', 'Total lipid (fat)' and 'Carbohydrate, by difference'
+            
+            //Calculate nutrient amount for that one ingredient based on the amount of ingredient : amountNutrient * amountIngredient / 100
+            // add the result of calculation to nutrient total
+            // totalNutrient1 += protein * amountIngredient / 100;
+            // totalNutrient2 += TotalLipidFat * amountIngredient / 100;
+            // totalNutrient3 += Carbohydrate * amountIngredient / 100;
+
+        // Once it loops listIngredient.length-1 break out 
+
+        // Call postMeals() to database Store nutrient totals in the table meals -- POST
+
     }
+
+    // function postMeals(todaysDate,profileid,nutrient1, nutrient2, nutrient3)
+    // POST request with params to add meal to meals table
+    // use today's date for now and refactor later in the case that a user wants to add meals for previous days 
 
   return (
     <div>

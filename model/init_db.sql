@@ -72,5 +72,6 @@ CREATE TABLE ingredients (
 
 ALTER TABLE ingredients
 ADD CONSTRAINT fk_meal
-FOREIGN KEY (meal_id) REFERENCES meals(meal_id);
+FOREIGN KEY (meal_id) REFERENCES meals(meal_id) ON DELETE CASCADE; 
  -- See if we need decimals and if so, how to get that (string ?)
+--  CREATE NUTRIENTS TABLE 

@@ -1,5 +1,5 @@
 --
--- Drop Tables and create new ones
+-- Drop Tables 
 --
 
 SET foreign_key_checks = 0;
@@ -7,6 +7,7 @@ DROP TABLE if exists profiles;
 DROP TABLE if exists users;
 DROP TABLE if exists meals;
 DROP TABLE if exists ingredients;
+DROP TABLE if exists nutrients_by_meal;
 SET foreign_key_checks = 1;
 
 --
@@ -48,7 +49,7 @@ FOREIGN KEY (profile_id) REFERENCES profiles(profile_id);
 CREATE TABLE meals (
     meal_id INT not null AUTO_INCREMENT PRIMARY KEY,
     profile_id INT,
-    `day` date not null
+    `date` date not null
 );
 
 ALTER TABLE meals
@@ -64,14 +65,24 @@ CREATE TABLE ingredients (
     ingredient_id INT not null AUTO_INCREMENT PRIMARY KEY,
     meal_id INT,
     `name` VARCHAR(50) not null,
-    number_amount INT not null,
-    nutrient_1 INT,
-    nutrient_2 INT,
-    nutrient_3 INT
+    number_amount INT not null
 );
 
 ALTER TABLE ingredients
 ADD CONSTRAINT fk_meal
 FOREIGN KEY (meal_id) REFERENCES meals(meal_id) ON DELETE CASCADE; 
- -- See if we need decimals and if so, how to get that (string ?)
+
+--
 --  CREATE NUTRIENTS TABLE 
+--
+
+CREATE TABLE nutrients_by_meal (
+    nutrient_id INT not null AUTO_INCREMENT PRIMARY KEY,
+    meal_id INT,
+    `name` VARCHAR(50) not null,
+    number_amount INT not null
+);
+
+ALTER TABLE nutrients_by_meal
+ADD CONSTRAINT fk_meal
+FOREIGN KEY (meal_id) REFERENCES meals(meal_id) ON DELETE CASCADE; 

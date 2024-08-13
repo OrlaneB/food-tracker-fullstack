@@ -30,7 +30,7 @@ CREATE TABLE users(
     profile_id INT,
     username VARCHAR(50) not null,
     email VARCHAR(50) not null,
-    `password` VARCHAR(50) not null
+    `password` VARCHAR(255) not null
 );
 
 ALTER TABLE users

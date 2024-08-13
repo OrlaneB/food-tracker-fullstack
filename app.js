@@ -12,21 +12,31 @@ var mealsRouter = require('./routes/meals');
 
 var app = express();
 app.use(cors());
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, 'public')));
+// Serve static files from the React frontend app
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get("/", function(req, res, next) {
+  res.send("Access the API at path /api");
+});
 
 app.use('/api/', authRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/meals', mealsRouter);
+
+// Anything that doesn't match the above, send back index.html
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname + "/client/build/index.html"));
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

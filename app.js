@@ -5,9 +5,9 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');  // add at the top 
 
-var indexRouter = require('./routes/index');
-var authRouter = require('./routes/auth');
+// var indexRouter = require('./routes/index'); -- removed idex.js route
 var usersRouter = require('./routes/users');
+var profilesRouter = require('./routes/profiles');
 var mealsRouter = require('./routes/meals');
 
 var app = express();
@@ -22,15 +22,15 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 // Serve static files from the React frontend app
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
 
 app.get("/", function(req, res, next) {
   res.send("Access the API at path /api");
 });
 
-app.use('/api/', authRouter);
-app.use('/api/auth', authRouter);
+// app.use('/api/', indexRouter); -- removed index.js route
 app.use('/api/users', usersRouter);
+app.use('/api/profiles', profilesRouter);
 app.use('/api/meals', mealsRouter);
 
 // Anything that doesn't match the above, send back index.html

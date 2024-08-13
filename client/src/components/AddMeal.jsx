@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import React, { useState, createContext, useContext } from 'react';
+import NavBar from "./NavBar"
+
 
 // const ingredientsContext = createContext(null);
 const listIngredientsContext = createContext(null);
@@ -133,6 +135,8 @@ export default function AddMeal() {
         <button onClick={()=>handleAddIngredientButton()}>Add an ingredient</button>
 
         <button>Add the meal</button>
+
+        <NavBar/>
     </div>
   )
 }

@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import Day from './Day'
 import BarGraph from './BarGraph'
 import MealCards from './MealCards'
+import NavBar from "./NavBar"
 import '../styles/Homepage.css'
 import '../styles/NavBar.css'
 
@@ -55,6 +56,7 @@ export default function Homepage() {
       <Day />
       <BarGraph objDay = {objDay}/>
       <MealCards objDay = {objDay}/>
+      <NavBar/>
 
     </div>
   )

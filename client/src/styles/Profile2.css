@@ -1,0 +1,59 @@
+#profile{
+    width: 70%;
+    margin: auto;
+    margin-top: 70px;
+}
+
+#header {
+    display: flex;
+    justify-content: center;
+    gap:50px;
+    text-align: left;
+}
+
+#header:first-child{
+    flex:30%;
+}
+
+#header button {
+    display: block;
+    margin: auto;
+    margin-top: 10px;
+}
+
+#profilePicture {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+    overflow: hidden; 
+}
+
+#header:last-child{
+    flex:70%;
+}
+
+#nutrientGoals {
+    text-align: center;
+    padding: 40px;
+}
+
+#nutrientGoals label {
+    padding: 20px;
+}
+
+#nutrientGoals label input {
+    margin-left: 10px;
+}
+
+#nutrientGoals #warning{
+    color: rgb(159, 159, 159);
+    font-style: italic;
+}
+
+#nutrientGrid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    justify-content: center;
+    padding: 40px;
+}

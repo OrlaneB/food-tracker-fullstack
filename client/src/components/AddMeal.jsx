@@ -9,6 +9,8 @@ export default function AddMeal() {
     const [suggestions,setSuggestions] = useState([]);
     const [onFocusInput, setOnFocusInput] = useState(null);
 
+    const nutrientList = ["Energy","Protein","Carbohydrate, by difference","Total lipid (fat)","Fiber, total dietary","Sugars, total including NLEA","Calcium, Ca","Iron, Fe","Potassium, K","Sodium, Na","Vitamin A, RAE","Vitamin C, total ascorbic acid","Vitamin D (D2 + D3)","Vitamin E (alpha-tocopherol)","Vitamin K (phylloquinone)","Magnesium, Mg","Zinc, Zn","Cholesterol","Folate, DFE","Omega-3 Fatty Acids (EPA, DHA)"];
+
 
     function handleAddIngredientButton(){
         let newIng = {name:"",numberAmount:"",measurement:"g", id:nextId};
@@ -63,7 +65,8 @@ export default function AddMeal() {
         
               responses.forEach((response,index)=>{
                 let ingredientNutrients = {};
-                response.data[0].foodNutrients.forEach(nut=>{
+                
+                response.data[0].foodNutrients.filter(nut => nutrientList.includes(nut.name)).forEach(nut=>{
                     let amountOfIngredient = nut.amount /100;
                     ingredientNutrients[nut.name]=`${amountOfIngredient*listIng[index].numberAmount} ${nut.unitName}`;
                 })

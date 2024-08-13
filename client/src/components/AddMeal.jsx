@@ -1,73 +1,44 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
-import React, { useState, createContext, useContext } from 'react';
-
-// const ingredientsContext = createContext(null);
-const listIngredientsContext = createContext(null);
-
-
-function AddAnIngredient({ingredientObj}){
-    const [ingredient,setIngredient]=useState(ingredientObj)
-
-    const {listIngredients,setListIngredients} = useContext(listIngredientsContext);
-
-    function handleChange(event){
-        //Input value is connected to newIngredients keys.
-
-        //Create a shallow copy of the object
-        let newIngredient = {...ingredient};
-        //Get the name of input to change the correct value
-        console.log(event.target,event.target.name)
-        let {name,value} = event.target;
-        console.log(name,value)
-        //Change the new object
-        newIngredient[name]=value;
-        //Update setNewIngredient
-        setIngredient(newIngredient);
-        console.log(ingredient.id);
-
-        // cbUpdateListIngredients(newIngredient);
-         //Create a shallow copy of list ingredients
-
-         let newList = [...listIngredients];
-        
-         //Find in the list this ingredient by the id+
-         let indexIng = newList.findIndex((item)=>item.id===newIngredient.id);
-         if(indexIng!==-1){
-             //Update with the parameter of the function
-             newList[indexIng]=newIngredient;
-             setListIngredients(newList);
-         } 
-         
-         console.log(listIngredients);
-        
-    }
-
-    return(
-        <form className="AddIngredient">
-            <input type='text' name="name" value={ingredient.name} onChange={(event)=>handleChange(event)} placeholder='Name of ingredient' />
-            <input type='number' name="numberAmount" value={ingredient.numberAmount} onChange={(event)=>handleChange(event)} placeholder='How much' />
-            <select name="measurement" value={ingredient.measurement} onChange={(event)=>handleChange(event)}>
-                <option>g</option>
-                <option>portion</option> {/*Double check API for the correct options*/}
-            </select>
-        </form>
-    )
-}
+import React, { useState } from 'react';
+const authKey = import.meta.env.VITE_APP_API_KEY;
+import axios from 'axios'
 
 
 export default function AddMeal() {
     const [listIngredients, setListIngredients] = useState([]);
-    const [nextId, setNextId] = useState(1);
+    const [nextId, setNextId] = useState(0);
+    const [suggestions,setSuggestions] = useState([]);
+    const [onFocusInput, setOnFocusInput] = useState(null);
+
+    const nutrientList = ["Energy","Protein","Carbohydrate, by difference","Total lipid (fat)","Fiber, total dietary","Sugars, total including NLEA","Calcium, Ca","Iron, Fe","Potassium, K","Sodium, Na","Vitamin A, RAE","Vitamin C, total ascorbic acid","Vitamin D (D2 + D3)","Vitamin E (alpha-tocopherol)","Vitamin K (phylloquinone)","Magnesium, Mg","Zinc, Zn","Cholesterol","Folate, DFE","Omega-3 Fatty Acids (EPA, DHA)"];
 
 
     function handleAddIngredientButton(){
-        //Called when a new component is created (+ button)
         let newIng = {name:"",numberAmount:"",measurement:"g", id:nextId};
         setListIngredients([...listIngredients, newIng])
-        //adds an ID to the ingredient object with nextId
-        //increase nextId
         setNextId(nextId+1);
+    }
+
+    function handleChangeIngredientForm(event,index){
+        const {name,value}=event.target;
+
+        let newList = [...listIngredients];
+        newList[index][name]=value;
+
+
+        setListIngredients(newList);
+
+        if(name==="name") {
+          getSuggestions(value);
+          setOnFocusInput(index);
+        }
+    }
+
+    function handleClickSuggestion(index, suggestion){
+      let newList = [...listIngredients];
+      newList[index]["name"] = suggestion;
+
+      setListIngredients(newList);
+      setOnFocusInput();
     }
 
     function postIngredients(ingList){
@@ -75,67 +46,131 @@ export default function AddMeal() {
         // data: {ingList}
     }
 
-    function calculateNutrients (){
-        // declare var of nutrient1, nutrient2,nutrient3
-        //let totalNutrient1 = 0;
-        //Loop through the array listIngredients
+    function calculateNutrients (listIng){
+
+        let nutrientsObj = {};
+
+        const requests = listIng.map(ingredient =>
+            axios.get(`https://api.nal.usda.gov/fdc/v1/foods/list?api_key=${authKey}`, {
+              params: {
+                query: ingredient.name,
+                dataType: "Survey (FNDDS)",
+                pageSize: 1, // Limite le nombre de résultats par page si nécessaire
+              },
+            })
+          );
+          
+          axios.all(requests)
+            .then(axios.spread((...responses) => {
         
-        //Fetch in API with GET query for the nutrients of the current ingredient => this returns an object
-        //.then const {protein, TotalLipidFat, Carbohydrate} = results.data;
-            //Get the values from the destructured  variables for example: 'Protein', 'Total lipid (fat)' and 'Carbohydrate, by difference'
-            
-            //Calculate nutrient amount for that one ingredient based on the amount of ingredient : amountNutrient * amountIngredient / 100
-            // add the result of calculation to nutrient total
-            // totalNutrient1 += protein * amountIngredient / 100;
-            // totalNutrient2 += TotalLipidFat * amountIngredient / 100;
-            // totalNutrient3 += Carbohydrate * amountIngredient / 100;
+              responses.forEach((response,index)=>{
+                let ingredientNutrients = {};
+                
+                response.data[0].foodNutrients.filter(nut => nutrientList.includes(nut.name)).forEach(nut=>{
+                    let amountOfIngredient = nut.amount /100;
+                    ingredientNutrients[nut.name]=`${amountOfIngredient*listIng[index].numberAmount} ${nut.unitName}`;
+                })
+                nutrientsObj[response.data[0].description]=ingredientNutrients;
+              })
 
-        // Once it loops listIngredient.length-1 break out 
+              console.log(nutrientsObj);
 
-        // Call postMeals() to database Store nutrient totals in the table meals -- POST
+              let nutrientMeal = {};
+
+                for(let ing in nutrientsObj){
+                        for(let nutrient in nutrientsObj[ing]){
+                            let amount = nutrientsObj[ing][nutrient].split(" ")[0];
+
+                            if (nutrientMeal[nutrient]) {
+                                nutrientMeal[nutrient] += Number(amount);
+                            } else {
+                                nutrientMeal[nutrient] = Number(amount);
+                            }
+                        }
+                }
+                    
+                
+
+                console.log(nutrientMeal)
+
+            }))
+            .catch(errors => {
+              console.log(errors); // Gère les erreurs
+            });
+
+           
 
     }
 
-    // function postMeals(todaysDate,profileid,nutrient1, nutrient2, nutrient3)
-    // POST request with params to add meal to meals table
-    // use today's date for now and refactor later in the case that a user wants to add meals for previous days 
+    // calculateNutrients([{name:"tomato",numberAmount:150}]);
+
+
+    function postMeals(todaysDate,profileid,nutrient1, nutrient2, nutrient3){
+        // POST request with params to add meal to meals table
+        // use today's date for now and refactor later in the case that a user wants to add meals for previous days 
+    }
+
+    const getSuggestions = debounce(async (inputValue) => {
+      if (inputValue) {
+          try {
+              const response = await axios.get(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${authKey}`, {
+                  params: {
+                      query: inputValue,
+                      dataType: "Survey (FNDDS)",
+                      pageSize: 5
+                  },
+              });
+
+              // let newSuggestions = response.data.map(obj=>obj.description);
+              
+              if(response.data.foods) {
+                let newSuggestions = response.data.foods.map(s=>s.description);
+                setSuggestions(newSuggestions)
+                // console.log(newSuggestions)
+              }
+              
+          } catch (err) {
+              console.log(err);
+          }
+      }
+  }, 500);
+  
+
+
+    function debounce(func, delay) {
+      let timeoutId;
+      return function(...args) {
+          if (timeoutId) clearTimeout(timeoutId);
+          timeoutId = setTimeout(() => {
+              func.apply(this, args);
+          }, delay);
+      };
+    }
+  
+    
 
   return (
     <div>
-        {/* 
-            Title - Add a meal for (date)
-
-            Component for the ingredients inputs (because reusable)
-                Input ingredientName - text
-                Input numberAmount - number
-                Input measurment - dropdown (see in API which ones)
-                Delete button to remove the ingredient
-
-            Button add an ingredient
-                On click create a new component
-
-            Submit the meal
-                On click, goes back to the homepage
-                Create a new object Meal and add the ingredients, and calculates the nutrients in each one and in the whole meal
-
-            
-        */}
-
-
-      <listIngredientsContext.Provider value={{listIngredients,setListIngredients}} >
-
-        {listIngredients.map((ingredientObj)=>(
-            <AddAnIngredient ingredientObj={ingredientObj}  key={ingredientObj.id} />
-
+        {listIngredients.map((ingredientObj,index)=>(
+            // <AddAnIngredient ingredientObj={ingredientObj}  key={ingredientObj.id} />
+            <form key={ingredientObj.id}>
+                <input type='text' value={ingredientObj.name} name='name' placeholder='Name of ingredient' onChange={(event)=>handleChangeIngredientForm(event,index)} />
+                {onFocusInput===index && suggestions &&
+                  <div>
+                    {suggestions.map(s=>(
+                    <div onClick={()=>handleClickSuggestion(index,s)}>{s}</div>
+                    ))}
+                  </div>
+                }
+                
+                <input type='number' value={ingredientObj.numberAmount} name='numberAmount' placeholder='Amount'  onChange={(event)=>handleChangeIngredientForm(event,index)} onFocus={()=>setOnFocusInput(null)}/>g
+            </form>
         ))}
-        </listIngredientsContext.Provider>
         
+        <button onClick={()=>calculateNutrients(listIngredients)}>Calculate nutrients</button>
         <button onClick={()=>handleAddIngredientButton()}>Add an ingredient</button>
 
         <button>Add the meal</button>
     </div>
   )
 }
-
-
-// ingredientObj={ingredientObj}

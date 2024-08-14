@@ -8,6 +8,7 @@ import ProfilePage from './components/ProfilePage.jsx';
 import './App.css'
 import axios from 'axios'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Register from './components/Register.jsx';
 import Login from './components/Login.jsx';
 
 
@@ -47,6 +48,7 @@ function App() {
           <Route path="/profile" element={<ProfilePage />}/>
           <Route path="/add-meal" element={<AddMeal />}/>
           <Route path="/navbar" element={<NavBar/>} />
+          <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
         </Routes>
       </Router>

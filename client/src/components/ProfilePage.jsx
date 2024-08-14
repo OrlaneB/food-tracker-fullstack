@@ -1,7 +1,7 @@
 import React from 'react'
 import NavBar from "./NavBar"
 import Profile from './Profile';
-import Login from './Login';
+import Login from './Register';
 
 
 export default function ProfilePage() {

@@ -1,0 +1,28 @@
+#register {
+    width:40%;
+    border: 1px solid lightgrey;
+    padding:50px;
+    margin:40px auto;
+    text-align: center;
+}
+
+#register form label{
+    display: block;
+    padding: 8px 0;
+}
+
+#register form label input {
+    display: block;
+    margin:8px auto;
+    
+}
+
+#register #genderLabel label{
+    display: inline-flex;
+    align-items: center;
+    margin: 0 8px;
+}
+
+#register #genderLabel label input {
+    margin: 0 6px;
+}

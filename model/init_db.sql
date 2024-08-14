@@ -83,10 +83,10 @@ INSERT INTO profiles (nutrient_1, nutrient_2, nutrient_3, medical_condition, dat
 -- Insert Data into users
 --
 INSERT INTO users (profile_id, username, email, password) VALUES
-(1, 'user1', 'user1@example.com', 'password1'),
-(2, 'user2', 'user2@example.com', 'password2'),
-(3, 'user3', 'user3@example.com', 'password3'),
-(4, 'user4', 'user4@example.com', 'password4');
+(1, 'user1', 'user1@example.com', '$2b$10$RYB/mnDI2elkvRV0oPDmMetmzMFXz8t/W6I6XiQA8kVWaCne.hHkC'),
+(2, 'user2', 'user2@example.com', '$2b$10$RYB/mnDI2elkvRV0oPDmMetmzMFXz8t/W6I6XiQA8kVWaCne.hHkC'),
+(3, 'user3', 'user3@example.com', '$2b$10$RYB/mnDI2elkvRV0oPDmMetmzMFXz8t/W6I6XiQA8kVWaCne.hHkC'),
+(4, 'user4', 'user4@example.com', '$2b$10$RYB/mnDI2elkvRV0oPDmMetmzMFXz8t/W6I6XiQA8kVWaCne.hHkC');
 --
 -- Insert Data into meals
 --

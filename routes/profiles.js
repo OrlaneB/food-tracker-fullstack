@@ -2,11 +2,6 @@ var express = require('express');
 var router = express.Router();
 const userShouldBeLoggedIn = require("../guards/userShouldBeLoggedIn")
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
-
 /* GET profile information
 add middleware to check id userIdMustExist
 */
@@ -19,5 +14,9 @@ router.get("/",userShouldBeLoggedIn,async(req, res)=>{
 /* POST profile information
 add middleware to check id userIdMustExist
 */
+
+/*UPDATE profile information*/
+
+/* DELETE account, will need to figure out if its tied to userid or profile id, whichever you decide you will need ON DELETE CASCADE*/
 
 module.exports = router;

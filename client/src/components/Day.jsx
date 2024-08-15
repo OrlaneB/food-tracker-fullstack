@@ -40,7 +40,10 @@ export default function Day({dateObj}) {
     return (
         <div className='Day'>
             <button onClick={(event)=>handleChangeDate(event,"before")}>←</button>
-            <p>{dateObj.day.toDateString()}</p>
+            <div>
+                <p>foodtracker</p>
+                <p>{dateObj.day.toDateString()}</p> 
+            </div>
             <button onClick={(event)=>handleChangeDate(event,"after")} disabled={dateObj.day.getDate()===today.getDate()?"disabled":""}>→</button>
         </div>    
     )                                

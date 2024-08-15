@@ -13,8 +13,8 @@
     border-radius:50%;
     margin:20px auto;
     background-image: conic-gradient(
-        lightblue 235deg,
-        rgb(89, 89, 89) 0
+      #2866b2 235deg,
+        black
     );
     transform: rotateY(180deg); 
 }
@@ -44,4 +44,11 @@
   font-size:1em;
   text-align:center;
   transform: rotateY(180deg); 
+}
+
+
+@media screen and (max-width:600px) {
+  .BarGraph {
+    width: 80%;
+  }
 }

@@ -66,6 +66,7 @@ export default function Homepage() {
       
 
       <Day dateObj={{day,setDay}}/>
+      <hr style={{width:"80%",borderWidth:"0.5px", marginTop:"0",marginBottom:"15px"}}/>
       <BarGraph objDay = {objDay} percentage={nutrientPercentage}/>
       <MealCards objDay = {objDay}/>
 

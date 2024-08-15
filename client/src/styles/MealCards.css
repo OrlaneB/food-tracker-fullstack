@@ -10,8 +10,16 @@
     margin:15px 0;
 }
 
+.mealContainer h3 {
+    margin: 8px 0;
+}
+
 .mealContainer ul {
-    padding:5px 25px;
+    padding:10px 25px;
+    padding-top: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
 }
 
 .mealContainer ul li {
@@ -26,7 +34,7 @@
     display: flex;
     text-align: center;
     background-color: white;
-    margin:10px 0;
+    margin: 0;
     border-radius: 3px;
 }
 
@@ -36,4 +44,26 @@
 
 .mealNutrients p:hover {
     color:blue;
+}
+
+.mealContainer button {
+    border: none;
+    font-weight: bold;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.mealContainer button:hover {
+    color: #6880FF;
+}
+
+
+@media screen and (max-width:600px){
+    .Meals {
+        width:80%;
+    }
+
+    .mealContainer ul {
+        display: block;
+    }
 }

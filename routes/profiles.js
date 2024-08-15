@@ -21,13 +21,13 @@ router.get("/:user_id",userShouldBeLoggedIn, async(req, res)=>{
                               WHERE users.user_id = ${user_id}`);
 
     if (results.length === 0) {
-      return res.status(404).send({ error: "User not found!" });
+      return res.status(404).send({ error: "Profile not found!" });
     } else {
       // Initialize result object
       let resObj = results.data[0]
 
       // Add success message
-      res.status(200).send({message:'Login successful', resObj});
+      res.status(200).send({message:'Welcome', resObj});
     }
   } catch (e) {
     console.log("something happened");
@@ -53,14 +53,30 @@ router.post("/", async (req, res) => {
           height} = req.body;
   try {
     // Add the user's profile informaiton
-    await db(`INSERT INTO profiles (user_id,nutrient_1, nutrient_2, nutrient_3, medical_condition, date_of_birth, gender, weight, height) 
+    await db(`INSERT INTO profiles 
+              (
+              user_id,
+              nutrient_1, 
+              nutrient_2, 
+              nutrient_3, 
+              medical_condition, 
+              date_of_birth, 
+              gender, 
+              weight, 
+              height) 
        VALUES (
               ${user_id},
               "${nutrient_1}", 
-              "${nutrient_2}", "${nutrient_3}", "${medical_condition}", "${date_of_birth.slice(0,10)}", "${gender}", "${weight}", "${height}")`);
-  
-       console.log("success");
-       res.status(201).send("Profile has been created");
+              "${nutrient_2}", 
+              "${nutrient_3}", 
+              "${medical_condition}", 
+              "${date_of_birth.slice(0,10)}", 
+              "${gender}", 
+              "${weight}", 
+              "${height}")`
+            );
+      // Send a success message to the frontend
+       res.status(201).send("Profile updated!");
   } catch (err) {
     res.status(500).send({ error: err.message });
   }

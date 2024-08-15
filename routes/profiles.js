@@ -1,27 +1,36 @@
 var express = require('express');
 var router = express.Router();
+const db = require('../model/helper');
 const userShouldBeLoggedIn = require("../guards/userShouldBeLoggedIn")
+const userMustExist = require("../guards/userMustExist")
 
 /* GET profile information*/
-router.get("/",userShouldBeLoggedIn,async(req, res)=>{
-  console.log(res.locals.userId);
-  res.send({protectedData: "This is your profile info!"})
+router.get("/:user_id",userShouldBeLoggedIn, async(req, res)=>{
 
   const { user_id } = req.params;
+  console.log("user_id", user_id);
 
-  if (!userId) {
+  if (!user_id) {
     return res.status(400).send({ error: "User ID is required!" });
   }
   try {
-    const results = await db(`SELECT * FROM users WHERE user_id = ?`, [user_id]);
+    const results = await db(`SELECT * 
+                              FROM profiles 
+                              LEFT JOIN users
+                              ON profiles.profile_id = ${user_id}
+                              WHERE users.user_id = ${user_id}`);
 
     if (results.length === 0) {
       return res.status(404).send({ error: "User not found!" });
     } else {
-      res.status(200).send(results.data);
-      console.log(results.data)
+      // Initialize result object
+      let resObj = results.data[0]
+
+      // Add success message
+      res.status(200).send({message:'Login successful', resObj});
     }
   } catch (e) {
+    console.log("something happened");
     res.status(500).send({ error: e.message });
   }
 
@@ -32,6 +41,30 @@ router.get("/",userShouldBeLoggedIn,async(req, res)=>{
 /* POST profile information
 add middleware to check id userIdMustExist
 */
+router.post("/", async (req, res) => {
+  const { user_id,
+          nutrient_1, 
+          nutrient_2,
+          nutrient_3,
+          medical_condition,
+          date_of_birth,
+          gender,
+          weight,
+          height} = req.body;
+  try {
+    // Add the user's profile informaiton
+    await db(`INSERT INTO profiles (user_id,nutrient_1, nutrient_2, nutrient_3, medical_condition, date_of_birth, gender, weight, height) 
+       VALUES (
+              ${user_id},
+              "${nutrient_1}", 
+              "${nutrient_2}", "${nutrient_3}", "${medical_condition}", "${date_of_birth.slice(0,10)}", "${gender}", "${weight}", "${height}")`);
+  
+       console.log("success");
+       res.status(201).send("Profile has been created");
+  } catch (err) {
+    res.status(500).send({ error: err.message });
+  }
+});
 
 /*UPDATE profile information*/
 // create array of the column names and use index to add to loop

@@ -13,6 +13,7 @@ SET foreign_key_checks = 1;
 --
 CREATE TABLE profiles(
     profile_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
     nutrient_1 VARCHAR(50) not null,
     nutrient_2 VARCHAR(50) not null,
     nutrient_3 VARCHAR(50) not null,
@@ -22,6 +23,11 @@ CREATE TABLE profiles(
     `weight` INT not null,
     height INT not null
     );
+
+ALTER TABLE profiles
+ADD CONSTRAINT fk_user
+FOREIGN KEY (user_id) REFERENCES users(user_id);
+
 --
 -- Create Table users
 --
@@ -74,11 +80,11 @@ FOREIGN KEY (meal_id) REFERENCES meals(meal_id) ON DELETE CASCADE;
 --
 -- Insert Data into profiles
 --
-INSERT INTO profiles (nutrient_1, nutrient_2, nutrient_3, medical_condition, date_of_birth, gender, weight, height) VALUES
-('Energy (kcal)', 'Protein', 'Calcium, Ca', 'Osteoporosis', '1985-03-25', 'Female', 65, 160),
-('Carbohydrate, by difference', 'Iron, Fe', 'Vitamin C, total ascorbic acid', 'Anemia', '1990-07-19', 'Male', 80, 175),
-('Total lipid (fat)', 'Vitamin A, RAE', 'Zinc, Zn', 'Heart Disease', '1978-11-12', 'Male', 90, 180),
-('Fiber, total dietary', 'Potassium, K', 'Magnesium, Mg', 'High Blood Pressure', '1995-05-14', 'Female', 55, 165);
+INSERT INTO profiles (user_id, nutrient_1, nutrient_2, nutrient_3, medical_condition, date_of_birth, gender, weight, height) VALUES
+(1,'Energy (kcal)', 'Protein', 'Calcium, Ca', 'Osteoporosis', '1985-03-25', 'Female', 65, 160),
+(2,'Carbohydrate, by difference', 'Iron, Fe', 'Vitamin C, total ascorbic acid', 'Anemia', '1990-07-19', 'Male', 80, 175),
+(3,'Total lipid (fat)', 'Vitamin A, RAE', 'Zinc, Zn', 'Heart Disease', '1978-11-12', 'Male', 90, 180),
+(4,'Fiber, total dietary', 'Potassium, K', 'Magnesium, Mg', 'High Blood Pressure', '1995-05-14', 'Female', 55, 165);
 --
 -- Insert Data into users
 --

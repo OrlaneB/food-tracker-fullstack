@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const jwtSecret = process.env.JWT_SECRET;
 
 function userShouldBeLoggedIn(req, res, next) {
-  const token = req.headers["authorization"]?.replace(/^Bearer\s/, "");//
+  const token = req.body["authorization"]?.replace(/^Bearer\s/, "");
   
   if (!token) {
     res.status(401).send({ message: "please provide a token" });

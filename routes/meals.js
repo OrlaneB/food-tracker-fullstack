@@ -10,8 +10,8 @@ router.get("/:profile_id", async(req, res)=>{
   const { date, profile_id } = req.params;
   console.log("profile_id", profile_id);
 
-  if (!user_id) {
-    return res.status(400).send({ error: "User ID is required!" });
+  if (!profile_id) {
+    return res.status(400).send({ error: "Profile ID is required!" });
   }
   try {
     const results = await db(`SELECT * 
@@ -29,7 +29,7 @@ router.get("/:profile_id", async(req, res)=>{
       let resObj = results.data[0]
 
       // Add success message
-      res.status(200).send({message:'Login successful', resObj});
+      res.status(200).send({message:'Success', resObj});
     }
   } catch (e) {
     console.log("something happened");

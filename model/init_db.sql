@@ -8,20 +8,7 @@ DROP TABLE if exists meals;
 DROP TABLE if exists ingredients;
 DROP TABLE if exists nutrients_by_meal;
 SET foreign_key_checks = 1;
---
--- Create Table profiles
---
-CREATE TABLE profiles(
-    profile_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    nutrient_1 VARCHAR(50) not null,
-    nutrient_2 VARCHAR(50) not null,
-    nutrient_3 VARCHAR(50) not null,
-    medical_condition VARCHAR(50) not null,
-    date_of_birth date not null,
-    gender VARCHAR(20) not null,
-    `weight` INT not null,
-    height INT not null
-    );
+
 --
 -- Create Table users
 --
@@ -33,9 +20,44 @@ CREATE TABLE users(
     `password` VARCHAR(255) not null
 );
 
-ALTER TABLE users
-ADD CONSTRAINT fk_profile
-FOREIGN KEY (profile_id) REFERENCES profiles(profile_id);
+-- ALTER TABLE users
+-- ADD CONSTRAINT fk_profile
+-- FOREIGN KEY (profile_id) REFERENCES profiles(profile_id);
+
+--
+-- Create Table profiles
+--
+CREATE TABLE profiles(
+    profile_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    nutrient_1 VARCHAR(50) not null,
+    nutrient_2 VARCHAR(50) not null,
+    nutrient_3 VARCHAR(50) not null,
+    medical_condition VARCHAR(50) not null,
+    date_of_birth date not null,
+    gender VARCHAR(20) not null,
+    `weight` INT not null,
+    height INT not null
+    );
+
+ALTER TABLE profiles
+ADD CONSTRAINT fk_user
+FOREIGN KEY (user_id) REFERENCES users(user_id);
+
+--
+-- Create Table users
+--
+-- CREATE TABLE users(
+--     user_id INT not null AUTO_INCREMENT PRIMARY KEY,
+--     profile_id INT,
+--     username VARCHAR(50) not null,
+--     email VARCHAR(50) not null,
+--     `password` VARCHAR(255) not null
+-- );
+
+-- ALTER TABLE users
+-- ADD CONSTRAINT fk_profile
+-- FOREIGN KEY (profile_id) REFERENCES profiles(profile_id);
 --
 -- Create Table meals
 --
@@ -71,14 +93,7 @@ CREATE TABLE nutrients_by_meal (
 ALTER TABLE nutrients_by_meal
 ADD CONSTRAINT fk_meal_n
 FOREIGN KEY (meal_id) REFERENCES meals(meal_id) ON DELETE CASCADE;
---
--- Insert Data into profiles
---
-INSERT INTO profiles (nutrient_1, nutrient_2, nutrient_3, medical_condition, date_of_birth, gender, weight, height) VALUES
-('Energy (kcal)', 'Protein', 'Calcium, Ca', 'Osteoporosis', '1985-03-25', 'Female', 65, 160),
-('Carbohydrate, by difference', 'Iron, Fe', 'Vitamin C, total ascorbic acid', 'Anemia', '1990-07-19', 'Male', 80, 175),
-('Total lipid (fat)', 'Vitamin A, RAE', 'Zinc, Zn', 'Heart Disease', '1978-11-12', 'Male', 90, 180),
-('Fiber, total dietary', 'Potassium, K', 'Magnesium, Mg', 'High Blood Pressure', '1995-05-14', 'Female', 55, 165);
+
 --
 -- Insert Data into users
 --
@@ -87,6 +102,16 @@ INSERT INTO users (profile_id, username, email, password) VALUES
 (2, 'user2', 'user2@example.com', '$2b$10$RYB/mnDI2elkvRV0oPDmMetmzMFXz8t/W6I6XiQA8kVWaCne.hHkC'),
 (3, 'user3', 'user3@example.com', '$2b$10$RYB/mnDI2elkvRV0oPDmMetmzMFXz8t/W6I6XiQA8kVWaCne.hHkC'),
 (4, 'user4', 'user4@example.com', '$2b$10$RYB/mnDI2elkvRV0oPDmMetmzMFXz8t/W6I6XiQA8kVWaCne.hHkC');
+
+--
+-- Insert Data into profiles
+--
+INSERT INTO profiles (user_id, nutrient_1, nutrient_2, nutrient_3, medical_condition, date_of_birth, gender, weight, height) VALUES
+(1,'Energy (kcal)', 'Protein', 'Calcium, Ca', 'Osteoporosis', '1985-03-25', 'Female', 65, 160),
+(2,'Carbohydrate, by difference', 'Iron, Fe', 'Vitamin C, total ascorbic acid', 'Anemia', '1990-07-19', 'Male', 80, 175),
+(3,'Total lipid (fat)', 'Vitamin A, RAE', 'Zinc, Zn', 'Heart Disease', '1978-11-12', 'Male', 90, 180),
+(4,'Fiber, total dietary', 'Potassium, K', 'Magnesium, Mg', 'High Blood Pressure', '1995-05-14', 'Female', 55, 165);
+
 --
 -- Insert Data into meals
 --

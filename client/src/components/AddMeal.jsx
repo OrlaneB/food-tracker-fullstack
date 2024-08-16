@@ -2,12 +2,15 @@ import React, { useState } from 'react';
 const authKey = import.meta.env.VITE_APP_API_KEY;
 import axios from 'axios'
 
+import "../styles/AddAMeal.css"
 
 export default function AddMeal() {
     const [listIngredients, setListIngredients] = useState([]);
     const [nextId, setNextId] = useState(0);
     const [suggestions,setSuggestions] = useState([]);
     const [onFocusInput, setOnFocusInput] = useState(null);
+
+    let today = new Date();
 
     const nutrientList = ["Energy","Protein","Carbohydrate, by difference","Total lipid (fat)","Fiber, total dietary","Sugars, total including NLEA","Calcium, Ca","Iron, Fe","Potassium, K","Sodium, Na","Vitamin A, RAE","Vitamin C, total ascorbic acid","Vitamin D (D2 + D3)","Vitamin E (alpha-tocopherol)","Vitamin K (phylloquinone)","Magnesium, Mg","Zinc, Zn","Cholesterol","Folate, DFE","Omega-3 Fatty Acids (EPA, DHA)"];
 
@@ -102,8 +105,13 @@ export default function AddMeal() {
 
     }
 
-    // calculateNutrients([{name:"tomato",numberAmount:150}]);
+    function deleteIngredient(event,index){
+      event.preventDefault();
 
+      let newList = [...listIngredients];
+      newList.splice(index,1);
+      setListIngredients(newList);
+    }
 
     function postMeals(todaysDate,profileid,nutrient1, nutrient2, nutrient3){
         // POST request with params to add meal to meals table
@@ -150,27 +158,39 @@ export default function AddMeal() {
     
 
   return (
-    <div>
+    <div id="AddAMeal">
+      <p style={{fontFamily:"impact"}}>foodtracker</p>
+      <hr style={{width:"60%", marginBottom:"30px"}} />
+      <h2>Log the meal for {today.toDateString()}</h2>
         {listIngredients.map((ingredientObj,index)=>(
             // <AddAnIngredient ingredientObj={ingredientObj}  key={ingredientObj.id} />
             <form key={ingredientObj.id}>
                 <input type='text' value={ingredientObj.name} name='name' placeholder='Name of ingredient' onChange={(event)=>handleChangeIngredientForm(event,index)} />
+
+                
+                
+                <input type='number' value={ingredientObj.numberAmount} name='numberAmount' placeholder='Amount'  onChange={(event)=>handleChangeIngredientForm(event,index)} onFocus={()=>setOnFocusInput(null)}/>g
+
+                <button className='deleteIngButton' onClick={(event)=>deleteIngredient(event,index)}>x</button>
+
                 {onFocusInput===index && suggestions &&
-                  <div>
+                  <div className='suggestionsContainer'>
                     {suggestions.map(s=>(
-                    <div onClick={()=>handleClickSuggestion(index,s)}>{s}</div>
+                    <p onClick={()=>handleClickSuggestion(index,s)}>{s}</p>
                     ))}
                   </div>
                 }
-                
-                <input type='number' value={ingredientObj.numberAmount} name='numberAmount' placeholder='Amount'  onChange={(event)=>handleChangeIngredientForm(event,index)} onFocus={()=>setOnFocusInput(null)}/>g
             </form>
         ))}
-        
-        <button onClick={()=>calculateNutrients(listIngredients)}>Calculate nutrients</button>
-        <button onClick={()=>handleAddIngredientButton()}>Add an ingredient</button>
 
-        <button>Add the meal</button>
+        {!listIngredients[0] &&
+          <p id='emptyIngList'>Add the ingredients of this meal.</p>
+        }
+        
+        {/* <button onClick={()=>calculateNutrients(listIngredients)}>Calculate nutrients</button> */}
+        <button onClick={()=>handleAddIngredientButton()} id='addIngButton'> Add an ingredient</button>
+
+        <button id='addMealButton'>Add the meal</button>
     </div>
   )
 }

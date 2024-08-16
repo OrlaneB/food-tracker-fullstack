@@ -44,21 +44,6 @@ ALTER TABLE profiles
 ADD CONSTRAINT fk_user
 FOREIGN KEY (user_id) REFERENCES users(user_id);
 
---
--- Create Table users
---
--- CREATE TABLE users(
---     user_id INT not null AUTO_INCREMENT PRIMARY KEY,
---     profile_id INT,
---     username VARCHAR(50) not null,
---     email VARCHAR(50) not null,
---     `password` VARCHAR(255) not null
--- );
-
--- ALTER TABLE users
--- ADD CONSTRAINT fk_profile
--- FOREIGN KEY (profile_id) REFERENCES profiles(profile_id);
---
 -- Create Table meals
 --
 CREATE TABLE meals (

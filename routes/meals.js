@@ -4,12 +4,8 @@ const db = require('../model/helper');
 const userShouldBeLoggedIn = require("../guards/userShouldBeLoggedIn")
 
 /* GET meals*/
-router.get("/:profile_id:date", async(req, res)=>{
-
-  const { date, profile_id} = req.params;
-  // console.log(req.params);
-  // console.log("profile_id", profile_id);
-  // console.log("date of meal", date.slice(0,10));
+router.get("/:profile_id", async(req, res)=>{
+  const { date, profile_id} = req.body;
 
   if (!profile_id) {
     return res.status(400).send({ error: "Profile ID is required!" });
@@ -39,6 +35,46 @@ router.get("/:profile_id:date", async(req, res)=>{
 
 })
 
-// POST - add meals - rteurn meal Id to the frontend
+/* POST one meal */
+router.post('/:profile_id', async(req, res) => {
+  const { profile_id } = req.params;
+  const { date} = req.body;
+  console.log(typeof profile_id); //string
+  console.log(date); //string
+    
+  try {
+
+  // Add profile_id and date to meals
+  await db(`INSERT INTO meals (profile_id, date)
+            VALUES (${profile_id}, "${date.slice(0,10)}");`
+        );
+  // Send a success message to the frontend
+  res.status(201).send("Meal added!");
+  } catch (err) {
+  res.status(500).send({ error: err.message });
+  }
+})
+
+/* POST ingredients to one meal */
+router.post('/ingredients/:meal_id', async(req, res) => {
+  const { meal_id} = req.params;
+  const { name, number_amount} = req.body;
+    console.log(meal_id);
+    console.log(name);
+    console.log(number_amount);
+  try {
+console.log("in try block");
+  // Add ingredients to meal
+  await db(` INSERT INTO ingredients (meal_id, name, number_amount)
+            VALUES (${meal_id},"${name}",${number_amount})`
+        );
+  // Send a success message to the frontend
+  res.status(201).send("Ingredients added!");
+  } catch (err) {
+  res.status(500).send({ error: err.message });
+  }
+})
+
+/* GET one meal */
 
 module.exports = router;

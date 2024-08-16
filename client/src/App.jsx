@@ -25,18 +25,50 @@ function App() {
   //   setView(viewName);
   // }
 
-  axios.get(`https://api.nal.usda.gov/fdc/v1/foods/list?api_key=${authKey}`, {
+  // const ingredients = ['milk', 'bread', 'cheese'];
 
-    params:{
-      query: 'cheddar cheese',
-      dataType : "Survey (FNDDS)"
-    }
+  // const requests = ingredients.map(ingredient =>
+  //   axios.get(`https://api.nal.usda.gov/fdc/v1/foods/list?api_key=${authKey}`, {
+  //     params: {
+  //       query: ingredient,
+  //       dataType: "Survey (FNDDS)",
+  //       pageSize: 1, // Limite le nombre de résultats par page si nécessaire
+  //     },
+  //   })
+  // );
+  
+  // axios.all(requests)
+  //   .then(axios.spread((...responses) => {
+  //     let mealNutrients = [];
 
+<<<<<<< HEAD
     }).then(function(response){
       // console.log(response.data[0])
     })
       .catch(function(error){console.log(error.error)}
   );
+=======
+  //     responses.forEach(response=>{
+  //       mealNutrients.push(response.data[0].foodNutrients);
+  //     })
+
+  //     console.log(mealNutrients)
+  //   }))
+  //   .catch(errors => {
+  //     console.log(errors); // Gère les erreurs
+  //   });
+
+  // axios.get(`https://api.nal.usda.gov/fdc/v1/foods/list?api_key=${authKey}`, {
+
+  //   params:{
+  //     query: 'milk',
+  //     dataType : "Survey (FNDDS)"
+  //   }
+
+  //   }).then(function(response){console.log(response.data[0])})
+  //     .catch(function(error){console.log(error.error)}
+  // );
+>>>>>>> main
 
 
   return (

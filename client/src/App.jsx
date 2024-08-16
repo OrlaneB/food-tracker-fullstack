@@ -41,13 +41,6 @@ function App() {
   //   .then(axios.spread((...responses) => {
   //     let mealNutrients = [];
 
-<<<<<<< HEAD
-    }).then(function(response){
-      // console.log(response.data[0])
-    })
-      .catch(function(error){console.log(error.error)}
-  );
-=======
   //     responses.forEach(response=>{
   //       mealNutrients.push(response.data[0].foodNutrients);
   //     })
@@ -68,7 +61,6 @@ function App() {
   //   }).then(function(response){console.log(response.data[0])})
   //     .catch(function(error){console.log(error.error)}
   // );
->>>>>>> main
 
 
   return (

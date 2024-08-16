@@ -1,0 +1,18 @@
+#login {
+    width:40%;
+    border: 1px solid lightgrey;
+    padding:50px;
+    margin:40px auto;
+    text-align: center;
+}
+
+#login form label {
+    display: block;
+    padding: 8px 0;
+}
+
+#login form label input {
+    display: block;
+    margin: 8px auto;
+
+}

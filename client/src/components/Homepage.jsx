@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import Day from './Day'
 import BarGraph from './BarGraph'
 import MealCards from './MealCards'
+import NavBar from "./NavBar"
 import '../styles/Homepage.css'
 import '../styles/NavBar.css'
 
@@ -69,6 +70,7 @@ export default function Homepage() {
       <hr style={{width:"80%",borderWidth:"0.5px", marginTop:"0",marginBottom:"15px"}}/>
       <BarGraph objDay = {objDay} percentage={nutrientPercentage}/>
       <MealCards objDay = {objDay}/>
+      <NavBar/>
 
     </div>
   )

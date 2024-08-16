@@ -1,6 +1,67 @@
+<<<<<<< HEAD
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
+import React, { useState, createContext, useContext } from 'react';
+import NavBar from "./NavBar"
+
+
+// const ingredientsContext = createContext(null);
+const listIngredientsContext = createContext(null);
+
+
+function AddAnIngredient({ingredientObj}){
+    const [ingredient,setIngredient]=useState(ingredientObj)
+
+    const {listIngredients,setListIngredients} = useContext(listIngredientsContext);
+
+    function handleChange(event){
+        //Input value is connected to newIngredients keys.
+
+        //Create a shallow copy of the object
+        let newIngredient = {...ingredient};
+        //Get the name of input to change the correct value
+        console.log(event.target,event.target.name)
+        let {name,value} = event.target;
+        console.log(name,value)
+        //Change the new object
+        newIngredient[name]=value;
+        //Update setNewIngredient
+        setIngredient(newIngredient);
+        console.log(ingredient.id);
+
+        // cbUpdateListIngredients(newIngredient);
+         //Create a shallow copy of list ingredients
+
+         let newList = [...listIngredients];
+        
+         //Find in the list this ingredient by the id+
+         let indexIng = newList.findIndex((item)=>item.id===newIngredient.id);
+         if(indexIng!==-1){
+             //Update with the parameter of the function
+             newList[indexIng]=newIngredient;
+             setListIngredients(newList);
+         } 
+         
+         console.log(listIngredients);
+        
+    }
+
+    return(
+        <form className="AddIngredient">
+            <input type='text' name="name" value={ingredient.name} onChange={(event)=>handleChange(event)} placeholder='Name of ingredient' />
+            <input type='number' name="numberAmount" value={ingredient.numberAmount} onChange={(event)=>handleChange(event)} placeholder='How much' />
+            <select name="measurement" value={ingredient.measurement} onChange={(event)=>handleChange(event)}>
+                <option>g</option>
+                <option>portion</option> {/*Double check API for the correct options*/}
+            </select>
+        </form>
+    )
+}
+=======
 import React, { useState } from 'react';
 const authKey = import.meta.env.VITE_APP_API_KEY;
 import axios from 'axios'
+>>>>>>> main
 
 import "../styles/AddAMeal.css"
 
@@ -183,6 +244,11 @@ export default function AddMeal() {
             </form>
         ))}
 
+<<<<<<< HEAD
+        <button>Add the meal</button>
+
+        <NavBar/>
+=======
         {!listIngredients[0] &&
           <p id='emptyIngList'>Add the ingredients of this meal.</p>
         }
@@ -191,6 +257,7 @@ export default function AddMeal() {
         <button onClick={()=>handleAddIngredientButton()} id='addIngButton'> Add an ingredient</button>
 
         <button id='addMealButton'>Add the meal</button>
+>>>>>>> main
     </div>
   )
 }

@@ -58,12 +58,11 @@ router.post('/:profile_id', async(req, res) => {
 /* POST ingredients to one meal */
 router.post('/ingredients/:meal_id', async(req, res) => {
   const { meal_id} = req.params;
+  
   const { name, number_amount} = req.body;
-    console.log(meal_id);
-    console.log(name);
-    console.log(number_amount);
+    
   try {
-console.log("in try block");
+
   // Add ingredients to meal
   await db(` INSERT INTO ingredients (meal_id, name, number_amount)
             VALUES (${meal_id},"${name}",${number_amount})`

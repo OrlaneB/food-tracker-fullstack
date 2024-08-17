@@ -1,19 +1,14 @@
-/* eslint-disable no-unused-vars */
 
-/* Profile
-This screen should have the following:
-- Username
-- Avatar/ image
-- Medical condition
-- Data preferences: nutrient list, medical condition - has state
-- Age, gender, weight, height - has state
-- Link your device
-*/
-import { useState } from 'react'
-// import '../styles/Profile.css'
+import { useContext, useState } from 'react'
 import "../styles/Profile2.css"
 
+import loginAuth from '../context/loginAuth';
+import { useNavigate } from 'react-router-dom';
+
 export default function Profile() {
+
+    const {loginAuthValue,setLoginAuthValue}=useContext(loginAuth);
+    const navigate = useNavigate();
 
 
     const nutrients = ["Energy","Protein","Carbohydrate, by difference","Total lipid (fat)","Fiber, total dietary","Sugars, total including NLEA","Calcium, Ca","Iron, Fe","Potassium, K","Sodium, Na","Vitamin A, RAE","Vitamin C, total ascorbic acid","Vitamin D (D2 + D3)","Vitamin E (alpha-tocopherol)","Vitamin K (phylloquinone)","Magnesium, Mg","Zinc, Zn","Cholesterol","Folate, DFE","Omega-3 Fatty Acids (EPA, DHA)"];
@@ -26,6 +21,17 @@ export default function Profile() {
         username:"Laura"
     })
 
+
+    function logOut(){
+        localStorage.removeItem("token");
+
+        let newAuthValue = {...loginAuthValue};
+        newAuthValue.isLoggedIn = false;
+
+        setLoginAuthValue(newAuthValue);
+
+        navigate("/login");
+    }
 
     function isChecked(nutrient){
         // console.log(userObject.chosenNutrients);
@@ -46,7 +52,8 @@ export default function Profile() {
                 </div>
                 
                 <div id="details">
-                        <h1>@Laura</h1>
+                        <h1 style={{margin:"10px 0"}}>@Laura</h1>
+                        <button style={{margin:"0",textAlign:"left"}} onClick={()=>logOut()}>Log Out</button>
                         <h2>Medical Condition: Anemia</h2>
                         <p>{userObject.age}</p>
                         <p>{userObject.height}</p>

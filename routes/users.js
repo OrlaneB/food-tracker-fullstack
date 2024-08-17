@@ -5,7 +5,7 @@ const db = require("../model/helper");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const jwtSecret = process.env.JWT_SECRET;
-const saltrounds = process.env.SALT_ROUNDS;
+const saltrounds = process.env.SALT_ROUNDS || 10;
 
 /* GET test. */
 router.get("/", function(req, res) {
@@ -17,6 +17,10 @@ router.get("/", function(req, res) {
 // This endpoint works but the profile_id value is null for user registered through postman
 router.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
+
+  console.log("Received password:", password);  // Debugging: log password
+  console.log("Salt rounds:", saltrounds);      // Debugging: log saltrounds
+
   const passwordHash = await bcrypt.hash(password, +saltrounds);
   try {
     const sql = `INSERT INTO users (username, email, password) VALUES ('${username}', '${email}', '${passwordHash}')`;
@@ -33,27 +37,35 @@ router.post("/register", async (req, res) => {
 // Login user NEED TO ADD MIDDLEWARE userMustExist
 router.post("/login", async (req, res) => {
   const { username, password } = req.body;
+  
   try {
     // find the user
     const results = await db(
       `SELECT * FROM users WHERE username = '${username}'`
     );
+  
     // if user doesn't exist, return error
     if (!results.data.length) {
+      // console.log("user dont exist");
       res.status(401).send({ error: "user not found" });
 
     } else {//we found a user with the received username
       const user = results.data[0];
+      // console.log("user exists?");
       const userPassword = user.password;
       //else check password
       const passwordCorrect = await bcrypt.compare(password, userPassword);
       if (!passwordCorrect) {
-
+        // console.log("password incorrect");
         res.status(401).send({ error: "password incorrect" });
       } else {
         //create token and return it
+        // console.log("password correct");
         const tokenPayload = { userId: user.user_id };
+        // console.log("payload correct",jwtSecret);
         const token = jwt.sign(tokenPayload, jwtSecret);
+
+        console.log("token is good");
 
         console.log("the user",user);
         console.log("login successful");

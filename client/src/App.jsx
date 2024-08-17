@@ -11,6 +11,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Register from './components/Register.jsx';
 import Login from './components/Login.jsx';
 
+import loginAuth from './context/loginAuth.jsx';
 
 
 function App() {
@@ -21,52 +22,20 @@ function App() {
 
   const authKey = import.meta.env.VITE_APP_API_KEY;
 
-  // function changeView(viewName){
-  //   setView(viewName);
-  // }
 
-  // const ingredients = ['milk', 'bread', 'cheese'];
 
-  // const requests = ingredients.map(ingredient =>
-  //   axios.get(`https://api.nal.usda.gov/fdc/v1/foods/list?api_key=${authKey}`, {
-  //     params: {
-  //       query: ingredient,
-  //       dataType: "Survey (FNDDS)",
-  //       pageSize: 1, // Limite le nombre de résultats par page si nécessaire
-  //     },
-  //   })
-  // );
-  
-  // axios.all(requests)
-  //   .then(axios.spread((...responses) => {
-  //     let mealNutrients = [];
 
-  //     responses.forEach(response=>{
-  //       mealNutrients.push(response.data[0].foodNutrients);
-  //     })
-
-  //     console.log(mealNutrients)
-  //   }))
-  //   .catch(errors => {
-  //     console.log(errors); // Gère les erreurs
-  //   });
-
-  // axios.get(`https://api.nal.usda.gov/fdc/v1/foods/list?api_key=${authKey}`, {
-
-  //   params:{
-  //     query: 'milk',
-  //     dataType : "Survey (FNDDS)"
-  //   }
-
-  //   }).then(function(response){console.log(response.data[0])})
-  //     .catch(function(error){console.log(error.error)}
-  // );
+  const [loginAuthValue,setLoginAuthValue] = useState({
+    user_id:null,
+    isLoggedIn:false,
+  })
 
 
   return (
     <> {/* component wrapper */}
       
-      <Router>
+    < loginAuth.Provider value={{loginAuthValue, setLoginAuthValue}}>
+      {/* <Router> */}
         <Routes>
           <Route path="/" element={<Homepage />}/>
           <Route path="/profile" element={<ProfilePage />}/>
@@ -75,12 +44,13 @@ function App() {
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
         </Routes>
-      </Router>
+      {/* </Router> */}
+      </loginAuth.Provider>
       
       {/* {view === "Homepage" && <Homepage />}
       {view === "Profile" && <Profile />}
       {view === "AddMeal" && <AddMeal />} */}
-     
+
       
     </>
   )

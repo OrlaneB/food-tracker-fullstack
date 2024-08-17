@@ -3,6 +3,7 @@ const authKey = import.meta.env.VITE_APP_API_KEY;
 import axios from 'axios'
 
 import "../styles/AddAMeal.css"
+import NavBar from './NavBar';
 
 export default function AddMeal() {
     const [listIngredients, setListIngredients] = useState([]);
@@ -158,7 +159,8 @@ export default function AddMeal() {
     
 
   return (
-    <div id="AddAMeal">
+    <>
+      <div id="AddAMeal">
       <p style={{fontFamily:"impact"}}>foodtracker</p>
       <hr style={{width:"60%", marginBottom:"30px"}} />
       <h2>Log the meal for {today.toDateString()}</h2>
@@ -191,6 +193,9 @@ export default function AddMeal() {
         <button onClick={()=>handleAddIngredientButton()} id='addIngButton'> Add an ingredient</button>
 
         <button id='addMealButton'>Add the meal</button>
-    </div>
+
+        </div>
+        <NavBar />
+    </>
   )
 }

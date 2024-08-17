@@ -59,12 +59,12 @@ export default function Login() {
 
                     <label>
                     Your username
-                    <input type='text' name='username' value={credentials.username} onChange={(event)=>handleChange(event)}/>
+                    <input type='text' name='username' value={credentials.username} autoComplete='username' onChange={(event)=>handleChange(event)}/>
                     </label>
 
                     <label>
                     Your password
-                    <input type='password' name='password' value={credentials.password} onChange={(event)=>handleChange(event)} />
+                    <input type='password' name='password' value={credentials.password} autoComplete='password' onChange={(event)=>handleChange(event)} />
                     </label>
 
                     <button type='submit'>Sign up</button>

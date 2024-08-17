@@ -81,17 +81,17 @@ export default function Register() {
               <form onSubmit={(event)=>handleSubmitOne(event)}>
                 <label>
                   Your email
-                  <input type='email' value={registerObj.email} name='email' onChange={(event)=>handleChangeRegister(event)}/>
+                  <input type='email' value={registerObj.email} name='email' autoComplete='email' onChange={(event)=>handleChangeRegister(event)}/>
                 </label>
 
                 <label>
                   Your username
-                  <input type='text' value={registerObj.username} name='username' onChange={(event)=>handleChangeRegister(event)}/>
+                  <input type='text' value={registerObj.username} name='username' autoComplete='username' onChange={(event)=>handleChangeRegister(event)}/>
                 </label>
 
                 <label>
                   Your password
-                  <input type='password' value={registerObj.password} name='password' onChange={(event)=>handleChangeRegister(event)} />
+                  <input type='password' value={registerObj.password} name='password' autoComplete='password' onChange={(event)=>handleChangeRegister(event)} />
                 </label>
 
                 <button type='submit'>Sign up</button>

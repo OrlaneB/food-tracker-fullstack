@@ -1,10 +1,13 @@
 /* eslint-disable react/prop-types */
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import '../styles/MealCards.css'
+import mealsForOneDate from '../context/mealsForOneDate';
 
 export default function MealCards({objDay}) {
     // copy dummy data
     const arrMeals = objDay.meals;
+
+    let {meals,nutrientsByMeal} = useContext(mealsForOneDate);
 
     const [openedMeals,setOpenedMeals]=useState([]);
 
@@ -19,7 +22,9 @@ export default function MealCards({objDay}) {
     //render meal information
     return (
      <div className='Meals'>
-         {arrMeals.map((meal, index) =>(
+         { meals &&
+         
+         meals.map((meal, index) =>(
 
            <div key={index} className='mealContainer'>
             <div style={{display:"flex", alignItems:"center"}}>
@@ -30,15 +35,15 @@ export default function MealCards({objDay}) {
             
              { openedMeals.includes(index) &&
               <ul>
-               {meal.ingredients.map((ingredient, index2) => (
-                 <li key={index2}>{ingredient.numberAmount}{ingredient.measurement} {ingredient.ingredientName}</li>
+               {Object.keys(meal).map((ingredient, index2) => (
+                  <li key={index2}>{meal[ingredient]}g {ingredient}</li>
                ))}
              </ul>}
 
              <div className='mealNutrients'>
-               <p>{meal.protein} <br/>Proteins</p>
-               <p>{meal.carbs} <br/>Carbs</p>
-               <p>{meal.fat} <br/>Fats</p>
+               <p> {nutrientsByMeal[index][0].nutrient_number_amount}g <br/>Proteins</p>
+               <p> {nutrientsByMeal[index][1].nutrient_number_amount}g <br/>Carbs</p>
+               <p> {nutrientsByMeal[index][2].nutrient_number_amount}g <br/>Fats</p>
              </div>
            </div>
 

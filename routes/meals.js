@@ -5,7 +5,8 @@ const userShouldBeLoggedIn = require("../guards/userShouldBeLoggedIn")
 
 /* GET meals*/
 router.get("/:profile_id", async(req, res)=>{
-  const { date, profile_id} = req.body;
+  const { date} = req.query;
+  const {profile_id}= req.params;
 
   if (!profile_id) {
     return res.status(400).send({ error: "Profile ID is required!" });

@@ -1,14 +1,21 @@
 
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import "../styles/Profile2.css"
 
 import loginAuth from '../context/loginAuth';
 import { useNavigate } from 'react-router-dom';
+import NavBar from './NavBar';
 
 export default function Profile() {
 
-    const {loginAuthValue,setLoginAuthValue}=useContext(loginAuth);
+    const {loginAuthValue,setLoginAuthValue,checkIfLoggedIn}=useContext(loginAuth);
     const navigate = useNavigate();
+    
+
+    useEffect(()=>{
+       checkIfLoggedIn();
+    },[])
+
 
 
     const nutrients = ["Energy","Protein","Carbohydrate, by difference","Total lipid (fat)","Fiber, total dietary","Sugars, total including NLEA","Calcium, Ca","Iron, Fe","Potassium, K","Sodium, Na","Vitamin A, RAE","Vitamin C, total ascorbic acid","Vitamin D (D2 + D3)","Vitamin E (alpha-tocopherol)","Vitamin K (phylloquinone)","Magnesium, Mg","Zinc, Zn","Cholesterol","Folate, DFE","Omega-3 Fatty Acids (EPA, DHA)"];
@@ -43,7 +50,9 @@ export default function Profile() {
  //Level of activity
 
     return (
+        <>
         <div id="profile">
+            
             <div id='header'>
                 <div id='imageAndUsername'>
                     
@@ -88,8 +97,12 @@ export default function Profile() {
                             </div>
                         ))}
                 </div>
+
+            </div>
+            <NavBar />
             
-        </div>
+        
+        </>
     )
 }
 

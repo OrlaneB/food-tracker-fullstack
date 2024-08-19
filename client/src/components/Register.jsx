@@ -14,7 +14,7 @@ export default function Register() {
     // console.log(username, email, password);
   
     try {
-      console.log("a");
+
   
       await axios.post("http://localhost:5000/api/users/register", {
         username,
@@ -72,7 +72,7 @@ export default function Register() {
   }
 
   return (
-    <div>
+    <>
 
         <div id='register'>
             <h1>Please sign up to start</h1>
@@ -153,6 +153,6 @@ export default function Register() {
         
 
         <NavBar />
-    </div>
+    </>
   )
 }

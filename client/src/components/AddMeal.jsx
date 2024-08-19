@@ -13,16 +13,11 @@ export default function AddMeal() {
     const [suggestions,setSuggestions] = useState([]);
     const [onFocusInput, setOnFocusInput] = useState(null);
 
-    const {isLoggedIn}= useContext(loginAuth).loginAuthValue;
+    const {checkIfLoggedIn}= useContext(loginAuth);
 
-    const navigate = useNavigate();
-
-    
+    // const navigate = useNavigate();
 
 
-    function checkIfLoggedIn(){
-      if(!isLoggedIn) navigate("/login");
-    }
     
 
     let today = new Date();
@@ -207,7 +202,7 @@ export default function AddMeal() {
           <p id='emptyIngList'>Add the ingredients of this meal.</p>
         }
         
-        {/* <button onClick={()=>calculateNutrients(listIngredients)}>Calculate nutrients</button> */}
+        <button onClick={()=>calculateNutrients(listIngredients)}>Calculate nutrients</button>
         <button onClick={()=>handleAddIngredientButton()} id='addIngButton'> Add an ingredient</button>
 
         <button id='addMealButton'>Add the meal</button>

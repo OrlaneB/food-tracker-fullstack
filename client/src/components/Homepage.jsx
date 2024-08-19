@@ -1,11 +1,12 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Day from './Day'
 import BarGraph from './BarGraph'
 import MealCards from './MealCards'
 import NavBar from "./NavBar"
 import '../styles/Homepage.css'
 import '../styles/NavBar.css'
+import loginAuth from '../context/loginAuth'
 
 // Each meal
 let objMeal1 = {
@@ -48,8 +49,11 @@ export default function Homepage() {
 
   const [day,setDay]=useState(new Date())
 
-  //Will come from AuthContext
-  const isLoggedIn = true;
+  const {checkIfLoggedIn} = useContext(loginAuth);
+
+  useEffect(()=>{
+    checkIfLoggedIn();
+  },[])
 
   let dummyData = [
     {name:"Protein", percentage:84},

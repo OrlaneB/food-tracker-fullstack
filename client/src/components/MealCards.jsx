@@ -8,6 +8,7 @@ export default function MealCards({objDay}) {
     const arrMeals = objDay.meals;
 
     let {meals,nutrientsByMeal} = useContext(mealsForOneDate);
+    console.log(meals,nutrientsByMeal);
 
     const [openedMeals,setOpenedMeals]=useState([]);
 
@@ -41,9 +42,9 @@ export default function MealCards({objDay}) {
              </ul>}
 
              <div className='mealNutrients'>
-               <p> {nutrientsByMeal[index][0].nutrient_number_amount}g <br/>Proteins</p>
-               <p> {nutrientsByMeal[index][1].nutrient_number_amount}g <br/>Carbs</p>
-               <p> {nutrientsByMeal[index][2].nutrient_number_amount}g <br/>Fats</p>
+               <p> {nutrientsByMeal[index][0].nutrient_number_amount}g <br/>{nutrientsByMeal[index][0].nutrient_name}</p>
+               <p> {nutrientsByMeal[index][1].nutrient_number_amount}g <br/>{nutrientsByMeal[index][1].nutrient_name}</p>
+               <p> {nutrientsByMeal[index][2].nutrient_number_amount}g <br/>{nutrientsByMeal[index][2].nutrient_name}</p>
              </div>
            </div>
 

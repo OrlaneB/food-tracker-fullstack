@@ -3,7 +3,7 @@ var router = express.Router();
 const db = require('../model/helper');
 const userShouldBeLoggedIn = require("../guards/userShouldBeLoggedIn")
 
-/* GET meals - returns ingredients and nutrients for all meals on a given date*/
+/* GET meals*/
 router.get("/:profile_id", async(req, res)=>{
   const { date, profile_id} = req.body;
 
@@ -41,7 +41,7 @@ router.get("/:profile_id", async(req, res)=>{
 
 })
 
-/* POST one meal */
+/* POST meal */
 router.post('/:profile_id', async(req, res) => {
   const { profile_id } = req.params;
   const { date, ingredientsList} = req.body;
@@ -54,34 +54,37 @@ router.post('/:profile_id', async(req, res) => {
   await db(`INSERT INTO meals (profile_id, date)
             VALUES (${profile_id}, "${date.slice(0,10)}");`
         );
-  
-  // -----> Add ingredients -- receive an array of objects that have ingredient information
-  // You need to write a loop to add ingredient objects from array to the ingredients table with it's corresponding meal
 
   // Send the meal_id for this meal to frontend 
-  const getMealId = `SELECT max(meal_id) 
+  const getMealId = await db(`SELECT max(meal_id) 
                      FROM meals
                      WHERE profile_id=${profile_id}`
+                    );
 
   // Send a success message to the frontend
   res.status(201).send("Meal added!");
+  res.status(201).send(getMealId);
+
   } catch (err) {
   res.status(500).send({ error: err.message });
   }
 })
 
-/* POST ingredients to one meal */
+/* POST meal ingredients*/
 router.post('/ingredients/:meal_id', async(req, res) => {
   const { meal_id} = req.params;
-  
   const { name, number_amount} = req.body;
     
   try {
 
   // Add ingredients to meal
-  await db(` INSERT INTO ingredients (meal_id, name, number_amount)
-            VALUES (${meal_id},"${name}",${number_amount})`
-        );
+  for (let ingredient of ingredientsList){
+    await db(` INSERT INTO ingredients (meal_id, name, number_amount)
+               VALUES (${meal_id},"${name}",${number_amount})`
+    );
+  }
+  // Add ingredients to meal
+  
   // Send a success message to the frontend
   res.status(201).send("Ingredients added!");
   } catch (err) {

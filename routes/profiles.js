@@ -5,7 +5,7 @@ const userShouldBeLoggedIn = require("../guards/userShouldBeLoggedIn")
 const userMustExist = require("../guards/userMustExist")
 
 /* GET profile information*/
-router.get("/:user_id",userShouldBeLoggedIn, async(req, res)=>{
+router.get("/:user_id", userShouldBeLoggedIn, async(req, res)=>{
 
   const { user_id } = req.params;
   console.log("user_id", user_id);
@@ -36,14 +36,10 @@ router.get("/:user_id",userShouldBeLoggedIn, async(req, res)=>{
 
 })
 
-
-
-/* POST profile information
-add middleware to check id userIdMustExist
-*/
-router.post("/", async (req, res) => {
-  const { user_id,
-          nutrient_1, 
+/* POST profile information*/
+router.post("/profiles/user_id", userMustExist, async (req, res) => {
+  const {user_id} = req.params
+  const { nutrient_1, 
           nutrient_2,
           nutrient_3,
           medical_condition,

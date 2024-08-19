@@ -150,6 +150,12 @@ router.post('/:meal_id', async(req, res) => {
   })
 
 
-/* GET nutrients*/
+/* PUT meals*/
+/* PUT ingredients*/
+/* PUT nutrients*/
+
+/* DELETE meal */
+/* DELETE ingredient */
+/* DELETE nutrient */
 
 module.exports = router;

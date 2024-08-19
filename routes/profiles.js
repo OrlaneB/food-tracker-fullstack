@@ -37,9 +37,26 @@ router.get("/:user_id", userShouldBeLoggedIn, async(req, res)=>{
 })
 
 /* POST profile information*/
-router.post("/profiles/user_id", userMustExist, async (req, res) => {
+router.post("/:user_id", async (req, res) => {
   const {user_id} = req.params
-  const { nutrient_1, 
+  try {
+    // Add the user's profile informaiton
+    await db(`INSERT INTO profiles (user_id) 
+              VALUES (${user_id})`
+            );
+      // Send a success message to the frontend
+       res.status(201).send("Profile created!");
+  } catch (err) {
+    res.status(500).send({ error: err.message });
+  }
+});
+
+/* PUT profile information*/
+// router.post("/profiles/profile_id", userMustExist, async (req, res) => {
+router.put("/:profile_id", async (req, res) => {
+  const {profile_id} = req.params
+  const { user_id,
+          nutrient_1, 
           nutrient_2,
           nutrient_3,
           medical_condition,
@@ -78,8 +95,6 @@ router.post("/profiles/user_id", userMustExist, async (req, res) => {
   }
 });
 
-/* PUT profile information*/
-
 // create array of the column names and use index to add to loop
 // from the frontend i get an array that has 0-3 nutrients, username
 // i want to update the nutrients when username
@@ -88,6 +103,7 @@ router.post("/profiles/user_id", userMustExist, async (req, res) => {
 // input is all profile information
 // destructure each field
 // update information - NOT THE BEST WAY BECAUSE SENDING DATA THAT ISNT MODIFIED
+
 
 /* PUT nutrients to track */
 

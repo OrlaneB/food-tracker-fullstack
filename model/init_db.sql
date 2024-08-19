@@ -30,14 +30,14 @@ CREATE TABLE users(
 CREATE TABLE profiles(
     profile_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
-    nutrient_1 VARCHAR(50) not null,
-    nutrient_2 VARCHAR(50) not null,
-    nutrient_3 VARCHAR(50) not null,
-    medical_condition VARCHAR(50) not null,
-    date_of_birth date not null,
-    gender VARCHAR(20) not null,
-    `weight` INT not null,
-    height INT not null
+    nutrient_1 VARCHAR(50),
+    nutrient_2 VARCHAR(50),
+    nutrient_3 VARCHAR(50),
+    medical_condition VARCHAR(50),
+    date_of_birth date,
+    gender VARCHAR(20),
+    `weight` INT,
+    height INT
     );
 
 ALTER TABLE profiles

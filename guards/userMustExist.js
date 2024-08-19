@@ -16,4 +16,4 @@ async function userMustExist(req, res, next) {
   }
 }
 
-module.exports = studentMustExist;
+module.exports = userMustExist;

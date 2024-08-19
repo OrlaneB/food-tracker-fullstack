@@ -79,13 +79,20 @@ router.post("/profiles/user_id", userMustExist, async (req, res) => {
 });
 
 /* PUT profile information*/
+
 // create array of the column names and use index to add to loop
 // from the frontend i get an array that has 0-3 nutrients, username
 // i want to update the nutrients when username
 // loop with 3 iterations for each if there is something in the array add the nutrient to nutrient_1 = index+1, etc.
 // else set the nutrient to null
+// input is all profile information
+// destructure each field
+// update information - NOT THE BEST WAY BECAUSE SENDING DATA THAT ISNT MODIFIED
 
 /* PUT nutrients to track */
+
+// input 3 nutrient fields
+// update nutrients to track
 
 /* DELETE user account */
 

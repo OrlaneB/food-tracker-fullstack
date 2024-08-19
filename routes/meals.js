@@ -89,18 +89,18 @@ router.post('/ingredients/:meal_id', async(req, res) => {
 })
 
 /* POST meal nutrients*/
-router.post('/nutrients/:nutrient_id', async(req, res) => {
-  const { nutrient_id} = req.params;
-  const { meal_id} = req.body;
+router.post('/nutrients/:meal_id', async(req, res) => {
+  const { meal_id} = req.params;
+  const { nutrientsList} = req.body;
   try {
   // Add ingredients to meal
-  for (let ingredient of ingredientsList){
-    await db(` INSERT INTO ingredients (nutrient_name, nutrient_number_amount)
+  for (let nutrient of nutrientsList){
+    await db(` INSERT INTO nutrients_by_meal (meal_id, nutrient_name, nutrient_number_amount)
                VALUES (${meal_id},"${nutrient.name}",${nutrient.number_amount})`
     );
   }
   // Send a success message to the frontend
-  res.status(201).send("Ingredients added!");
+  res.status(201).send("Nutrients added!");
   } catch (err) {
   res.status(500).send({ error: err.message });
   }

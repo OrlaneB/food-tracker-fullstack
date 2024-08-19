@@ -1,9 +1,9 @@
 const db = require("../model/helper");
 
-async function studentMustExist(req, res, next) {
+async function userMustExist(req, res, next) {
   try {
     const result = await db(
-      `SELECT * FROM students WHERE id = ${+req.params.id}`
+      `SELECT * FROM users WHERE id = ${+req.params.id}`
     );
     if (result.data.length === 1) {
       res.locals.item = result.data[0];

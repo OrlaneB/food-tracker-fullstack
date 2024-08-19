@@ -4,7 +4,7 @@ const db = require('../model/helper');
 const userShouldBeLoggedIn = require("../guards/userShouldBeLoggedIn")
 
 /* GET meals, ingredients, nutrients*/
-router.get("/:profile_id", async(req, res)=>{
+router.get("/:profile_id", userShouldBeLoggedIn, async(req, res)=>{
   const { date, profile_id} = req.body;
 
   if (!profile_id) {
@@ -154,7 +154,7 @@ router.post('/:meal_id', async(req, res) => {
 /* PUT ingredients*/
 /* PUT nutrients*/
 
-/* DELETE meal */
+/* DELETE meal*/
 /* DELETE ingredient */
 /* DELETE nutrient */
 

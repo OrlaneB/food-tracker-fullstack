@@ -87,6 +87,6 @@ router.post("/profiles/user_id", userMustExist, async (req, res) => {
 
 
 
-/* DELETE account, will need to figure out if its tied to userid or profile id, whichever you decide you will need ON DELETE CASCADE*/
+/* DELETE account, will need to figure out if its tied to userid or profile id, whichever you decide you will need ON DELETE CASCADE userMustExist guard*/
 
 module.exports = router;

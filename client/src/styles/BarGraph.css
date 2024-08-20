@@ -16,7 +16,7 @@
       #2866b2 235deg,
         black
     );
-    transform: rotateY(180deg); 
+     
 }
 
 .nutrientName {
@@ -43,7 +43,6 @@
     font-family:"segoe UI";
   font-size:1em;
   text-align:center;
-  transform: rotateY(180deg); 
 }
 
 

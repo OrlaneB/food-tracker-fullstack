@@ -3,6 +3,8 @@ import { useContext, useState } from 'react';
 import '../styles/MealCards.css'
 import mealsForOneDate from '../context/mealsForOneDate';
 
+import userFriendlyNutrientNames from "../utilities/userFriendlyNutrientNames"
+
 export default function MealCards({objDay}) {
     // copy dummy data
     const arrMeals = objDay.meals;
@@ -42,9 +44,15 @@ export default function MealCards({objDay}) {
              </ul>}
 
              <div className='mealNutrients'>
-               <p> {nutrientsByMeal[index][0].nutrient_number_amount}g <br/>{nutrientsByMeal[index][0].nutrient_name}</p>
-               <p> {nutrientsByMeal[index][1].nutrient_number_amount}g <br/>{nutrientsByMeal[index][1].nutrient_name}</p>
-               <p> {nutrientsByMeal[index][2].nutrient_number_amount}g <br/>{nutrientsByMeal[index][2].nutrient_name}</p>
+               <p> {nutrientsByMeal[index][0].nutrient_number_amount}g <br/>
+                    {userFriendlyNutrientNames[nutrientsByMeal[index][0].nutrient_name]}
+               </p>
+               <p> {nutrientsByMeal[index][1].nutrient_number_amount}g <br/>
+                    {userFriendlyNutrientNames[nutrientsByMeal[index][1].nutrient_name]}
+                </p>
+               <p> {nutrientsByMeal[index][2].nutrient_number_amount}g <br/>
+                      {userFriendlyNutrientNames[nutrientsByMeal[index][2].nutrient_name]}
+                </p>
              </div>
            </div>
 

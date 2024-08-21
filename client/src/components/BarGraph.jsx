@@ -2,6 +2,7 @@
 import { useContext, useEffect, useState } from 'react';
 import '../styles/BarGraph.css'
 import mealsForOneDate from '../context/mealsForOneDate';
+import userFriendlyNutrientNames from '../utilities/userFriendlyNutrientNames';
 
 export default function BarGraph({objDay,percentage}) {
 
@@ -64,7 +65,7 @@ export default function BarGraph({objDay,percentage}) {
             <div className='text' >
                     <p>{nut.current}g <br/> 
                     <span style={{color:"grey",fontSize:"0.7em"}}>/{recommendations[nut.nutrient_name]}g</span></p></div>
-            <p className='nutrientName' >{nut.nutrient_name}</p>
+            <p className='nutrientName' >{userFriendlyNutrientNames[nut.nutrient_name]}</p>
           </div>
         ))}
         </div>

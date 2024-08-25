@@ -4,10 +4,8 @@ import '../styles/BarGraph.css'
 import mealsForOneDate from '../context/mealsForOneDate';
 import userFriendlyNutrientNames from '../utilities/userFriendlyNutrientNames';
 
-export default function BarGraph({objDay,percentage}) {
+export default function BarGraph({percentage}) {
 
-    const objDay1= objDay;
-    const {protein, carbs, fat} = objDay1;
 
     const colors = ["#99C8FF","#2866b2","#6880FF"]
 

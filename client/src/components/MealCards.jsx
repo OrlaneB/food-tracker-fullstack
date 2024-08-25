@@ -5,12 +5,11 @@ import mealsForOneDate from '../context/mealsForOneDate';
 
 import userFriendlyNutrientNames from "../utilities/userFriendlyNutrientNames"
 
-export default function MealCards({objDay}) {
-    // copy dummy data
-    const arrMeals = objDay.meals;
+export default function MealCards() {
+ 
 
     let {meals,nutrientsByMeal} = useContext(mealsForOneDate);
-    console.log(meals,nutrientsByMeal);
+    // console.log(meals,nutrientsByMeal);
 
     const [openedMeals,setOpenedMeals]=useState([]);
 

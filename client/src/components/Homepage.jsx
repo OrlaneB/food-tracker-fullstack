@@ -10,57 +10,25 @@ import axios from 'axios'
 
 import mealsForOneDate from '../context/mealsForOneDate'
 
-// Each meal
-let objMeal1 = {
-  ingredients : [
-    {ingredientName : "rice", numberAmount : "1", measurement : "portion", protein : "x g", carbs : "y g", fat : "z g" },
-    {ingredientName : "tomato", numberAmount : "3", measurement : "portion", protein : "x g", carbs : "y g", fat : "z g" },
-    {ingredientName : "cheese", numberAmount : "30", measurement : "g", protein : "x g", carbs : "y g", fat : "z g" },
-    {ingredientName : "apple", numberAmount : "150", measurement : "g", protein : "x g", carbs : "y g", fat : "z g" },
-    //...
-  ],
-  protein : '10g',
-  carbs : '15g',
-  fat : "1g"
-}
-let objMeal2 = {
-  ingredients : [
-    {ingredientName : "rice", numberAmount : "1", measurement : "portion", protein : "x g", carbs : "y g", fat : "z g" }],
-  protein : '17g',
-  carbs : '15g',
-  fat : "12g"
-}
-let objMeal3 = {
-  ingredients : [
-    {ingredientName : "rice", numberAmount : "1", measurement : "portion", protein : "x g", carbs : "y g", fat : "z g" }],
-  protein : '10g',
-  carbs : '5g',
-  fat : "8g"
-}
-let objDay = {
-  meals : [objMeal1, objMeal2, objMeal3],
-  protein : '37',
-  carbs : '35',
-  fat : "21"
-}
-
-
 
 
 export default function Homepage() {
 
   const [day,setDay]=useState(new Date())
+
+  //"2024-08-01"
   const [meals,setMeals]=useState();
   const [nutrientsByMeal,setNutrientsByMeal]=useState();
+  const [noMealsForThisDate,setNoMealsForThisDate]=useState(false);
 
   //Will come from AuthContext
   const isLoggedIn = true;
   const chosenNutrients=["Protein","Vitamin A, RAE","Iron, Fe"]
 
   let dummyData = [
-    {name:"Protein", percentage:84},
-    {name:"Vitamin A, RAE", percentage:24},
-    {name:"Iron, Fe",percentage:56}];
+    {name:"", percentage:50},
+    {name:"", percentage:50},
+    {name:"",percentage:50}];
 
   const [nutrientPercentage,setNutrientPercentage] = useState(dummyData);
 
@@ -68,8 +36,12 @@ export default function Homepage() {
   async function getMeals() {
     try {
       const result = await axios.get("http://localhost:5000/api/meals/1", {
-        params: { date: "2024-08-01" }
+        params: { date: `${day.getFullYear()}-${day.getMonth()+1<10? `0${day.getMonth()+1}`:day.getMonth()+1}-${day.getDate()<10? `0${day.getDate()}`:day.getDate()}` }
       });
+      
+      if(result.data.dataIngredients[0]){
+
+        setNoMealsForThisDate(false)
 
       const {dataIngredients,dataNutrients} = result.data;
 
@@ -109,16 +81,10 @@ export default function Homepage() {
         }
 
         setNutrientsByMeal(newNutrientsByMeal);
-
-      // for (let index in chosenNutrients) {
-      //   let nut = chosenNutrients[index];
-      //   const sum = dataNutrients
-      //     .filter(n => n.nutrient_name === nut)
-      //     // .reduce((accumulator, nutObj) => 
-      //     //   accumulator + nutObj.nutrient_number_amount, 0); // Provide 0 as the initial value
       
-      //   console.log(sum);
-      // }
+      } else {
+        setNoMealsForThisDate(true)
+      }
       
       
 
@@ -131,7 +97,7 @@ export default function Homepage() {
 
   useEffect(()=>{
     getMeals()
-  },[])
+  },[day])
       
 
   return (
@@ -141,9 +107,19 @@ export default function Homepage() {
     <mealsForOneDate.Provider value={{meals,nutrientsByMeal}}>
       <Day dateObj={{day,setDay}}/>
       <hr style={{width:"80%",borderWidth:"0.5px", marginTop:"0",marginBottom:"15px"}}/>
-      <BarGraph objDay = {objDay} percentage={nutrientPercentage}/>
-      <MealCards objDay = {objDay}/>
+      {!noMealsForThisDate &&
+          <>
+            <BarGraph percentage={nutrientPercentage}/>
+            <MealCards />
+          </>
+      }
+      
     </mealsForOneDate.Provider>
+
+    {noMealsForThisDate &&
+      <p style={{textAlign:"center"}}>There are no meals for this date.</p>
+      
+      }
       <NavBar/>
     
 

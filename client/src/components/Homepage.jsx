@@ -9,12 +9,15 @@ import '../styles/NavBar.css'
 import axios from 'axios'
 
 import mealsForOneDate from '../context/mealsForOneDate'
+import { useNavigate } from 'react-router-dom'
 
 
 
 export default function Homepage() {
 
   const [day,setDay]=useState(new Date())
+
+  const navigate = useNavigate();
 
   //"2024-08-01"
   const [meals,setMeals]=useState();
@@ -117,9 +120,11 @@ export default function Homepage() {
     </mealsForOneDate.Provider>
 
     {noMealsForThisDate &&
-      <p style={{textAlign:"center"}}>There are no meals for this date.</p>
-      
-      }
+      <div id='noMealWarning'>
+        <p>There are no meals for this date.</p>
+        <button onClick={()=>navigate("/add-meal")}>Add one here</button>
+      </div>
+    }
       <NavBar/>
     
 

@@ -101,6 +101,8 @@ export default function Homepage() {
   useEffect(()=>{
     getMeals()
   },[day])
+
+
       
 
   return (

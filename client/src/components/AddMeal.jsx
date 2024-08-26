@@ -1,14 +1,24 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 const authKey = import.meta.env.VITE_APP_API_KEY;
 import axios from 'axios'
 
 import "../styles/AddAMeal.css"
+import NavBar from './NavBar';
+import loginAuth from '../context/loginAuth';
+import { useNavigate } from 'react-router-dom';
 
 export default function AddMeal() {
     const [listIngredients, setListIngredients] = useState([]);
     const [nextId, setNextId] = useState(0);
     const [suggestions,setSuggestions] = useState([]);
     const [onFocusInput, setOnFocusInput] = useState(null);
+
+    const {checkIfLoggedIn}= useContext(loginAuth);
+
+    // const navigate = useNavigate();
+
+
+    
 
     let today = new Date();
 
@@ -155,10 +165,15 @@ export default function AddMeal() {
       };
     }
   
+    useEffect(()=>{
+      checkIfLoggedIn()
+    }, [])
     
 
   return (
-    <div id="AddAMeal">
+    <>
+
+      <div id="AddAMeal">
       <p style={{fontFamily:"impact"}}>foodtracker</p>
       <hr style={{width:"60%", marginBottom:"30px"}} />
       <h2>Log the meal for {today.toDateString()}</h2>
@@ -187,10 +202,14 @@ export default function AddMeal() {
           <p id='emptyIngList'>Add the ingredients of this meal.</p>
         }
         
-        {/* <button onClick={()=>calculateNutrients(listIngredients)}>Calculate nutrients</button> */}
+        <button onClick={()=>calculateNutrients(listIngredients)}>Calculate nutrients</button>
         <button onClick={()=>handleAddIngredientButton()} id='addIngButton'> Add an ingredient</button>
 
         <button id='addMealButton'>Add the meal</button>
-    </div>
+
+        </div>
+        <NavBar />
+    </>
+
   )
 }

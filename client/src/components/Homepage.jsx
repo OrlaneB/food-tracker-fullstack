@@ -1,11 +1,12 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Day from './Day'
 import BarGraph from './BarGraph'
 import MealCards from './MealCards'
 import NavBar from "./NavBar"
 import '../styles/Homepage.css'
 import '../styles/NavBar.css'
+import loginAuth from '../context/loginAuth'
 import axios from 'axios'
 
 import mealsForOneDate from '../context/mealsForOneDate'
@@ -17,6 +18,11 @@ export default function Homepage() {
 
   const [day,setDay]=useState(new Date())
 
+  const {checkIfLoggedIn} = useContext(loginAuth);
+
+  useEffect(()=>{
+    checkIfLoggedIn();
+  },[])
   const navigate = useNavigate();
 
   //"2024-08-01"

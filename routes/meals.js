@@ -3,9 +3,10 @@ var router = express.Router();
 const db = require('../model/helper');
 const userShouldBeLoggedIn = require("../guards/userShouldBeLoggedIn")
 
-/* GET meals, ingredients, nutrients*/
-router.get("/:profile_id", userShouldBeLoggedIn, async(req, res)=>{
-  const { date, profile_id} = req.body;
+/* GET meals*/
+router.get("/:profile_id", async(req, res)=>{
+  const { date} = req.query;
+  const {profile_id}= req.params;
 
   if (!profile_id) {
     return res.status(400).send({ error: "Profile ID is required!" });

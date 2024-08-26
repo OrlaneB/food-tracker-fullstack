@@ -5,7 +5,7 @@ const db = require("../model/helper");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const jwtSecret = process.env.JWT_SECRET;
-const saltrounds = process.env.SALT_ROUNDS;
+const saltrounds = process.env.SALT_ROUNDS || 10;
 const userMustExist = require("../guards/userMustExist")
 
 /* POST register new user */

@@ -8,20 +8,7 @@ DROP TABLE if exists meals;
 DROP TABLE if exists ingredients;
 DROP TABLE if exists nutrients_by_meal;
 SET foreign_key_checks = 1;
---
--- Create Table profiles
---
-CREATE TABLE profiles(
-    profile_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    nutrient_1 VARCHAR(50) not null,
-    nutrient_2 VARCHAR(50) not null,
-    nutrient_3 VARCHAR(50) not null,
-    medical_condition VARCHAR(50) not null,
-    date_of_birth date not null,
-    gender VARCHAR(20) not null,
-    `weight` INT not null,
-    height INT not null
-    );
+
 --
 -- Create Table users
 --
@@ -33,10 +20,30 @@ CREATE TABLE users(
     `password` VARCHAR(255) not null
 );
 
-ALTER TABLE users
-ADD CONSTRAINT fk_profile
-FOREIGN KEY (profile_id) REFERENCES profiles(profile_id);
+-- ALTER TABLE users
+-- ADD CONSTRAINT fk_profile
+-- FOREIGN KEY (profile_id) REFERENCES profiles(profile_id);
+
 --
+-- Create Table profiles
+--
+CREATE TABLE profiles(
+    profile_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    nutrient_1 VARCHAR(50) not null,
+    nutrient_2 VARCHAR(50) not null,
+    nutrient_3 VARCHAR(50) not null,
+    medical_condition VARCHAR(50) not null,
+    date_of_birth date not null,
+    gender VARCHAR(20) not null,
+    `weight` INT not null,
+    height INT not null
+    );
+
+ALTER TABLE profiles
+ADD CONSTRAINT fk_user
+FOREIGN KEY (user_id) REFERENCES users(user_id);
+
 -- Create Table meals
 --
 CREATE TABLE meals (
@@ -65,20 +72,13 @@ FOREIGN KEY (meal_id) REFERENCES meals(meal_id) ON DELETE CASCADE;
 CREATE TABLE nutrients_by_meal (
     nutrient_id INT not null AUTO_INCREMENT PRIMARY KEY,
     meal_id INT,
-    `name` VARCHAR(50) not null,
-    number_amount INT not null
+    `nutrient_name` VARCHAR(50) not null,
+    nutrient_number_amount INT not null
 );
 ALTER TABLE nutrients_by_meal
 ADD CONSTRAINT fk_meal_n
 FOREIGN KEY (meal_id) REFERENCES meals(meal_id) ON DELETE CASCADE;
---
--- Insert Data into profiles
---
-INSERT INTO profiles (nutrient_1, nutrient_2, nutrient_3, medical_condition, date_of_birth, gender, weight, height) VALUES
-('Energy (kcal)', 'Protein', 'Calcium, Ca', 'Osteoporosis', '1985-03-25', 'Female', 65, 160),
-('Carbohydrate, by difference', 'Iron, Fe', 'Vitamin C, total ascorbic acid', 'Anemia', '1990-07-19', 'Male', 80, 175),
-('Total lipid (fat)', 'Vitamin A, RAE', 'Zinc, Zn', 'Heart Disease', '1978-11-12', 'Male', 90, 180),
-('Fiber, total dietary', 'Potassium, K', 'Magnesium, Mg', 'High Blood Pressure', '1995-05-14', 'Female', 55, 165);
+
 --
 -- Insert Data into users
 --
@@ -87,6 +87,16 @@ INSERT INTO users (profile_id, username, email, password) VALUES
 (2, 'user2', 'user2@example.com', '$2b$10$RYB/mnDI2elkvRV0oPDmMetmzMFXz8t/W6I6XiQA8kVWaCne.hHkC'),
 (3, 'user3', 'user3@example.com', '$2b$10$RYB/mnDI2elkvRV0oPDmMetmzMFXz8t/W6I6XiQA8kVWaCne.hHkC'),
 (4, 'user4', 'user4@example.com', '$2b$10$RYB/mnDI2elkvRV0oPDmMetmzMFXz8t/W6I6XiQA8kVWaCne.hHkC');
+
+--
+-- Insert Data into profiles
+--
+INSERT INTO profiles (user_id, nutrient_1, nutrient_2, nutrient_3, medical_condition, date_of_birth, gender, weight, height) VALUES
+(1,'Energy (kcal)', 'Protein', 'Calcium, Ca', 'Osteoporosis', '1985-03-25', 'Female', 65, 160),
+(2,'Carbohydrate, by difference', 'Iron, Fe', 'Vitamin C, total ascorbic acid', 'Anemia', '1990-07-19', 'Male', 80, 175),
+(3,'Total lipid (fat)', 'Vitamin A, RAE', 'Zinc, Zn', 'Heart Disease', '1978-11-12', 'Male', 90, 180),
+(4,'Fiber, total dietary', 'Potassium, K', 'Magnesium, Mg', 'High Blood Pressure', '1995-05-14', 'Female', 55, 165);
+
 --
 -- Insert Data into meals
 --
@@ -152,44 +162,171 @@ INSERT INTO ingredients (meal_id, name, number_amount) VALUES
 --
 -- Insert Data into nutrients_by_meal
 --
-INSERT INTO nutrients_by_meal (meal_id, name, number_amount) VALUES
-(1, 'Energy (kcal)', 450), (1, 'Protein', 35), (1, 'Calcium, Ca', 120),
-(2, 'Energy (kcal)', 520), (2, 'Protein', 40), (2, 'Calcium, Ca', 150),
-(3, 'Energy (kcal)', 300), (3, 'Protein', 20), (3, 'Calcium, Ca', 100),
-(4, 'Energy (kcal)', 480), (4, 'Protein', 30), (4, 'Calcium, Ca', 130),
-(5, 'Energy (kcal)', 510), (5, 'Protein', 38), (5, 'Calcium, Ca', 140),
-(6, 'Energy (kcal)', 350), (6, 'Protein', 25), (6, 'Calcium, Ca', 110),
-(7, 'Energy (kcal)', 470), (7, 'Protein', 32), (7, 'Calcium, Ca', 135),
-(8, 'Energy (kcal)', 500), (8, 'Protein', 37), (8, 'Calcium, Ca', 145),
-(9, 'Energy (kcal)', 320), (9, 'Protein', 22), (9, 'Calcium, Ca', 115),
-(10, 'Carbohydrate, by difference', 60), (10, 'Iron, Fe', 7), (10, 'Vitamin C, total ascorbic acid', 65),
-(11, 'Carbohydrate, by difference', 75), (11, 'Iron, Fe', 9), (11, 'Vitamin C, total ascorbic acid', 80),
-(12, 'Carbohydrate, by difference', 50), (12, 'Iron, Fe', 6), (12, 'Vitamin C, total ascorbic acid', 60),
-(13, 'Carbohydrate, by difference', 70), (13, 'Iron, Fe', 8), (13, 'Vitamin C, total ascorbic acid', 75),
-(14, 'Carbohydrate, by difference', 80), (14, 'Iron, Fe', 10), (14, 'Vitamin C, total ascorbic acid', 85),
-(15, 'Carbohydrate, by difference', 55), (15, 'Iron, Fe', 7), (15, 'Vitamin C, total ascorbic acid', 70),
-(16, 'Carbohydrate, by difference', 65), (16, 'Iron, Fe', 8), (16, 'Vitamin C, total ascorbic acid', 72),
-(17, 'Carbohydrate, by difference', 78), (17, 'Iron, Fe', 9), (17, 'Vitamin C, total ascorbic acid', 82),
-(18, 'Carbohydrate, by difference', 58), (18, 'Iron, Fe', 6), (18, 'Vitamin C, total ascorbic acid', 68),
-(19, 'Total lipid (fat)', 25), (19, 'Vitamin A, RAE', 600), (19, 'Zinc, Zn', 8),
-(20, 'Total lipid (fat)', 28), (20, 'Vitamin A, RAE', 650), (20, 'Zinc, Zn', 9),
-(21, 'Total lipid (fat)', 20), (21, 'Vitamin A, RAE', 500), (21, 'Zinc, Zn', 7),
-(22, 'Total lipid (fat)', 27), (22, 'Vitamin A, RAE', 620), (22, 'Zinc, Zn', 8.5),
-(23, 'Total lipid (fat)', 30), (23, 'Vitamin A, RAE', 700), (23, 'Zinc, Zn', 10),
-(24, 'Total lipid (fat)', 22), (24, 'Vitamin A, RAE', 540), (24, 'Zinc, Zn', 7.5),
-(25, 'Total lipid (fat)', 26), (25, 'Vitamin A, RAE', 610), (25, 'Zinc, Zn', 8.2),
-(26, 'Total lipid (fat)', 29), (26, 'Vitamin A, RAE', 680), (26, 'Zinc, Zn', 9.3),
-(27, 'Total lipid (fat)', 21), (27, 'Vitamin A, RAE', 530), (27, 'Zinc, Zn', 7.1),
-(28, 'Fiber, total dietary', 10), (28, 'Potassium, K', 900), (28, 'Magnesium, Mg', 110),
-(29, 'Fiber, total dietary', 12), (29, 'Potassium, K', 950), (29, 'Magnesium, Mg', 120),
-(30, 'Fiber, total dietary', 8), (30, 'Potassium, K', 850), (30, 'Magnesium, Mg', 100),
-(31, 'Fiber, total dietary', 11), (31, 'Potassium, K', 920), (31, 'Magnesium, Mg', 115),
-(32, 'Fiber, total dietary', 13), (32, 'Potassium, K', 980), (32, 'Magnesium, Mg', 125),
-(33, 'Fiber, total dietary', 9), (33, 'Potassium, K', 870), (33, 'Magnesium, Mg', 105),
-(34, 'Fiber, total dietary', 11), (34, 'Potassium, K', 940), (34, 'Magnesium, Mg', 118),
-(35, 'Fiber, total dietary', 14), (35, 'Potassium, K', 1000), (35, 'Magnesium, Mg', 130),
-(36, 'Fiber, total dietary', 10), (36, 'Potassium, K', 890), (36, 'Magnesium, Mg', 108);
+INSERT INTO nutrients_by_meal (meal_id, nutrient_name, nutrient_number_amount) VALUES
+-- Meal 1
+(1, 'Energy (kcal)', 450), (1, 'Protein', 35), (1, 'Carbohydrate, by difference', 60), (1, 'Total lipid (fat)', 20), 
+(1, 'Fiber, total dietary', 10), (1, 'Sugars, total including NLEA', 15), (1, 'Calcium, Ca', 120), (1, 'Iron, Fe', 8), 
+(1, 'Potassium, K', 900), (1, 'Sodium, Na', 400), (1, 'Vitamin A, RAE', 600), (1, 'Vitamin C, total ascorbic acid', 20), 
+(1, 'Vitamin D (D2 + D3)', 2), (1, 'Vitamin E (alpha-tocopherol)', 5), (1, 'Vitamin K (phylloquinone)', 40), 
+(1, 'Magnesium, Mg', 50), (1, 'Zinc, Zn', 7), (1, 'Cholesterol', 80), (1, 'Folate, DFE', 50), (1, 'Omega-3 Fatty Acids (EPA, DHA)', 0.5),
 
+-- Meal 2
+(2, 'Energy (kcal)', 520), (2, 'Protein', 40), (2, 'Carbohydrate, by difference', 70), (2, 'Total lipid (fat)', 25), 
+(2, 'Fiber, total dietary', 12), (2, 'Sugars, total including NLEA', 18), (2, 'Calcium, Ca', 150), (2, 'Iron, Fe', 9), 
+(2, 'Potassium, K', 950), (2, 'Sodium, Na', 420), (2, 'Vitamin A, RAE', 650), (2, 'Vitamin C, total ascorbic acid', 25), 
+(2, 'Vitamin D (D2 + D3)', 3), (2, 'Vitamin E (alpha-tocopherol)', 6), (2, 'Vitamin K (phylloquinone)', 45), 
+(2, 'Magnesium, Mg', 55), (2, 'Zinc, Zn', 8), (2, 'Cholesterol', 90), (2, 'Folate, DFE', 60), (2, 'Omega-3 Fatty Acids (EPA, DHA)', 0.6),
+
+-- Meal 3
+(3, 'Energy (kcal)', 300), (3, 'Protein', 20), (3, 'Carbohydrate, by difference', 50), (3, 'Total lipid (fat)', 15), 
+(3, 'Fiber, total dietary', 8), (3, 'Sugars, total including NLEA', 10), (3, 'Calcium, Ca', 100), (3, 'Iron, Fe', 7), 
+(3, 'Potassium, K', 870), (3, 'Sodium, Na', 350), (3, 'Vitamin A, RAE', 500), (3, 'Vitamin C, total ascorbic acid', 18), 
+(3, 'Vitamin D (D2 + D3)', 1.5), (3, 'Vitamin E (alpha-tocopherol)', 4), (3, 'Vitamin K (phylloquinone)', 30), 
+(3, 'Magnesium, Mg', 45), (3, 'Zinc, Zn', 6), (3, 'Cholesterol', 75), (3, 'Folate, DFE', 55), (3, 'Omega-3 Fatty Acids (EPA, DHA)', 0.4),
+
+-- Meal 4
+(4, 'Energy (kcal)', 480), (4, 'Protein', 30), (4, 'Calcium, Ca', 130),
+(4, 'Carbohydrate, by difference', 60), (4, 'Iron, Fe', 7), (4, 'Vitamin C, total ascorbic acid', 40),
+(4, 'Total lipid (fat)', 22), (4, 'Vitamin A, RAE', 540), (4, 'Zinc, Zn', 8),
+(4, 'Fiber, total dietary', 12), (4, 'Potassium, K', 900), (4, 'Magnesium, Mg', 110),
+(4, 'Vitamin D (D2 + D3)', 2), (4, 'Vitamin B-12', 1.2), (4, 'Vitamin K (phylloquinone)', 75),
+(4, 'Sodium, Na', 550), (4, 'Vitamin B-6', 0.5), (4, 'Folate, total', 130),
+(4, 'Cholesterol', 65), (4, 'Sugars, total', 20),
+
+-- Meal 5
+(5, 'Energy (kcal)', 510), (5, 'Protein', 38), (5, 'Calcium, Ca', 140),
+(5, 'Carbohydrate, by difference', 75), (5, 'Iron, Fe', 6), (5, 'Vitamin C, total ascorbic acid', 30),
+(5, 'Total lipid (fat)', 24), (5, 'Vitamin A, RAE', 620), (5, 'Zinc, Zn', 9),
+(5, 'Fiber, total dietary', 11), (5, 'Potassium, K', 960), (5, 'Magnesium, Mg', 120),
+(5, 'Vitamin D (D2 + D3)', 2.5), (5, 'Vitamin B-12', 1.4), (5, 'Vitamin K (phylloquinone)', 80),
+(5, 'Sodium, Na', 620), (5, 'Vitamin B-6', 0.6), (5, 'Folate, total', 140),
+(5, 'Cholesterol', 70), (5, 'Sugars, total', 18),
+
+-- Meal 6
+(6, 'Energy (kcal)', 350), (6, 'Protein', 25), (6, 'Calcium, Ca', 110),
+(6, 'Carbohydrate, by difference', 50), (6, 'Iron, Fe', 5), (6, 'Vitamin C, total ascorbic acid', 28),
+(6, 'Total lipid (fat)', 18), (6, 'Vitamin A, RAE', 480), (6, 'Zinc, Zn', 7),
+(6, 'Fiber, total dietary', 9), (6, 'Potassium, K', 850), (6, 'Magnesium, Mg', 105),
+(6, 'Vitamin D (D2 + D3)', 1.8), (6, 'Vitamin B-12', 1.0), (6, 'Vitamin K (phylloquinone)', 60),
+(6, 'Sodium, Na', 450), (6, 'Vitamin B-6', 0.4), (6, 'Folate, total', 120),
+(6, 'Cholesterol', 55), (6, 'Sugars, total', 15),
+
+-- Meal 7
+(7, 'Energy (kcal)', 470), (7, 'Protein', 32), (7, 'Calcium, Ca', 135),
+(7, 'Carbohydrate, by difference', 65), (7, 'Iron, Fe', 6), (7, 'Vitamin C, total ascorbic acid', 35),
+(7, 'Total lipid (fat)', 21), (7, 'Vitamin A, RAE', 550), (7, 'Zinc, Zn', 8),
+(7, 'Fiber, total dietary', 10), (7, 'Potassium, K', 890), (7, 'Magnesium, Mg', 115),
+(7, 'Vitamin D (D2 + D3)', 2), (7, 'Vitamin B-12', 1.3), (7, 'Vitamin K (phylloquinone)', 70),
+(7, 'Sodium, Na', 510), (7, 'Vitamin B-6', 0.5), (7, 'Folate, total', 135),
+(7, 'Cholesterol', 60), (7, 'Sugars, total', 19),
+
+-- Meal 8
+(8, 'Energy (kcal)', 500), (8, 'Protein', 37), (8, 'Calcium, Ca', 145),
+(8, 'Carbohydrate, by difference', 70), (8, 'Iron, Fe', 7), (8, 'Vitamin C, total ascorbic acid', 38),
+(8, 'Total lipid (fat)', 23), (8, 'Vitamin A, RAE', 600), (8, 'Zinc, Zn', 9),
+(8, 'Fiber, total dietary', 11), (8, 'Potassium, K', 920), (8, 'Magnesium, Mg', 120),
+(8, 'Vitamin D (D2 + D3)', 2.2), (8, 'Vitamin B-12', 1.5), (8, 'Vitamin K (phylloquinone)', 85),
+(8, 'Sodium, Na', 540), (8, 'Vitamin B-6', 0.6), (8, 'Folate, total', 140),
+(8, 'Cholesterol', 65), (8, 'Sugars, total', 17),
+
+-- Meal 9
+(9, 'Energy (kcal)', 320), (9, 'Protein', 22), (9, 'Calcium, Ca', 115),
+(9, 'Carbohydrate, by difference', 45), (9, 'Iron, Fe', 4), (9, 'Vitamin C, total ascorbic acid', 25),
+(9, 'Total lipid (fat)', 14), (9, 'Vitamin A, RAE', 420), (9, 'Zinc, Zn', 6),
+(9, 'Fiber, total dietary', 8), (9, 'Potassium, K', 770), (9, 'Magnesium, Mg', 95),
+(9, 'Vitamin D (D2 + D3)', 1.6), (9, 'Vitamin B-12', 0.9), (9, 'Vitamin K (phylloquinone)', 55),
+(9, 'Sodium, Na', 400), (9, 'Vitamin B-6', 0.3), (9, 'Folate, total', 100),
+(9, 'Cholesterol', 45), (9, 'Sugars, total', 12),
+
+-- Meal 10
+(10, 'Energy (kcal)', 400), (10, 'Protein', 15), (10, 'Calcium, Ca', 130),
+(10, 'Carbohydrate, by difference', 60), (10, 'Iron, Fe', 7), (10, 'Vitamin C, total ascorbic acid', 65),
+(10, 'Total lipid (fat)', 18), (10, 'Vitamin A, RAE', 500), (10, 'Zinc, Zn', 8),
+(10, 'Fiber, total dietary', 12), (10, 'Potassium, K', 850), (10, 'Magnesium, Mg', 100),
+(10, 'Vitamin D (D2 + D3)', 2), (10, 'Vitamin B-12', 1.2), (10, 'Vitamin K (phylloquinone)', 70),
+(10, 'Sodium, Na', 550), (10, 'Vitamin B-6', 0.5), (10, 'Folate, total', 130),
+(10, 'Cholesterol', 65), (10, 'Sugars, total', 20),
+
+-- Meal 11
+(11, 'Energy (kcal)', 420), (11, 'Protein', 18), (11, 'Calcium, Ca', 140),
+(11, 'Carbohydrate, by difference', 75), (11, 'Iron, Fe', 9), (11, 'Vitamin C, total ascorbic acid', 80),
+(11, 'Total lipid (fat)', 20), (11, 'Vitamin A, RAE', 600), (11, 'Zinc, Zn', 9.5),
+(11, 'Fiber, total dietary', 13), (11, 'Potassium, K', 950), (11, 'Magnesium, Mg', 120),
+(11, 'Vitamin D (D2 + D3)', 2.5), (11, 'Vitamin B-12', 1.5), (11, 'Vitamin K (phylloquinone)', 80),
+(11, 'Sodium, Na', 600), (11, 'Vitamin B-6', 0.6), (11, 'Folate, total', 150),
+(11, 'Cholesterol', 70), (11, 'Sugars, total', 25),
+
+-- Meal 12
+(12, 'Energy (kcal)', 360), (12, 'Protein', 20), (12, 'Calcium, Ca', 125),
+(12, 'Carbohydrate, by difference', 55), (12, 'Iron, Fe', 6), (12, 'Vitamin C, total ascorbic acid', 40),
+(12, 'Total lipid (fat)', 16), (12, 'Vitamin A, RAE', 450), (12, 'Zinc, Zn', 7.5),
+(12, 'Fiber, total dietary', 9), (12, 'Potassium, K', 820), (12, 'Magnesium, Mg', 105),
+(12, 'Vitamin D (D2 + D3)', 1.8), (12, 'Vitamin B-12', 1.1), (12, 'Vitamin K (phylloquinone)', 65),
+(12, 'Sodium, Na', 470), (12, 'Vitamin B-6', 0.4), (12, 'Folate, total', 120),
+(12, 'Cholesterol', 55), (12, 'Sugars, total', 17),
+
+-- Meal 13
+(13, 'Energy (kcal)', 390), (13, 'Protein', 28), (13, 'Calcium, Ca', 140),
+(13, 'Carbohydrate, by difference', 50), (13, 'Iron, Fe', 7), (13, 'Vitamin C, total ascorbic acid', 45),
+(13, 'Total lipid (fat)', 19), (13, 'Vitamin A, RAE', 510), (13, 'Zinc, Zn', 8),
+(13, 'Fiber, total dietary', 10), (13, 'Potassium, K', 880), (13, 'Magnesium, Mg', 110),
+(13, 'Vitamin D (D2 + D3)', 2), (13, 'Vitamin B-12', 1.3), (13, 'Vitamin K (phylloquinone)', 75),
+(13, 'Sodium, Na', 520), (13, 'Vitamin B-6', 0.5), (13, 'Folate, total', 130),
+(13, 'Cholesterol', 60), (13, 'Sugars, total', 18),
+
+-- Meal 14
+(14, 'Energy (kcal)', 430), (14, 'Protein', 35), (14, 'Calcium, Ca', 150),
+(14, 'Carbohydrate, by difference', 65), (14, 'Iron, Fe', 8), (14, 'Vitamin C, total ascorbic acid', 50),
+(14, 'Total lipid (fat)', 21), (14, 'Vitamin A, RAE', 580), (14, 'Zinc, Zn', 9),
+(14, 'Fiber, total dietary', 12), (14, 'Potassium, K', 910), (14, 'Magnesium, Mg', 115),
+(14, 'Vitamin D (D2 + D3)', 2.2), (14, 'Vitamin B-12', 1.4), (14, 'Vitamin K (phylloquinone)', 80),
+(14, 'Sodium, Na', 550), (14, 'Vitamin B-6', 0.6), (14, 'Folate, total', 135),
+(14, 'Cholesterol', 65), (14, 'Sugars, total', 20),
+
+-- Meal 15
+(15, 'Energy (kcal)', 470), (15, 'Protein', 30), (15, 'Calcium, Ca', 145),
+(15, 'Carbohydrate, by difference', 60), (15, 'Iron, Fe', 7), (15, 'Vitamin C, total ascorbic acid', 42),
+(15, 'Total lipid (fat)', 22), (15, 'Vitamin A, RAE', 550), (15, 'Zinc, Zn', 8),
+(15, 'Fiber, total dietary', 11), (15, 'Potassium, K', 930), (15, 'Magnesium, Mg', 120),
+(15, 'Vitamin D (D2 + D3)', 2.4), (15, 'Vitamin B-12', 1.5), (15, 'Vitamin K (phylloquinone)', 85),
+(15, 'Sodium, Na', 570), (15, 'Vitamin B-6', 0.5), (15, 'Folate, total', 140),
+(15, 'Cholesterol', 68), (15, 'Sugars, total', 21),
+
+-- Meal 16
+(16, 'Energy (kcal)', 360), (16, 'Protein', 24), (16, 'Calcium, Ca', 135),
+(16, 'Carbohydrate, by difference', 55), (16, 'Iron, Fe', 6), (16, 'Vitamin C, total ascorbic acid', 38),
+(16, 'Total lipid (fat)', 17), (16, 'Vitamin A, RAE', 520), (16, 'Zinc, Zn', 7.5),
+(16, 'Fiber, total dietary', 10), (16, 'Potassium, K', 870), (16, 'Magnesium, Mg', 105),
+(16, 'Vitamin D (D2 + D3)', 2), (16, 'Vitamin B-12', 1.2), (16, 'Vitamin K (phylloquinone)', 70),
+(16, 'Sodium, Na', 480), (16, 'Vitamin B-6', 0.4), (16, 'Folate, total', 120),
+(16, 'Cholesterol', 55), (16, 'Sugars, total', 16),
+
+-- Meal 17
+(17, 'Energy (kcal)', 510), (17, 'Protein', 38), (17, 'Calcium, Ca', 140),
+(17, 'Carbohydrate, by difference', 75), (17, 'Iron, Fe', 9), (17, 'Vitamin C, total ascorbic acid', 65),
+(17, 'Total lipid (fat)', 24), (17, 'Vitamin A, RAE', 610), (17, 'Zinc, Zn', 9.5),
+(17, 'Fiber, total dietary', 13), (17, 'Potassium, K', 950), (17, 'Magnesium, Mg', 120),
+(17, 'Vitamin D (D2 + D3)', 2.5), (17, 'Vitamin B-12', 1.5), (17, 'Vitamin K (phylloquinone)', 80),
+(17, 'Sodium, Na', 600), (17, 'Vitamin B-6', 0.6), (17, 'Folate, total', 150),
+(17, 'Cholesterol', 70), (17, 'Sugars, total', 25),
+
+-- Meal 18
+(18, 'Energy (kcal)', 320), (18, 'Protein', 22), (18, 'Calcium, Ca', 120),
+(18, 'Carbohydrate, by difference', 45), (18, 'Iron, Fe', 5), (18, 'Vitamin C, total ascorbic acid', 28),
+(18, 'Total lipid (fat)', 14), (18, 'Vitamin A, RAE', 430), (18, 'Zinc, Zn', 7),
+(18, 'Fiber, total dietary', 8), (18, 'Potassium, K', 770), (18, 'Magnesium, Mg', 100),
+(18, 'Vitamin D (D2 + D3)', 1.8), (18, 'Vitamin B-12', 1.1), (18, 'Vitamin K (phylloquinone)', 60),
+(18, 'Sodium, Na', 430), (18, 'Vitamin B-6', 0.4), (18, 'Folate, total', 110),
+(18, 'Cholesterol', 50), (18, 'Sugars, total', 13),
+
+-- Meal 19
+(19, 'Energy (kcal)', 480), (19, 'Protein', 32), (19, 'Calcium, Ca', 150),
+(19, 'Carbohydrate, by difference', 70), (19, 'Iron, Fe', 8), (19, 'Vitamin C, total ascorbic acid', 52),
+(19, 'Total lipid (fat)', 22), (19, 'Vitamin A, RAE', 590), (19, 'Zinc, Zn', 9),
+(19, 'Fiber, total dietary', 12), (19, 'Potassium, K', 920), (19, 'Magnesium, Mg', 120),
+(19, 'Vitamin D (D2 + D3)', 2.4), (19, 'Vitamin B-12', 1.4), (19, 'Vitamin K (phylloquinone)', 85),
+(19, 'Sodium, Na', 580), (19, 'Vitamin B-6', 0.5), (19, 'Folate, total', 140),
+(19, 'Cholesterol', 65), (19, 'Sugars, total', 21);
 
 
 

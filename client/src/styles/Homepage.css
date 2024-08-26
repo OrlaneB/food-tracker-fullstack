@@ -5,29 +5,27 @@
     position: relative;
 }
 
-/* .mealNutrients {
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    grid-template-rows: 1;
-    border: solid 1px gray;
-    margin: 10px;
-    padding: 5px;
-} */
+#noMealWarning {
+    text-align: center;
+    width:80%;
+    border: 2px dashed lightgrey;
+    margin: 20px auto;
+    padding: 30px 0;
+}
 
-/* .NavBar {
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    grid-template-rows: 1;
-    border: solid 1px gray;
-    margin-left: 5%;
-    padding: 5px;
-    position: fixed;
-    bottom: 0px;
-    width: 90%;
-} */
-
-/* .NavBar button {
-    width: 25%;
-    height: 50%;
+#noMealWarning button {
+    background-color:#2866b2;
+    color: white;
+    border: none;
+    padding:10px;
     cursor: pointer;
+    margin: 8px;
+}
+
+#noMealWarning button:hover {
+    background-color: #99C8FF;
+}
+/* 
+#noMealWarning p {
+    margin: 5px;
 } */

@@ -20,10 +20,6 @@ CREATE TABLE users(
     `password` VARCHAR(255) not null
 );
 
--- ALTER TABLE users
--- ADD CONSTRAINT fk_profile
--- FOREIGN KEY (profile_id) REFERENCES profiles(profile_id);
-
 --
 -- Create Table profiles
 --
@@ -42,7 +38,7 @@ CREATE TABLE profiles(
 
 ALTER TABLE profiles
 ADD CONSTRAINT fk_user
-FOREIGN KEY (user_id) REFERENCES users(user_id);
+FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE;
 
 -- Create Table meals
 --

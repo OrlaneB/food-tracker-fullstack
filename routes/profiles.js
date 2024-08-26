@@ -52,7 +52,7 @@ router.post("/:user_id", async (req, res) => {
 });
 
 /* PUT profile information*/
-// router.post("/profiles/profile_id", userMustExist, async (req, res) => {
+// router.put("/profiles/profile_id", userMustExist, async (req, res) => {
 router.put("/:profile_id", async (req, res) => {
   const {profile_id} = req.params
   const { user_id,
@@ -95,22 +95,29 @@ router.put("/:profile_id", async (req, res) => {
   }
 });
 
-// create array of the column names and use index to add to loop
-// from the frontend i get an array that has 0-3 nutrients, username
-// i want to update the nutrients when username
-// loop with 3 iterations for each if there is something in the array add the nutrient to nutrient_1 = index+1, etc.
-// else set the nutrient to null
-// input is all profile information
-// destructure each field
-// update information - NOT THE BEST WAY BECAUSE SENDING DATA THAT ISNT MODIFIED
-
-
 /* PUT nutrients to track */
+router.put("/:profile_id", async (req, res) => {
+  const {profile_id} = req.params
+  const { listOfNutrientsToTrack } = req.body;
 
-// input 3 nutrient fields
-// update nutrients to track
+  try {
+    // Add the user's profile informaiton
+    await db(`UPDATE profiles 
+              SET 
+                  nutrient_1 = "${listOfNutrientsToTrack[0]}", 
+                  nutrient_2 = "${listOfNutrientsToTrack[1]}", 
+                  nutrient_3 = "${listOfNutrientsToTrack[2]}", 
+              WHERE profile_id = ${profile_id}`
+            );
+      // Send a success message to the frontend
+       res.status(201).send("Profile updated!");
+  } catch (err) {
+    res.status(500).send({ error: err.message });
+  }
+});
 
-/* DELETE user account */
+
+/* DELETE profile account */
 
 
 module.exports = router;

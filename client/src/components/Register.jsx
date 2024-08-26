@@ -1,21 +1,51 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import NavBar from './NavBar'
-
+import axios from 'axios';
 
 import "../styles/Register.css"
 import { useNavigate } from 'react-router-dom';
 
+// import loginAuth from '../context/loginAuth';
+
 export default function Register() {
 
+  async function register() {
+    const { username, email, password } = registerObj;
+    // console.log(username, email, password);
+  
+    try {
+
+  
+      await axios.post("http://localhost:5000/api/users/register", {
+        username,
+        email,
+        password,
+      });
+  
+      console.log("It worked!");
+    } catch (err) {
+      console.log(err);
+    }
+
+
+    setStep(2);
+  }
+
+  // const register = useContext(loginAuth).register;
+
   const [step,setStep]=useState(1);
+  const [registerObj,setRegisterObj]=useState({
+    username:"",
+    email:"",
+    password:""
+  })
 
   const navigate = useNavigate();
 
   function handleSubmitOne(event){
     event.preventDefault();
-    setStep(2);
 
-    //Post into database
+    register(registerObj);
   }
 
   function handleGoBack(event){
@@ -31,8 +61,18 @@ export default function Register() {
     navigate("/profile");
   }
 
+
+  function handleChangeRegister(event){
+    const {name,value} = event.target;
+
+    let newRegisterObj = {...registerObj};
+    newRegisterObj[name]=value;
+
+    setRegisterObj(newRegisterObj);
+  }
+
   return (
-    <div>
+    <>
 
         <div id='register'>
             <h1>Please sign up to start</h1>
@@ -41,17 +81,17 @@ export default function Register() {
               <form onSubmit={(event)=>handleSubmitOne(event)}>
                 <label>
                   Your email
-                  <input type='email' />
+                  <input type='email' value={registerObj.email} name='email' autoComplete='email' onChange={(event)=>handleChangeRegister(event)}/>
                 </label>
 
                 <label>
                   Your username
-                  <input type='text' />
+                  <input type='text' value={registerObj.username} name='username' autoComplete='username' onChange={(event)=>handleChangeRegister(event)}/>
                 </label>
 
                 <label>
                   Your password
-                  <input type='password' />
+                  <input type='password' value={registerObj.password} name='password' autoComplete='password' onChange={(event)=>handleChangeRegister(event)} />
                 </label>
 
                 <button type='submit'>Sign up</button>
@@ -104,7 +144,7 @@ export default function Register() {
                 <button onClick={(event)=>handleGoBack(event)}>Go back</button>
                 <button type='submit'>Continue with my profile</button>
 
-                <p onClick={()=>navigate("/profile")}>Pass this step</p>
+                <p onClick={()=>navigate("/login")}>Pass this step</p>
 
               </form>
 
@@ -113,6 +153,6 @@ export default function Register() {
         
 
         <NavBar />
-    </div>
+    </>
   )
 }

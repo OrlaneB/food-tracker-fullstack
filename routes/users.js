@@ -13,6 +13,10 @@ const userMustExist = require("../guards/userMustExist")
 // This endpoint works but the profile_id value is null for user registered through postman
 router.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
+
+  console.log("Received password:", password);  // Debugging: log password
+  console.log("Salt rounds:", saltrounds);      // Debugging: log saltrounds
+
   const passwordHash = await bcrypt.hash(password, +saltrounds);
   try {
     const sql = `INSERT INTO users (username, email, password) VALUES ('${username}', '${email}', '${passwordHash}')`;
@@ -28,27 +32,35 @@ router.post("/register", async (req, res) => {
 /* POST login user */
 router.post("/login", userMustExist, async (req, res) => {
   const { username, password } = req.body;
+  
   try {
     // find the user
     const results = await db(
       `SELECT * FROM users WHERE username = '${username}'`
     );
+  
     // if user doesn't exist, return error
     if (!results.data.length) {
+      // console.log("user dont exist");
       res.status(401).send({ error: "user not found" });
 
     } else {//we found a user with the received username
       const user = results.data[0];
+      // console.log("user exists?");
       const userPassword = user.password;
       //else check password
       const passwordCorrect = await bcrypt.compare(password, userPassword);
       if (!passwordCorrect) {
-
+        // console.log("password incorrect");
         res.status(401).send({ error: "password incorrect" });
       } else {
         //create token and return it
+        // console.log("password correct");
         const tokenPayload = { userId: user.user_id };
+        // console.log("payload correct",jwtSecret);
         const token = jwt.sign(tokenPayload, jwtSecret);
+
+        console.log("token is good");
 
         console.log("the user",user);
         console.log("login successful");

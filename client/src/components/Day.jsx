@@ -9,19 +9,10 @@ import '../styles/Day.css'
 // The day component renders the meals that have been inputted for that day
 
 export default function Day({dateObj}) {
-    // initialize the state of meals
-    const [meal, setMeal] = useState({
-        id : 1,
-        date : dateObj.day.toDateString,
-        portions : [],
-        ingredients : [],
-        nutrients : ['fat', 'protein', 'carbohydrates'],
-    })
 
     const today = new Date();
 
-    //Declare today's date
-    // const today = new Date();// throwing an error "Maximum callstack exceeded"
+
 
     function handleChangeDate(event,type){
         event.preventDefault();

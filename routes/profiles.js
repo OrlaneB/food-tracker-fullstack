@@ -5,7 +5,8 @@ const userShouldBeLoggedIn = require("../guards/userShouldBeLoggedIn")
 const userMustExist = require("../guards/userMustExist")
 
 /* GET profile information*/
-router.get("/:user_id", userShouldBeLoggedIn, async(req, res)=>{
+// router.get("/:user_id", userShouldBeLoggedIn, async(req, res)=>{
+router.get("/:user_id", async(req, res)=>{
 
   const { user_id } = req.params;
   console.log("user_id", user_id);
@@ -96,9 +97,10 @@ router.put("/:profile_id", async (req, res) => {
 });
 
 /* PUT nutrients to track */
-router.put("/:profile_id", async (req, res) => {
+router.put("/nutrients/:profile_id", async (req, res) => {
   const {profile_id} = req.params
   const { listOfNutrientsToTrack } = req.body;
+  console.log(listOfNutrientsToTrack)
 
   try {
     // Add the user's profile informaiton
@@ -106,18 +108,15 @@ router.put("/:profile_id", async (req, res) => {
               SET 
                   nutrient_1 = "${listOfNutrientsToTrack[0]}", 
                   nutrient_2 = "${listOfNutrientsToTrack[1]}", 
-                  nutrient_3 = "${listOfNutrientsToTrack[2]}", 
+                  nutrient_3 = "${listOfNutrientsToTrack[2]}" 
               WHERE profile_id = ${profile_id}`
             );
       // Send a success message to the frontend
-       res.status(201).send("Profile updated!");
+       res.status(201).send("Nutrients to track updated!");
   } catch (err) {
     res.status(500).send({ error: err.message });
   }
 });
-
-
-/* DELETE profile account */
 
 
 module.exports = router;

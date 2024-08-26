@@ -64,23 +64,7 @@ router.post("/login", userMustExist, async (req, res) => {
   }
 });
 
-// WE JUST STARTED THIS AT THE END OF CLASS BUT IT IS NOT WORKING YET
-// router.post("/loginCheck", async (req, res) => {
-//   const token = req.headers["authorization"]?.replace(/^Bearer\s/, "");//
-//   if (!token) {
-//     res.status(403).send({ message: "please provide a token" });
-//   } else {
-//     // const payload = jwt.verify(token, supersecret);
-//     // use payload
-//     jwt.verify(token, jwtSecret, async (err, payload) => {
-//       if (err) {
-//         res.status(401).send({ message: err.message });
-//       } else {
-//         res.send({protectedData: "This is a private data!"});
-//       }
-//     });
-//   }
-// });
+/* DELETE user account (make sure cascade works)*/
 
 module.exports = router;
 

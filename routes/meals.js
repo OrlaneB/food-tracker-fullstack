@@ -137,18 +137,18 @@ router.put('/:meal_id', async(req, res) => {
       //                           AND meals.date = "${date.slice(0,10)}"
       //                         `);
   
-      if (resultsIngredients.length === 0 || resultsNutrients.length === 0 ) {
-        return res.status(404).send({ error: "Meal not found!" });
-      } else {
-        const dataIngredients = resultsIngredients.data;
-        const dataNutrients = resultsNutrients.data;
-        // Return data and add success message
-        res.status(200).send({message:'Success', dataIngredients, dataNutrients});
-      }
-    } catch (e) {
-      console.log("something happened");
-      res.status(500).send({ error: e.message });
-    }
+    //   if (resultsIngredients.length === 0 || resultsNutrients.length === 0 ) {
+    //     return res.status(404).send({ error: "Meal not found!" });
+    //   } else {
+    //     const dataIngredients = resultsIngredients.data;
+    //     const dataNutrients = resultsNutrients.data;
+    //     // Return data and add success message
+    //     res.status(200).send({message:'Success', dataIngredients, dataNutrients});
+    //   }
+    // } catch (e) {
+    //   console.log("something happened");
+    //   res.status(500).send({ error: e.message });
+    // }
   
   })
 

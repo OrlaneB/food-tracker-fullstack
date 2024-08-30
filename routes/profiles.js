@@ -1,11 +1,12 @@
 var express = require('express');
 var router = express.Router();
 const db = require('../model/helper');
-const userShouldBeLoggedIn = require("../guards/userShouldBeLoggedIn")
-const userMustExist = require("../guards/userMustExist")
+// const userShouldBeLoggedIn = require("../guards/userShouldBeLoggedIn")
+// const userMustExist = require("../guards/userMustExist")
 
 /* GET profile information*/
-router.get("/:user_id", userShouldBeLoggedIn, async(req, res)=>{
+// router.get("/:user_id", userShouldBeLoggedIn, async(req, res)=>{
+router.get("/:user_id", async(req, res)=>{
 
   const { user_id } = req.params;
   console.log("user_id", user_id);
@@ -37,7 +38,9 @@ router.get("/:user_id", userShouldBeLoggedIn, async(req, res)=>{
 })
 
 /* POST profile information*/
-router.post("/profiles/user_id", userMustExist, async (req, res) => {
+// router.post("/profiles/user_id", userMustExist, async (req, res) => {
+router.post("/profiles/user_id", async (req, res) => {
+
   const {user_id} = req.params
   const { nutrient_1, 
           nutrient_2,

@@ -5,7 +5,10 @@
   src: url(assets/SHRIMP.ttf);
 }
 
-
+h1,h2,h3,h4,h5,h6{
+  font-family: Shrimp;
+  text-transform: uppercase;
+}
 
 .roundButton {
   margin:5px;
@@ -16,13 +19,14 @@
   background-color: transparent;
   border:1px solid #951327;
   color: #951327;
-  box-shadow: 2px 2px 2px #9513271d ;
+  box-shadow: inset 2px 2px 4px #0d275024 ;
   cursor: pointer;
 }
 
 .roundButton:hover {
   background-color: #951327;
   color: white;
+  box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.553);
 }
 
 

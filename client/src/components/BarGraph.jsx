@@ -7,7 +7,7 @@ import userFriendlyNutrientNames from '../utilities/userFriendlyNutrientNames';
 export default function BarGraph({percentage}) {
 
 
-    const colors = ["#99C8FF","#2866b2","#6880FF"]
+    const colors = ["#EA5F3A","#F79285","#FBC46C"]
 
     const recommendations = {
       Protein:120,
@@ -57,9 +57,16 @@ export default function BarGraph({percentage}) {
         <h2 style={{textAlign:"center",margin:"0"}}>Your nutrients for today</h2>
         <div className = "BarGraph">
         {nutrients && nutrients.map((nut,index)=>(
-          <div className='pie' key={index} style={nut.percentage<50?
-            {backgroundImage:`conic-gradient(${colors[index]} 0deg ${nut.percentage * 3.6}deg, black ${nut.percentage * 3.6}deg 360deg)`} :
-            {backgroundImage:`conic-gradient(${colors[index]} 0deg ${nut.percentage === 100 ? 360 : nut.percentage * 3.6}deg, black ${nut.percentage * 3.6}deg 360deg)`}}>
+          <div className='pie' key={index} 
+            style={
+              nut.percentage < 50
+              ? { backgroundImage: `conic-gradient(
+                transparent 0deg ${360 - nut.percentage * 3.6}deg,
+                ${colors[index]} ${360 - nut.percentage * 3.6}deg 360deg)`,}
+              : {backgroundImage: `conic-gradient(
+                transparent 0deg ${360 - nut.percentage * 3.6}deg,
+                ${colors[index]} ${360 - nut.percentage * 3.6}deg 360deg)`,}
+          }>
             <div className='text' >
                     <p>{nut.current}g <br/> 
                     <span style={{color:"grey",fontSize:"0.7em"}}>/{recommendations[nut.nutrient_name]}g</span></p></div>

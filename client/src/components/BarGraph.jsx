@@ -54,7 +54,7 @@ export default function BarGraph({percentage}) {
 
     return (
       <>
-        <h2 style={{textAlign:"center",margin:"0"}}>Your nutrients for today</h2>
+        <h2 style={{textAlign:"center",margin:"0"}}>Your nutrients</h2>
         <div className = "BarGraph">
         {nutrients && nutrients.map((nut,index)=>(
           <div className='pie' key={index} 

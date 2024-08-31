@@ -11,6 +11,9 @@ export default function MealCards() {
     let {meals,nutrientsByMeal} = useContext(mealsForOneDate);
     // console.log(meals,nutrientsByMeal);
 
+    const colors = ["#EA5F3A","#F79285","#FBC46C"]
+
+
     const [openedMeals,setOpenedMeals]=useState([]);
 
     function handleToggleOpen(index){
@@ -29,11 +32,12 @@ export default function MealCards() {
          meals.map((meal, index) =>(
 
            <div key={index} className='mealContainer'>
-            <div style={{display:"flex", alignItems:"center"}}>
-            <button style={openedMeals.includes(index)? {transform:"rotate(90deg)"}:{}} 
+            <div id="listContainer">
+            <button style={openedMeals.includes(index)? {transform:"rotate(90deg)",display:"inline"}:{display:"inline"}} 
+                    className='roundButton'
                     onClick={()=>handleToggleOpen(index)} >&gt;</button>
-            <h3>Meal #{index+1}</h3>
-            </div>
+            <h3 style={{display:"inline"}}>Meal #{index+1}</h3>
+            
             
              { openedMeals.includes(index) &&
               <ul>
@@ -42,14 +46,17 @@ export default function MealCards() {
                ))}
              </ul>}
 
+             </div>
+
              <div className='mealNutrients'>
-               <p> {nutrientsByMeal[index][0].nutrient_number_amount}g <br/>
+               <p style={{backgroundColor:colors[0]}}> 
+                <span className='amount'>{nutrientsByMeal[index][0].nutrient_number_amount}g </span><br/>
                     {userFriendlyNutrientNames[nutrientsByMeal[index][0].nutrient_name]}
                </p>
-               <p> {nutrientsByMeal[index][1].nutrient_number_amount}g <br/>
+               <p style={{backgroundColor:colors[1]}}> <span className='amount'>{nutrientsByMeal[index][1].nutrient_number_amount}g </span> <br/>
                     {userFriendlyNutrientNames[nutrientsByMeal[index][1].nutrient_name]}
                 </p>
-               <p> {nutrientsByMeal[index][2].nutrient_number_amount}g <br/>
+               <p style={{backgroundColor:colors[2]}}> <span className='amount'>{nutrientsByMeal[index][2].nutrient_number_amount}g </span> <br/>
                       {userFriendlyNutrientNames[nutrientsByMeal[index][2].nutrient_name]}
                 </p>
              </div>

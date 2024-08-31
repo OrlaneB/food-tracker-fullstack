@@ -29,6 +29,24 @@ h1,h2,h3,h4,h5,h6{
   box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.553);
 }
 
+.textButton {
+  background-color: white;
+  box-shadow: inset 3px 3px 5px #0d275024, inset -4px -4px 5px rgba(255, 255, 255, 0.31);
+  border:2px solid #951327;
+  border-radius: 5px;
+  color: #951327;
+  padding: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.textButton:hover{
+  background-color: #951327;
+  color: white;
+  /* box-shadow: inset -4px -4px 5px rgba(255, 255, 255, 0.263); */
+
+}
+
 
 header {
   display: flex;
@@ -49,7 +67,7 @@ header h2:hover{
   color: #F79285;
 }
 
-p {
+p,li {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 

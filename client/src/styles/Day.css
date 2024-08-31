@@ -29,5 +29,76 @@
 }
 
 .Day p:first-child {
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-family: Shrimp;
+    text-transform: uppercase;
+}
+
+#Day {
+    background-color: #951327;
+    padding: 20px;
+}
+
+#Day #displayedDate{
+    color:white;
+    font-family: Shrimp;
+    text-align: center;
+}
+
+#Day #datesContainer {
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    align-items: center;
+    padding:0 20px;
+}
+
+
+
+#Day #datesContainer button {
+    color:white;
+    border-color: white;
+}
+
+#Day #datesContainer button:hover{
+    color:#FBC46C;
+    border-color: #FBC46C;
+}
+
+#Day .dateBlock{
+    width:6%;
+    background-color: white;
+    padding: 8px;
+    text-align: center;
+    margin: 5px;
+    border:2px solid white;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+#Day .selectedDate{
+    background-color: #FBC46C;
+    color: white;
+    border-color: #FBC46C;
+}
+
+#Day .selectedDate .greyText {
+    color: #951327;
+}
+
+#Day .dateBlock p {
+    margin: 0;
+}
+
+#Day .dateBlock:hover {
+    border-color: #F79285 ;
+}
+
+.dateBlock .greyText {
+    color:rgb(194, 194, 194);
+    text-transform: uppercase;
+    font-size: 0.8em;
+}
+
+.dateBlock .numberDate {
+    font-size: 1.4em;
 }

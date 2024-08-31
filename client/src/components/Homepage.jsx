@@ -133,7 +133,7 @@ export default function Homepage() {
         <button onClick={()=>navigate("/add-meal")}>Add one here</button>
       </div>
     }
-      <NavBar/>
+      {/* <NavBar/> */}
     
 
     </div>

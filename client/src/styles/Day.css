@@ -40,7 +40,6 @@
 
 #Day #displayedDate{
     color:white;
-    font-family: Shrimp;
     text-align: center;
 }
 
@@ -85,6 +84,10 @@
     color: #951327;
 }
 
+#Day .selectedDate .numberDate {
+    color: #af1f35;
+}
+
 #Day .dateBlock p {
     margin: 0;
 }
@@ -101,6 +104,7 @@
 
 .dateBlock .numberDate {
     font-size: 1.4em;
+    font-family: "Super Caramel";
 }
 
 @media screen and (max-width:600px) {

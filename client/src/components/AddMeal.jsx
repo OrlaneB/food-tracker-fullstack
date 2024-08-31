@@ -12,6 +12,7 @@ export default function AddMeal() {
     const [nextId, setNextId] = useState(0);
     const [suggestions,setSuggestions] = useState([]);
     const [onFocusInput, setOnFocusInput] = useState(null);
+    const [dateInput,setDateInput]=useState(new Date());
 
     const {checkIfLoggedIn}= useContext(loginAuth);
 
@@ -54,10 +55,7 @@ export default function AddMeal() {
       setOnFocusInput();
     }
 
-    function postIngredients(ingList){
-        // POST axios
-        // data: {ingList}
-    }
+
 
     function calculateNutrients (listIng){
 
@@ -123,10 +121,7 @@ export default function AddMeal() {
       setListIngredients(newList);
     }
 
-    function postMeals(todaysDate,profileid,nutrient1, nutrient2, nutrient3){
-        // POST request with params to add meal to meals table
-        // use today's date for now and refactor later in the case that a user wants to add meals for previous days 
-    }
+  
 
     const getSuggestions = debounce(async (inputValue) => {
       if (inputValue) {
@@ -174,9 +169,7 @@ export default function AddMeal() {
     <>
 
       <div id="AddAMeal">
-      <p style={{fontFamily:"impact"}}>foodtracker</p>
-      <hr style={{width:"60%", marginBottom:"30px"}} />
-      <h2>Log the meal for {today.toDateString()}</h2>
+      <h2>Log the meal for <input type='date' value={dateInput} onChange={(event)=>setDateInput(event.value)} /></h2>
         {listIngredients.map((ingredientObj,index)=>(
             // <AddAnIngredient ingredientObj={ingredientObj}  key={ingredientObj.id} />
             <form key={ingredientObj.id}>
@@ -202,13 +195,15 @@ export default function AddMeal() {
           <p id='emptyIngList'>Add the ingredients of this meal.</p>
         }
         
-        <button onClick={()=>calculateNutrients(listIngredients)}>Calculate nutrients</button>
-        <button onClick={()=>handleAddIngredientButton()} id='addIngButton'> Add an ingredient</button>
+        {/* <button onClick={()=>calculateNutrients(listIngredients)}>Calculate nutrients</button> */}
+        <button onClick={()=>handleAddIngredientButton()} className='textButton'> Add an ingredient</button>
 
-        <button id='addMealButton'>Add the meal</button>
+        <div style={{position:"absolute",width:"95%",bottom:"150px"}}>
+          <button className='importantTextButton'>Add the meal</button>
+        </div>
+          
 
         </div>
-        <NavBar />
     </>
 
   )

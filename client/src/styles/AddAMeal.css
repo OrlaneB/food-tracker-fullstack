@@ -3,17 +3,7 @@
     padding: 40px;
 }
 
-#AddAMeal #addMealButton{
-    position: absolute;
-    bottom: 150px;
-    left:46%;
-    width:8%;
-    background-color:#2866b2;
-    color: white;
-    border: none;
-    padding:10px 0;
-    cursor: pointer;
-}
+
 
 #AddAMeal #addIngButton{
     background-color: grey;
@@ -29,8 +19,11 @@
     color:black;
 }
 
-#AddAMeal #addMealButton:hover {
-    background-color: #99C8FF;
+
+
+#AddAMeal h2 input {
+    margin-left: 8px;
+    padding: 3px;
 }
 
 #AddAMeal form {

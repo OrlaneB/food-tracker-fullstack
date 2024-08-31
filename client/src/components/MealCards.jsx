@@ -36,7 +36,7 @@ export default function MealCards() {
             <button style={openedMeals.includes(index)? {transform:"rotate(90deg)",display:"inline"}:{display:"inline"}} 
                     className='roundButton'
                     onClick={()=>handleToggleOpen(index)} >&gt;</button>
-            <h3 style={{display:"inline"}}>Meal #{index+1}</h3>
+            <h3 style={{display:"inline",marginLeft:"10px"}}>Meal #{index+1}</h3>
             
             
              { openedMeals.includes(index) &&

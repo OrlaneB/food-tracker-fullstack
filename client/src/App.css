@@ -5,9 +5,21 @@
   src: url(assets/SHRIMP.ttf);
 }
 
+@font-face {
+  font-family: HeyLouie;
+  src: url(assets/HeyLouie.otf);
+}
+
+@font-face {
+  font-family: "Super Caramel";
+  src: url(assets/SuperCaramel.ttf);
+}
+
 h1,h2,h3,h4,h5,h6{
-  font-family: Shrimp;
-  text-transform: uppercase;
+  font-family: "Super Caramel";
+  /* text-transform: uppercase; */
+  letter-spacing: 2px;
+  font-weight: 200;
 }
 
 .roundButton {
@@ -38,13 +50,21 @@ h1,h2,h3,h4,h5,h6{
   padding: 15px;
   font-weight: 600;
   cursor: pointer;
+  margin:20px 0
 }
 
 .textButton:hover{
   background-color: #951327;
   color: white;
-  /* box-shadow: inset -4px -4px 5px rgba(255, 255, 255, 0.263); */
+}
 
+.importantTextButton {
+  background-color: #EA5F3A;
+  color: #951327;
+  padding:15px;
+  border:none;
+  color:white;
+  font-weight: 600;
 }
 
 
@@ -57,8 +77,8 @@ header {
 }
 
 header h2 {
-  font-family: Shrimp;
-  text-transform: uppercase;
+  font-family: "Super Caramel";
+  /* text-transform: uppercase; */
   color: #951327;
   cursor: pointer;
 }

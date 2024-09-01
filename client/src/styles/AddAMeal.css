@@ -45,18 +45,13 @@
     margin: 10px auto;
 }
 
-#AddAMeal .deleteIngButton {
-    margin-left: 5px;
-    border-radius: 50%;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    border: none;
-    cursor: pointer;
+#AddAMeal .roundButton {
+   width:30px;
+   height:30px;
+   margin-left: 10px;
 }
 
-#AddAMeal .deleteIngButton:hover{
-    background-color: grey;
-    color:white;
-}
+
 
 #AddAMeal .suggestionsContainer {
     text-align: left;

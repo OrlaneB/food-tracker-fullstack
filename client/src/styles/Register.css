@@ -1,9 +1,14 @@
 #register {
     width:40%;
-    border: 1px solid lightgrey;
+    /* border: 1px solid lightgrey; */
+    background-color: #931327;
     padding:50px;
     margin:40px auto;
     text-align: center;
+    color: white;
+    margin-bottom: 100px;
+    border-radius: 8px;
+
 }
 
 #register form label{
@@ -11,10 +16,19 @@
     padding: 8px 0;
 }
 
-#register form label input {
+/* #register form label input {
     display: block;
-    margin:8px auto;
+    margin: 8px auto;
+    padding:10px 15px;
+    border-radius: 20px;
+    box-shadow: 5px 5px 8px #0d275037
+    , -3px -3px 8px rgba(255, 255, 255, 0.205)
+    ;
+    border:none;
     
+} */
+#register input {
+    display: block;
 }
 
 #register #genderLabel label{
@@ -25,4 +39,8 @@
 
 #register #genderLabel label input {
     margin: 0 6px;
+}
+
+#register .textButton:hover {
+    background-color: #F79285;
 }

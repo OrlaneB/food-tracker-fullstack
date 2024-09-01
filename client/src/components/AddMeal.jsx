@@ -179,7 +179,7 @@ export default function AddMeal() {
                 
                 <input type='number' value={ingredientObj.numberAmount} name='numberAmount' placeholder='Amount'  onChange={(event)=>handleChangeIngredientForm(event,index)} onFocus={()=>setOnFocusInput(null)}/>g
 
-                <button className='deleteIngButton' onClick={(event)=>deleteIngredient(event,index)}>x</button>
+                <button className='roundButton' onClick={(event)=>deleteIngredient(event,index)}>x</button>
 
                 {onFocusInput===index && suggestions &&
                   <div className='suggestionsContainer'>

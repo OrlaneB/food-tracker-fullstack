@@ -38,11 +38,26 @@ router.get("/:user_id", async(req, res)=>{
 })
 
 /* POST profile information*/
-// router.post("/profiles/user_id", userMustExist, async (req, res) => {
-router.post("/profiles/user_id", async (req, res) => {
-
+router.post("/:user_id", async (req, res) => {
   const {user_id} = req.params
-  const { nutrient_1, 
+  try {
+    // Add the user's profile informaiton
+    await db(`INSERT INTO profiles (user_id) 
+              VALUES (${user_id})`
+            );
+      // Send a success message to the frontend
+       res.status(201).send("Profile created!");
+  } catch (err) {
+    res.status(500).send({ error: err.message });
+  }
+});
+
+/* PUT profile information*/
+// router.put("/profiles/profile_id", userMustExist, async (req, res) => {
+router.put("/:profile_id", async (req, res) => {
+  const {profile_id} = req.params
+  const { user_id,
+          nutrient_1, 
           nutrient_2,
           nutrient_3,
           medical_condition,
@@ -81,16 +96,27 @@ router.post("/profiles/user_id", async (req, res) => {
   }
 });
 
-/* PUT profile information*/
-// create array of the column names and use index to add to loop
-// from the frontend i get an array that has 0-3 nutrients, username
-// i want to update the nutrients when username
-// loop with 3 iterations for each if there is something in the array add the nutrient to nutrient_1 = index+1, etc.
-// else set the nutrient to null
-
 /* PUT nutrients to track */
+router.put("/nutrients/:profile_id", async (req, res) => {
+  const {profile_id} = req.params
+  const { listOfNutrientsToTrack } = req.body;
+  console.log(listOfNutrientsToTrack)
 
-/* DELETE user account */
+  try {
+    // Add the user's profile informaiton
+    await db(`UPDATE profiles 
+              SET 
+                  nutrient_1 = "${listOfNutrientsToTrack[0]}", 
+                  nutrient_2 = "${listOfNutrientsToTrack[1]}", 
+                  nutrient_3 = "${listOfNutrientsToTrack[2]}" 
+              WHERE profile_id = ${profile_id}`
+            );
+      // Send a success message to the frontend
+       res.status(201).send("Nutrients to track updated!");
+  } catch (err) {
+    res.status(500).send({ error: err.message });
+  }
+});
 
 
 module.exports = router;

@@ -3,9 +3,10 @@ var router = express.Router();
 const db = require('../model/helper');
 // const userShouldBeLoggedIn = require("../guards/userShouldBeLoggedIn")
 
-/* GET meals*/
+/* GET meals, ingredients, nutrients*/
+// router.get("/:profile_id", userShouldBeLoggedIn, async(req, res)=>{
 router.get("/:profile_id", async(req, res)=>{
-  const { date} = req.query;
+  const {date} = req.query; // recommended to not use req.body with a get request
   const {profile_id}= req.params;
 
   if (!profile_id) {
@@ -86,6 +87,9 @@ router.post('/ingredients/:meal_id', async(req, res) => {
   }
   // Send a success message to the frontend
   res.status(201).send("Ingredients added!");
+  
+  // NEED to send meal_id to frontend
+
   } catch (err) {
   res.status(500).send({ error: err.message });
   }
@@ -117,50 +121,48 @@ router.post('/nutrients/:meal_id', async(req, res) => {
 })
 
 /* PUT meal */
-router.post('/:meal_id', async(req, res) => {
-  const { profile_id } = req.params;
-  const { date} = req.body;
+// router.post('/:meal_id', async(req, res) => {
+//   const { profile_id } = req.params;
+//   const { date} = req.body;
   
-    if (!profile_id) {
-      return res.status(400).send({ error: "Profile ID is required!" });
-    }
+//     if (!profile_id) {
+//       return res.status(400).send({ error: "Profile ID is required!" });
+//     }
   
-    try {
-      // Add profile_id and date to meals
-      await db(`INSERT INTO meals (profile_id, date)
-        VALUES (${profile_id}, "${date.slice(0,10)}");`
-      );
-      // Join ingredients, meals, and nutrients_by_meal tables 
-      const resultsIngredients = await db(`SE
-                                FROM meals 
-                                LEFT JOIN ingredients ON ingredients.meal_id = meals.meal_id 
-                                WHERE meals.profile_id = ${profile_id}
-                                AND meals.date = "${date.slice(0,10)}"
-                              `);
-      const resultsNutrients = await db(`SELECT *
-                                FROM meals 
-                                LEFT JOIN nutrients_by_meal nutrients ON nutrients.meal_id = meals.meal_id 
-                                WHERE meals.profile_id = ${profile_id}
-                                AND meals.date = "${date.slice(0,10)}"
-                              `);
+//     try {
+//       // Add profile_id and date to meals
+//       await db(`INSERT INTO meals (profile_id, date)
+//         VALUES (${profile_id}, "${date.slice(0,10)}");`
+//       );
+//       // Join ingredients, meals, and nutrients_by_meal tables 
+//       const resultsIngredients = await db(`SE
+//                                 FROM meals 
+//                                 LEFT JOIN ingredients ON ingredients.meal_id = meals.meal_id 
+//                                 WHERE meals.profile_id = ${profile_id}
+//                                 AND meals.date = "${date.slice(0,10)}"
+//                               `);
+//       const resultsNutrients = await db(`SELECT *
+//                                 FROM meals 
+//                                 LEFT JOIN nutrients_by_meal nutrients ON nutrients.meal_id = meals.meal_id 
+//                                 WHERE meals.profile_id = ${profile_id}
+//                                 AND meals.date = "${date.slice(0,10)}"
+//                               `);
   
-      if (resultsIngredients.length === 0 || resultsNutrients.length === 0 ) {
-        return res.status(404).send({ error: "Meal not found!" });
-      } else {
-        const dataIngredients = resultsIngredients.data;
-        const dataNutrients = resultsNutrients.data;
-        // Return data and add success message
-        res.status(200).send({message:'Success', dataIngredients, dataNutrients});
-      }
-    } catch (e) {
-      console.log("something happened");
-      res.status(500).send({ error: e.message });
-    }
+//       if (resultsIngredients.length === 0 || resultsNutrients.length === 0 ) {
+//         return res.status(404).send({ error: "Meal not found!" });
+//       } else {
+//         const dataIngredients = resultsIngredients.data;
+//         const dataNutrients = resultsNutrients.data;
+//         // Return data and add success message
+//         res.status(200).send({message:'Success', dataIngredients, dataNutrients});
+//       }
+//     } catch (e) {
+//       console.log("something happened");
+//       res.status(500).send({ error: e.message });
+//     }
   
-  })
+//   })
 
-
-/* PUT meals*/
 /* PUT ingredients*/
 /* PUT nutrients*/
 

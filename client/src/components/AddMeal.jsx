@@ -15,6 +15,7 @@ export default function AddMeal() {
     const [dateInput,setDateInput]=useState(new Date());
 
     const {checkIfLoggedIn}= useContext(loginAuth);
+    const {warningOn,setIsWarningOn} = useState(false);
 
     // const navigate = useNavigate();
 
@@ -194,13 +195,16 @@ export default function AddMeal() {
         {!listIngredients[0] &&
           <p id='emptyIngList'>Add the ingredients of this meal.</p>
         }
+
+        {warningOn &&
+          <p>Are you sure you added all the ingredients ?</p>
+        }
         
-        {/* <button onClick={()=>calculateNutrients(listIngredients)}>Calculate nutrients</button> */}
         <button onClick={()=>handleAddIngredientButton()} className='textButton'> Add an ingredient</button>
 
-        <div style={{position:"absolute",width:"95%",bottom:"150px"}}>
-          <button className='importantTextButton'>Add the meal</button>
-        </div>
+       
+        <button className='importantTextButton'>Add the meal</button>
+       
           
 
         </div>

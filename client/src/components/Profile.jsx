@@ -6,10 +6,16 @@ import loginAuth from '../context/loginAuth';
 import { useNavigate } from 'react-router-dom';
 import NavBar from './NavBar';
 
+import userFriendlyNutrientNames from '../utilities/userFriendlyNutrientNames';
+
 export default function Profile() {
 
     const {loginAuthValue,setLoginAuthValue,checkIfLoggedIn}=useContext(loginAuth);
     const navigate = useNavigate();
+
+
+    //Will come from profile
+    const chosenNutrients = [{name:"Iron, Fe",goalAmount:18,type:"Aim for"},{name:"Vitamin C, total ascorbic acid",goalAmount:75,type:"At least"},{name:"Calcium, Ca",goalAmount:1000,type:"Less than"}]
     
 
     useEffect(()=>{
@@ -50,27 +56,59 @@ export default function Profile() {
  //Level of activity
 
     return (
-        <>
         <div id="profile">
             
             <div id='header'>
                 <div id='imageAndUsername'>
                     
-                    <img src="https://tinyurl.com/y8kt5xam" alt="Ruth Asawa sitting next to her art" id="profilePicture"/>
-                    <button>Change image</button>
+                    <img src="https://tinyurl.com/y8kt5xam" alt="Ruth Asawa sitting next to her art"/>
+                    <button className='textButton modifyImage'>Change image</button>
+
                 </div>
                 
-                <div id="details">
-                        <h1 style={{margin:"10px 0"}}>@Laura</h1>
-                        <button style={{margin:"0",textAlign:"left"}} onClick={()=>logOut()}>Log Out</button>
-                        <h2>Medical Condition: Anemia</h2>
-                        <p>{userObject.age}</p>
-                        <p>{userObject.height}</p>
-                        <p>{userObject.weight}</p>
+                <div style={{width:"60%", maxWidth:"500px"}}>
+                    <div style={{display:"flex",alignItems:"center"}}>
+                        <h1>Laura</h1>
+                        <button className='logout textButton' onClick={()=>logOut()}>Log Out</button>
+                    </div>
+                        
+                    <p>Medical Condition: Anemia</p>
+                    
+                    <div id='userInfo'>
+                        <p>Age : {userObject.age}</p>
+                        <p>Height : {userObject.height}</p>
+                        <p>Weight : {userObject.weight}</p>
+                    </div>
+
+                    <button className='importantTextButton' style={{marginLeft:"0"}} >Modify profile</button>
+                    
+                        
                 </div>
             </div>
 
-                <div id="nutrientGoals">
+            <div id='nutrientInfo'>
+                <h2>Nutrients to track</h2>
+
+                <p style={{marginBottom:"30px",fontStyle:"italic"}}>We are not doctors, this is an average recommendation, check with your doctor to get precise intructions.</p>
+
+                <div id='flexGoalNutrients'>
+                    {chosenNutrients.map(nutrient=>(
+                        <div>
+                            <p>{nutrient.type}</p>
+                            <p>{nutrient.goalAmount}</p>
+                            <p>{userFriendlyNutrientNames[nutrient.name]}</p>
+                        </div>
+                    ))}
+                </div>
+
+                
+                <button className='textButton'>Update changes</button>
+
+                </div>
+                
+                
+
+                {/* <div id="nutrientGoals">
                     <h2>Your daily goals</h2>
                     <p id="warning">We are not doctors, this is an average recommendation, check with your doctor to get precise intructions.</p>
                     <form>
@@ -96,12 +134,10 @@ export default function Profile() {
                                 <label>{nutrient}</label>
                             </div>
                         ))}
-                </div>
+                </div> */}
 
             </div>
             
-        
-        </>
     )
 }
 

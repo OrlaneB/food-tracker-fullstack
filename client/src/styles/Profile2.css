@@ -1,7 +1,7 @@
 #profile{
     width: 70%;
     margin: auto;
-    margin-top: 70px;
+    margin-top: 20px;
 }
 
 #header {
@@ -9,21 +9,45 @@
     justify-content: center;
     gap:50px;
     text-align: left;
+    align-items: center;
 }
 
-#header:first-child{
-    flex:30%;
+
+#header #imageAndUsername{
+    width:25%;
+    max-width: 250px;
 }
 
-#header button {
+#header h1 {
+    margin: 0;
+}
+
+
+#header .logout {
+    padding: 8px;
+    margin: 0 15px;
+}
+
+#header div .modifyImage {
     display: block;
     margin: auto;
     margin-top: 10px;
+    padding:6px;
 }
 
-#profilePicture {
-    width: 250px;
-    height: 250px;
+#header #userInfo {
+    display: flex;
+    justify-content: left;
+    gap:50px;
+}
+
+#header #userInfo * {
+    text-align: center;
+}
+
+#imageAndUsername img {
+    width: 100%;
+    aspect-ratio: 1/1;
     border-radius: 50%;
     object-fit: cover;
     overflow: hidden; 
@@ -33,7 +57,7 @@
     flex:70%;
 }
 
-#nutrientGoals {
+/* #nutrientGoals {
     text-align: center;
     padding: 40px;
 }
@@ -56,4 +80,34 @@
     grid-template-columns: repeat(4,1fr);
     justify-content: center;
     padding: 40px;
+} */
+
+#nutrientInfo {
+    width:80%;
+    max-width: 800px;
+    margin: auto;
+    margin-top:38px;
+    text-align: center;
+    color: white;
+    background-color: #951327 ;
+    padding:30px;
+    border-radius: 8px;
+}
+
+#flexGoalNutrients {
+    display: flex;
+    justify-content: center;
+    gap:50px
+}
+
+#flexGoalNutrients div {
+    background-color: white;
+    padding:15px;
+    color:#951327;
+    box-shadow: inset 6px 6px 10px #0d27504e;
+    border-radius: 3px;
+}
+
+#flexGoalNutrients div p {
+    margin: 0;
 }

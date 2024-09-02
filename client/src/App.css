@@ -126,7 +126,9 @@ p,li {
 
 
 
-h1{
-  font-family: Shrimp;
-  text-transform: uppercase;
+@media screen and (max-width:600px){
+
+   header h2{
+    font-size: 1.2em;
+   }
 }

@@ -1,6 +1,7 @@
 #AddAMeal {
     text-align: center;
-    padding: 40px;
+    padding: 40px 0;
+    position: relative;
 }
 
 
@@ -28,14 +29,13 @@
 
 #AddAMeal form {
     padding: 10px 0;
-    width:30%;
     margin: auto;
+    width:35%;
 }
 
 
 #AddAMeal form input {
     margin: 0 5px;
-    width: 35%;
 }
 
 #AddAMeal #emptyIngList {
@@ -74,6 +74,11 @@
     color: white;
 }
 
+@media screen and (min-width:600px) and (max-width:1025px) {
+    #AddMeal form {
+        width:80%;
+    }
+}
 
 @media screen and (max-width:600px){
     #AddAMeal form {
@@ -81,11 +86,13 @@
     }
 
     #AddAMeal form input {
-        width:39%;
+        width:25%;
     }
 
     #AddAMeal #addMealButton {
         width:30%;
         left:35%
     }
+
+
 }

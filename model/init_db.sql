@@ -73,7 +73,7 @@ CREATE TABLE nutrients_by_meal (
     nutrient_id INT not null AUTO_INCREMENT PRIMARY KEY,
     meal_id INT,
     `nutrient_name` VARCHAR(50) not null,
-    nutrient_number_amount INT not null
+    nutrient_number_amount DECIMAL(6,2) not null
 );
 ALTER TABLE nutrients_by_meal
 ADD CONSTRAINT fk_meal_n

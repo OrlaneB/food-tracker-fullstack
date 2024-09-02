@@ -96,18 +96,18 @@ router.post('/nutrients/:meal_id', async(req, res) => {
 
   const { meal_id} = req.params;
   const { nutrientsList} = req.body;
-  console.log("a");
+  // console.log("a");
   console.log(nutrientsList["Protein"])
   try {
   // Add ingredients to meal
   for (let nutrient in nutrientsList){
-    console.log("b : ",nutrient);
+    // console.log("b : ",nutrient);
 
     await db(` INSERT INTO nutrients_by_meal (meal_id, nutrient_name, nutrient_number_amount)
                VALUES (${meal_id},"${nutrient}",${nutrientsList[nutrient]})`
     );
 
-    console.log("c")
+    // console.log("c")
   }
   // Send a success message to the frontend
   res.status(201).send("Nutrients added!");

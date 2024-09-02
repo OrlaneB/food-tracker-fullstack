@@ -134,7 +134,7 @@ export default function AddMeal() {
       postIngredients(mealID);
 
       //Add nutrients to the meal
-      await postNutrients(mealID);
+      postNutrients(mealID);
       }
       
 

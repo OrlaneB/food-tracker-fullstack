@@ -56,41 +56,33 @@ router.post("/:user_id", async (req, res) => {
 // router.put("/profiles/profile_id", userMustExist, async (req, res) => {
 router.put("/:profile_id", async (req, res) => {
   const {profile_id} = req.params
-  const { user_id,
-          nutrient_1, 
-          nutrient_2,
-          nutrient_3,
-          medical_condition,
-          date_of_birth,
-          gender,
-          weight,
-          height} = req.body;
+  const { nutrient_1_name,
+          nutrient_2_name,
+          nutrient_3_name,
+          nutrient_1_amount,
+          nutrient_2_amount,
+          nutrient_3_amount,
+          nutrient_1_goal,
+          nutrient_2_goal,
+          nutrient_3_goal} = req.body;
   try {
     // Add the user's profile informaiton
-    await db(`INSERT INTO profiles 
-              (
-              user_id,
-              nutrient_1, 
-              nutrient_2, 
-              nutrient_3, 
-              medical_condition, 
-              date_of_birth, 
-              gender, 
-              weight, 
-              height) 
-       VALUES (
-              ${user_id},
-              "${nutrient_1}", 
-              "${nutrient_2}", 
-              "${nutrient_3}", 
-              "${medical_condition}", 
-              "${date_of_birth.slice(0,10)}", 
-              "${gender}", 
-              "${weight}", 
-              "${height}")`
-            );
+    await db(`UPDATE profiles
+              SET 
+                  nutrient_1_name = '${nutrient_1_name}',
+                  nutrient_2_name = '${nutrient_2_name}',
+                  nutrient_3_name = '${nutrient_3_name}',
+                  nutrient_1_amount = ${nutrient_1_amount},
+                  nutrient_2_amount = ${nutrient_2_amount},
+                  nutrient_3_amount = ${nutrient_3_amount},
+                  nutrient_1_goal = '${nutrient_1_goal}',
+                  nutrient_2_goal = '${nutrient_2_goal}',
+                  nutrient_3_goal = '${nutrient_3_goal}'
+              WHERE profile_id = ${profile_id};
+      
+            `);
       // Send a success message to the frontend
-       res.status(201).send("Profile updated!");
+       res.status(201).send("Profile changed!");
   } catch (err) {
     res.status(500).send({ error: err.message });
   }

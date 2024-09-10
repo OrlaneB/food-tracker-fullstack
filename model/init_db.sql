@@ -26,14 +26,15 @@ CREATE TABLE users(
 CREATE TABLE profiles(
     profile_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
-    nutrient_1 VARCHAR(50),
-    nutrient_2 VARCHAR(50),
-    nutrient_3 VARCHAR(50),
-    medical_condition VARCHAR(50),
-    date_of_birth date,
-    gender VARCHAR(20),
-    `weight` INT,
-    height INT
+    nutrient_1_name VARCHAR(50),
+    nutrient_2_name VARCHAR(50),
+    nutrient_3_name VARCHAR(50),
+    nutrient_1_amount VARCHAR(50),
+    nutrient_2_amount VARCHAR(50),
+    nutrient_3_amount VARCHAR(50),
+    nutrient_1_goal VARCHAR(50),
+    nutrient_2_goal VARCHAR(50),
+    nutrient_3_goal VARCHAR(50)
     );
 
 ALTER TABLE profiles

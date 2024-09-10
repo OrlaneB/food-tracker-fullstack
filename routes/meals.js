@@ -134,10 +134,7 @@ router.put('/ingredients/:meal_id', async(req, res) => {
   }
 })
 
-/* PUT nutrients*/
-
 /* DELETE meal*/
 /* DELETE ingredient */
-/* DELETE nutrient */
 
 module.exports = router;

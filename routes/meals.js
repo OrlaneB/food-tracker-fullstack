@@ -116,12 +116,14 @@ router.put('/ingredients/:meal_id', async(req, res) => {
   const { meal_id} = req.params;
   const {ingredientsList} = req.body;
   try {
+    console.log("before loop");
     // Add ingredients to meal
     for (let ingredient of ingredientsList){
       await db(`UPDATE ingredients 
-                SET name = ${ingredient.name}, number_amount = ${ingredient.number_amount}
+                SET name = "${ingredient.name}", number_amount = ${ingredient.number_amount}
                 WHERE meal_id = ${meal_id}`
       );
+      console.log("in loop");
     }
     // Send a success message to the frontend
     res.status(201).send("Ingredients updated!");

@@ -1,12 +1,9 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState } from "react"
 import '../styles/Day.css'
-// import meals for corresponding day
 
-// create a new data object to store current date
-// const currentDate = new Date();
+import { DateTime } from "luxon";
 
-// The day component renders the meals that have been inputted for that day
 
 export default function Day({dateObj}) {
 
@@ -19,27 +16,28 @@ export default function Day({dateObj}) {
    
 
     function createDisplayedDates(){
-        let startDate = new Date(Date.parse(dateObj.day));
+        let startDate = DateTime.local(dateObj.day.getFullYear(),dateObj.day.getMonth()+1,dateObj.day.getDate());
+        console.log(startDate);
 
-        let dayMinusThree=new Date();
-        let dayMinusTwo=new Date();
-        let dayMinusOne=new Date();
-        let dayPlusOne=new Date();
-        let dayPlusTwo=new Date();
-        let dayPlusThree=new Date();
+
+        let dayMinusThree= startDate.minus({days:3});
+        let dayMinusTwo=startDate.minus({days:2});
+        let dayMinusOne=startDate.minus({days:1});
+        let dayPlusOne= startDate.plus({days:1});
+        let dayPlusTwo= startDate.plus({days:2});
+        let dayPlusThree= startDate.plus({days:3});
 
         let newDates = [
-            dayMinusThree.setDate(startDate.getDate()-3),
-            dayMinusTwo.setDate(startDate.getDate()-2),
-            dayMinusOne.setDate(startDate.getDate()-1),
+            dayMinusThree,
+            dayMinusTwo,
+            dayMinusOne,
             dateObj.day,
-            dayPlusOne.setDate(startDate.getDate()+1),
-            dayPlusTwo.setDate(startDate.getDate()+2),
-            dayPlusThree.setDate(startDate.getDate()+3),
+            dayPlusOne,
+            dayPlusTwo,
+            dayPlusThree,
         ]
 
         setDisplayedDates(newDates);
-        // console.log(newDates)
     }
 
     function handleChangeDate(event,date){
@@ -49,17 +47,6 @@ export default function Day({dateObj}) {
         dateObj.setDay(newDate);
     }
 
-    // function handleChangeDate(event,type){
-    //     event.preventDefault();
-    //     let newDate = new Date();
-
-    //     type==="before"?
-    //     newDate.setDate(dateObj.day.getDate() - 1) :
-    //     type==="after"?
-    //     newDate.setDate(dateObj.day.getDate() + 1) : "";
-
-    //     dateObj.setDay(newDate)
-    // }
 
     function moveSelectedDates(event,type){
         event.preventDefault();
@@ -68,8 +55,8 @@ export default function Day({dateObj}) {
         if(type==="down"){
 
             let newDates = [...displayedDates];
-            let addedDate = new Date();
-            addedDate.setDate(new Date(newDates[0]).getDate()-1);
+            let copiedDate = new Date(newDates[0]);
+            let addedDate = DateTime.local(copiedDate.getFullYear(), copiedDate.getMonth()+1, copiedDate.getDate()).minus({days:1});
             newDates.unshift(addedDate);
             newDates.pop();
 
@@ -78,8 +65,8 @@ export default function Day({dateObj}) {
         }else if(type==="up"){
 
             let newDates = [...displayedDates];
-            let addedDate = new Date();
-            addedDate.setDate(new Date(newDates[6]).getDate()+1);
+            let copiedDate = new Date(newDates[6]);
+            let addedDate = DateTime.local(copiedDate.getFullYear(), copiedDate.getMonth()+1, copiedDate.getDate()).plus({days:1});
             newDates.push(addedDate);
             newDates.shift();
 

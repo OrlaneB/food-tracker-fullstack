@@ -13,6 +13,7 @@ export default function Profile() {
     const {loginAuthValue,setLoginAuthValue,checkIfLoggedIn}=useContext(loginAuth);
     const navigate = useNavigate();
 
+    const nutrientNamesArray = Object.values(userFriendlyNutrientNames);
 
     //Will come from profile
     const chosenNutrients = [{name:"Iron, Fe",goalAmount:18,type:"Aim for"},{name:"Vitamin C, total ascorbic acid",goalAmount:75,type:"At least"},{name:"Calcium, Ca",goalAmount:1000,type:"Less than"}]
@@ -58,45 +59,53 @@ export default function Profile() {
     return (
         <div id="profile">
             
-            <div id='header'>
-                <div id='imageAndUsername'>
+                <div id='profileImage'>
                     
                     <img src="https://tinyurl.com/y8kt5xam" alt="Ruth Asawa sitting next to her art"/>
-                    <button className='textButton modifyImage'>Change image</button>
+                    <button className='roundButton'><i class="fi fi-rr-refresh"></i></button>
 
                 </div>
                 
-                <div style={{width:"60%", maxWidth:"500px"}}>
-                    <div style={{display:"flex",alignItems:"center"}}>
-                        <h1>Laura</h1>
-                        <button className='logout textButton' onClick={()=>logOut()}>Log Out</button>
-                    </div>
+              
+    
+                <h1>Laura</h1>
+                <p style={{color:"#9d9d9d"}}>Medical Condition: Anemia</p>
+                
                         
-                    <p>Medical Condition: Anemia</p>
                     
-                    <div id='userInfo'>
-                        <p>Age : {userObject.age}</p>
-                        <p>Height : {userObject.height}</p>
-                        <p>Weight : {userObject.weight}</p>
-                    </div>
-
-                    <button className='importantTextButton' style={{marginLeft:"0"}} >Modify profile</button>
                     
-                        
+                <div id='userInfo'>
+                    <p><span>{userObject.age}</span><br/>Age</p>
+                    <p><span>{userObject.height}</span><br/>Height</p>
+                    <p><span>{userObject.weight}</span><br/>Weight</p>
                 </div>
-            </div>
 
-            <div id='nutrientInfo'>
-                <h2>Nutrients to track</h2>
+                    
+                <button className='logout textButton' onClick={()=>logOut()}>Log Out</button>
+                <button className='importantTextButton' style={{marginLeft:"0"}} >Edit profile</button>
+
+                <hr style={{margin:"50px 0"}} />   
+                
+                <h3>Nutrients to track</h3>
 
                 <p style={{marginBottom:"30px",fontStyle:"italic"}}>We are not doctors, this is an average recommendation, check with your doctor to get precise intructions.</p>
 
                 <div id='flexGoalNutrients'>
                     {chosenNutrients.map(nutrient=>(
-                        <div>
-                            <p>{nutrient.type}</p>
-                            <p>{nutrient.goalAmount}</p>
-                            <p>{userFriendlyNutrientNames[nutrient.name]}</p>
+                        <div className='nutrientDiv'>
+                            <div>
+                                <button className={nutrient.type==="Less than"? "selectedType roundButton" : "roundButton"}>&lt;</button>
+                                <button className={nutrient.type==="Aim for"? "selectedType roundButton" : "roundButton"}>&#61;</button>
+                                <button className={nutrient.type==="At least"? "selectedType roundButton" : "roundButton"}>&gt;</button>
+                            </div>
+
+                            <input value={nutrient.goalAmount} type='number'/>
+                            
+                            <select name='nutrientName' value={userFriendlyNutrientNames[nutrient.name]}>
+                                {nutrientNamesArray.map((nut,index)=>(
+                                    <option key={index} value={nut}>{nut}</option>
+                                ))}
+                            </select>
                         </div>
                     ))}
                 </div>
@@ -104,7 +113,7 @@ export default function Profile() {
                 
                 <button className='textButton'>Update changes</button>
 
-                </div>
+              
                 
                 
 

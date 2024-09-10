@@ -2,112 +2,101 @@
     width: 70%;
     margin: auto;
     margin-top: 20px;
-}
-
-#header {
-    display: flex;
-    justify-content: center;
-    gap:50px;
-    text-align: left;
-    align-items: center;
-}
-
-
-#header #imageAndUsername{
-    width:25%;
-    max-width: 250px;
-}
-
-#header h1 {
-    margin: 0;
-}
-
-
-#header .logout {
-    padding: 8px;
-    margin: 0 15px;
-}
-
-#header div .modifyImage {
-    display: block;
-    margin: auto;
-    margin-top: 10px;
-    padding:6px;
-}
-
-#header #userInfo {
-    display: flex;
-    justify-content: left;
-    gap:50px;
-}
-
-#header #userInfo * {
     text-align: center;
+    margin-bottom: 150px;
 }
 
-#imageAndUsername img {
+#profileImage {
+    width: 200px;
+    margin: auto;
+}
+
+#profileImage img {
     width: 100%;
     aspect-ratio: 1/1;
     border-radius: 50%;
     object-fit: cover;
     overflow: hidden; 
+    margin-bottom: 0;
 }
 
-#header:last-child{
-    flex:70%;
+#profileImage button {
+    position: relative;
+    top:-190px;
+    left:80%;
+    background-color: white;
+    display: block;
 }
 
-/* #nutrientGoals {
-    text-align: center;
-    padding: 40px;
+#profileImage button:hover{
+    background-color: #951327;
 }
 
-#nutrientGoals label {
-    padding: 20px;
+#profile p, #profile h1 {
+    margin: 0;
 }
 
-#nutrientGoals label input {
-    margin-left: 10px;
-}
-
-#nutrientGoals #warning{
-    color: rgb(159, 159, 159);
-    font-style: italic;
-}
-
-#nutrientGrid {
-    display: grid;
-    grid-template-columns: repeat(4,1fr);
+#userInfo {
+    display: flex;
     justify-content: center;
-    padding: 40px;
-} */
+    gap:20%;
+}
 
-#nutrientInfo {
-    width:80%;
-    max-width: 800px;
-    margin: auto;
-    margin-top:38px;
-    text-align: center;
-    color: white;
-    background-color: #951327 ;
-    padding:30px;
-    border-radius: 8px;
+#userInfo p {
+    margin : 30px 0;
+}
+
+#userInfo p span {
+    font-weight: bold;
+    font-size: 1.5em;
 }
 
 #flexGoalNutrients {
     display: flex;
+    gap:10%;
     justify-content: center;
-    gap:50px
 }
 
-#flexGoalNutrients div {
-    background-color: white;
-    padding:15px;
-    color:#951327;
-    box-shadow: inset 6px 6px 10px #0d27504e;
-    border-radius: 3px;
+#flexGoalNutrients .roundButton {
+    width:25px;
+    height:25px;
 }
 
-#flexGoalNutrients div p {
-    margin: 0;
+#flexGoalNutrients .selectedType {
+    background-color: #951327;
+    color: white;
+}
+
+#flexGoalNutrients .roundButton:hover {
+    background-color: #EA5F3A;
+}
+#flexGoalNutrients input {
+    width:60%;
+    text-align: center;
+}
+
+#flexGoalNutrients select {
+    border: none;
+    font-size: 1em;
+    text-align: center;
+    margin:10px 0
+}
+
+@media screen and (max-width:600px) {
+    #flexGoalNutrients {
+        display: block;
+    }
+
+    #flexGoalNutrients .nutrientDiv {
+        margin:40px 0;
+    }
+
+    #flexGoalNutrients .roundButton{
+        width:40px;
+        height:40px
+    }
+
+    #flexGoalNutrients input {
+        width:80%;
+    }
 }

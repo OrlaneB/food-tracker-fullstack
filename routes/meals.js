@@ -111,7 +111,7 @@ router.post('/nutrients/:meal_id', async(req, res) => {
   }
 })
 
-/* PUT ingredients */
+/* PUT meals */
 router.put('/:meal_id', async(req, res) => {
   const { meal_id } = req.params;
   const { date} = req.body;

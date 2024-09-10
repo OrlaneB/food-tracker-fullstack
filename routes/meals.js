@@ -111,48 +111,27 @@ router.post('/nutrients/:meal_id', async(req, res) => {
   }
 })
 
-/* PUT meals */
-router.put('/:meal_id', async(req, res) => {
-  const { meal_id } = req.params;
-  const { date} = req.body;
-  
-    if (!meal_id) {
-      return res.status(400).send({ error: "Meal ID is required!" });
-    }
-  
-    try {
-      // Update meal
-      
-      // Join ingredients, meals, and nutrients_by_meal tables 
-      // const resultsIngredients = await db(`SELECT *
-      //                           FROM meals 
-      //                           LEFT JOIN ingredients ON ingredients.meal_id = meals.meal_id 
-      //                           WHERE meals.profile_id = ${profile_id}
-      //                           AND meals.date = "${date.slice(0,10)}"
-      //                         `);
-      // const resultsNutrients = await db(`SELECT *
-      //                           FROM meals 
-      //                           LEFT JOIN nutrients_by_meal nutrients ON nutrients.meal_id = meals.meal_id 
-      //                           WHERE meals.profile_id = ${profile_id}
-      //                           AND meals.date = "${date.slice(0,10)}"
-      //                         `);
-  
-    //   if (resultsIngredients.length === 0 || resultsNutrients.length === 0 ) {
-    //     return res.status(404).send({ error: "Meal not found!" });
-    //   } else {
-    //     const dataIngredients = resultsIngredients.data;
-    //     const dataNutrients = resultsNutrients.data;
-    //     // Return data and add success message
-    //     res.status(200).send({message:'Success', dataIngredients, dataNutrients});
-    //   }
-    // } catch (e) {
-    //   console.log("something happened");
-    //   res.status(500).send({ error: e.message });
-    // }
-  
-  })
-
 /* PUT ingredients*/
+router.put('/ingredients/:meal_id', async(req, res) => {
+  const { meal_id} = req.params;
+  const {ingredientsList} = req.body;
+  try {
+    // Add ingredients to meal
+    for (let ingredient of ingredientsList){
+      await db(`UPDATE ingredients 
+                SET name = ${ingredient.name}, number_amount = ${ingredient.number_amount}
+                WHERE meal_id = ${meal_id}`
+      );
+    }
+    // Send a success message to the frontend
+    res.status(201).send("Ingredients updated!");
+  } 
+  
+  catch (err) {
+    res.status(500).send({ error: err.message });
+  }
+})
+
 /* PUT nutrients*/
 
 /* DELETE meal*/

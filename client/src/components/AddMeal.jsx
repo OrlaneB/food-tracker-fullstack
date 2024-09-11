@@ -259,7 +259,13 @@ export default function AddMeal() {
           <p id='emptyIngList'>Add the ingredients of this meal.</p>
         }
 
-        <button id='addMealButton' onClick={()=>addWholeMealToDB()}>Add the meal</button>
+        {warningOn &&
+          <p>Are you sure you added all the ingredients ?</p>
+        }
+
+        <button onClick={()=>handleAddIngredientButton()} className='textButton'> Add an ingredient</button>
+
+        <button className='importantTextButton' id='addMealButton' onClick={()=>addWholeMealToDB()}>Add the meal</button>
 
         </div>
     </>

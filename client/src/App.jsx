@@ -16,10 +16,8 @@ import Profile from './components/Profile.jsx';
 
 function App() {
   let navigate = useNavigate();
-  // const [count, setCount] = useState(0) - don't need state for static version
 
-  // set default state to homepage
-  // const [view, setView] = useState("Homepage");
+  
 
   const authKey = import.meta.env.VITE_APP_API_KEY;
 

@@ -27,7 +27,7 @@ export default function MealCards() {
     //render meal information
     return (
      <div className='Meals'>
-         { meals &&
+         { meals && nutrientsByMeal[0][0] &&
          
          meals.map((meal, index) =>(
 
@@ -64,6 +64,14 @@ export default function MealCards() {
 
          )
          )}
+
+         { (!meals || !nutrientsByMeal[0][0]) &&
+
+            <div id='noMealWarning'>
+            <p>There are no meals for this date.</p>
+            <button onClick={()=>navigate("/add-meal")} className='textButton'>Add one here</button>
+            </div>
+         }
      </div>
     )
    }

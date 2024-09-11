@@ -130,10 +130,10 @@ export default function Homepage() {
     {noMealsForThisDate &&
       <div id='noMealWarning'>
         <p>There are no meals for this date.</p>
-        <button onClick={()=>navigate("/add-meal")}>Add one here</button>
+        <button onClick={()=>navigate("/add-meal")} className='textButton'>Add one here</button>
       </div>
     }
-      <NavBar/>
+      {/* <NavBar/> */}
     
 
     </div>

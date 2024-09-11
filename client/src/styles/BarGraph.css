@@ -8,15 +8,15 @@
 }
 
 .pie {
-    width:80px;
-    height:80px;
+    width:120px;
+    height:120px;
     border-radius:50%;
     margin:20px auto;
     background-image: conic-gradient(
       #2866b2 235deg,
         black
     );
-     
+    box-shadow: inset -4px -4px 8px rgba(255, 255, 255, 0.364), inset 5px 5px 10px #0d275024;     
 }
 
 .nutrientName {
@@ -28,13 +28,14 @@
     display:flex;
     justify-content:center;
     align-items:center;
-    width:60px;
-    height:60px;
-    top:10px;
-    left:10px;
+    width:90px;
+    height:90px;
+    top:15px;
+    left:15px;
     background-color:white;
     border-radius:50%;
     text-align:center;
+    box-shadow: 4px 4px 8px #0d275024, -2px -2px 8px rgba(255, 255, 255, 0.499);
   }
 
 
@@ -45,9 +46,24 @@
   text-align:center;
 }
 
+@media screen and (max-width:850px){
+  .pie{
+    width:100px;
+    height: 100px;
+  }
+  .text {
+    width:70px;
+    height:70px;
+    top:15px;
+    left:15px;
+  }
+}
 
 @media screen and (max-width:600px) {
   .BarGraph {
     width: 80%;
   }
+  
+  
 }
+

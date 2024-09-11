@@ -94,8 +94,8 @@ export default function Register() {
                   <input type='password' value={registerObj.password} name='password' autoComplete='password' onChange={(event)=>handleChangeRegister(event)} />
                 </label>
 
-                <button type='submit'>Sign up</button>
-                <p onClick={()=>navigate("/login")} >Already have an account ? Log in</p>
+                <button type='submit' className='textButton'>Sign up</button>
+                <p onClick={()=>navigate("/login")} className='buttonLink'>Already have an account ? Log in</p>
             </form>}
 
             { step===2 &&
@@ -141,10 +141,10 @@ export default function Register() {
                     </datalist>
                 </label>
 
-                <button onClick={(event)=>handleGoBack(event)}>Go back</button>
-                <button type='submit'>Continue with my profile</button>
+                <button onClick={(event)=>handleGoBack(event)} className='textButton'>Go back</button>
+                <button type='submit' className='importantTextButton' >Save my informations</button>
 
-                <p onClick={()=>navigate("/login")}>Pass this step</p>
+                <p onClick={()=>navigate("/login")} className='buttonLink'>Pass this step</p>
 
               </form>
 
@@ -152,7 +152,6 @@ export default function Register() {
         </div>
         
 
-        <NavBar />
     </>
   )
 }

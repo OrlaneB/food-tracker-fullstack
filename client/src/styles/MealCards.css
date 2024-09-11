@@ -4,10 +4,18 @@
 }
 
 .mealContainer {
-    background-color: rgb(237, 237, 237);
+    /* background-color: rgb(237, 237, 237); */
     padding:15px;
     border-radius: 5px;
     margin:15px 0;
+    box-shadow: inset 3px 3px 15px #0d275018;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mealContainer #listContainer{
+    width:65%;
 }
 
 .mealContainer h3 {
@@ -15,36 +23,51 @@
 }
 
 .mealContainer ul {
-    padding:10px 25px;
-    padding-top: 0;
+    padding:0;
     margin: 0;
     display: grid;
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(3,1fr);
+    width: 95%;
+    margin-left: 5%;
+
 }
 
 .mealContainer ul li {
-    margin: 2px;
+    margin: 4px 0;
+    font-size: 0.9em;
+    list-style-type: none;
+    padding: 0 4px;
 }
 
-.mealContainer ul li:hover {
-    color:blue;
+.mealContainer ul li::before{
+    margin:0 2px;
+    content: '\2022';
 }
+
+
 
 .mealNutrients {
-    display: flex;
-    text-align: center;
-    background-color: white;
     margin: 0;
     border-radius: 3px;
+    display: flex;
 }
 
 .mealNutrients p {
-    flex:33%;
+    padding: 10px;
+    color: #951327;
+    margin:5px;
+    border-radius: 5px;
+    text-align: center;
 }
 
-.mealNutrients p:hover {
-    color:blue;
+.mealNutrients p .amount {
+    /* color: white; */
+    font-family: "Super Caramel";
+    font-weight: 200;
+    letter-spacing: 2px;
 }
+
+
 
 .mealContainer button {
     border: none;
@@ -53,14 +76,20 @@
     cursor: pointer;
 }
 
-.mealContainer button:hover {
-    color: #6880FF;
-}
+
 
 
 @media screen and (max-width:600px){
     .Meals {
         width:80%;
+    }
+
+    .mealContainer {
+        display: block;
+    }
+
+    .mealNutrients {
+        justify-content: space-evenly;
     }
 
     .mealContainer ul {

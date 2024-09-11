@@ -67,12 +67,11 @@ export default function Login() {
                     <input type='password' name='password' value={credentials.password} autoComplete='password' onChange={(event)=>handleChange(event)} />
                     </label>
 
-                    <button type='submit'>Sign up</button>
-                    <p onClick={()=>navigate("/register")}>Don't have an account ? Sign up here</p>
+                    <button type='submit' className='textButton'>Sign up</button>
+                    <p onClick={()=>navigate("/register")} className='buttonLink'>Don't have an account ? Sign up here</p>
             </form>
         </div>
         
-        <NavBar />
     </>
   )
 }

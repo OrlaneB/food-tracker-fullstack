@@ -1,42 +1,114 @@
-/* #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* Will contain elements */
+
+@font-face {
+  font-family: AnjaEliane;
+  src: url(assets/AnjaEliane.ttf);
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+h1,h2,h3,h4,h5,h6{
+  font-family: AnjaEliane;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 200;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.roundButton {
+  margin:5px;
+  border-radius: 50%;
+  aspect-ratio: 1;
+  width:40px;
+  height: 40px;
+  background-color: transparent;
+  border:1px solid #951327;
+  color: #951327;
+  box-shadow: inset 2px 2px 4px #0d275024 ;
+  cursor: pointer;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.roundButton:hover {
+  background-color: #951327;
+  color: white;
+  box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.553);
 }
 
-.card {
-  padding: 2em;
+.textButton {
+  background-color: white;
+  box-shadow: inset 3px 3px 5px #0d275024, inset -4px -4px 5px rgba(255, 255, 255, 0.31);
+  border:2px solid #951327;
+  border-radius: 5px;
+  color: #951327;
+  padding: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  margin:20px 8px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.read-the-docs {
-  color: #888;
-} */
+.textButton:hover{
+  background-color: #951327;
+  color: white;
+}
+
+.importantTextButton {
+  background-color: #EA5F3A;
+  color: #951327;
+  padding:15px;
+  border:none;
+  color:white;
+  font-weight: 600;
+  border-radius: 5px;
+  margin: 20px 8px;
+  cursor: pointer;
+}
+
+.importantTextButton:hover{
+  background-color: #F79285;
+}
+
+.buttonLink:hover {
+  color:#FBC46C;
+  cursor: pointer;
+}
+
+input {
+    margin: 8px auto;
+    padding:10px 15px;
+    border-radius: 20px;
+    box-shadow: 5px 5px 8px #0d275037
+    , -3px -3px 8px rgba(255, 255, 255, 0.205)
+    ;
+    border:none;
+}
+
+
+header {
+  display: flex;
+  width:80%;
+  justify-content: space-between;
+  align-items: center;
+  margin: auto;
+}
+
+header h2 {
+  /* text-transform: uppercase; */
+  color: #951327;
+  cursor: pointer;
+}
+
+header h2:hover{
+  color: #F79285;
+}
+
+p,li {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+
+@media screen and (max-width:600px){
+
+   header h2{
+    font-size: 1.2em;
+   }
+}

@@ -1,19 +1,10 @@
 #AddAMeal {
     text-align: center;
-    padding: 40px;
+    padding: 40px 0;
+    position: relative;
 }
 
-#AddAMeal #addMealButton{
-    position: absolute;
-    bottom: 150px;
-    left:46%;
-    width:8%;
-    background-color:#2866b2;
-    color: white;
-    border: none;
-    padding:10px 0;
-    cursor: pointer;
-}
+
 
 #AddAMeal #addIngButton{
     background-color: grey;
@@ -29,20 +20,22 @@
     color:black;
 }
 
-#AddAMeal #addMealButton:hover {
-    background-color: #99C8FF;
+
+
+#AddAMeal h2 input {
+    margin-left: 8px;
+    padding: 3px;
 }
 
 #AddAMeal form {
     padding: 10px 0;
-    width:30%;
     margin: auto;
+    width:35%;
 }
 
 
 #AddAMeal form input {
     margin: 0 5px;
-    width: 35%;
 }
 
 #AddAMeal #emptyIngList {
@@ -52,18 +45,13 @@
     margin: 10px auto;
 }
 
-#AddAMeal .deleteIngButton {
-    margin-left: 5px;
-    border-radius: 50%;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    border: none;
-    cursor: pointer;
+#AddAMeal .roundButton {
+   width:30px;
+   height:30px;
+   margin-left: 10px;
 }
 
-#AddAMeal .deleteIngButton:hover{
-    background-color: grey;
-    color:white;
-}
+
 
 #AddAMeal .suggestionsContainer {
     text-align: left;
@@ -86,6 +74,11 @@
     color: white;
 }
 
+@media screen and (min-width:600px) and (max-width:1025px) {
+    #AddMeal form {
+        width:80%;
+    }
+}
 
 @media screen and (max-width:600px){
     #AddAMeal form {
@@ -93,11 +86,13 @@
     }
 
     #AddAMeal form input {
-        width:39%;
+        width:25%;
     }
 
     #AddAMeal #addMealButton {
         width:30%;
         left:35%
     }
+
+
 }

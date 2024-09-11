@@ -5,13 +5,11 @@ const db = require("../model/helper");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const jwtSecret = process.env.JWT_SECRET;
-<<<<<<< HEAD
-const saltrounds = process.env.SALT_ROUNDS|| 10;
-// const userMustExist = require("../guards/userMustExist")
-=======
+
 const saltrounds = process.env.SALT_ROUNDS || 10;
-const userMustExist = require("../guards/userMustExist")
->>>>>>> main
+
+// const userMustExist = require("../guards/userMustExist")
+
 
 /* POST register new user */
 // Register user NEED TO ADD MIDDLEWARE userAlreadyExists
@@ -35,14 +33,11 @@ router.post("/register", async (req, res) => {
 });
 
 /* POST login user */
-<<<<<<< HEAD
+
 // Login user NEED TO ADD MIDDLEWARE userMustExist
 // router.post("/login", userMustExist, async (req, res) => {
   router.post("/login", async (req, res) => {
 
-=======
-router.post("/login", userMustExist, async (req, res) => {
->>>>>>> main
   const { username, password } = req.body;
   
   try {

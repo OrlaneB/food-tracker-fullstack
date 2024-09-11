@@ -37,6 +37,20 @@ function App() {
 
   return (
     <> {/* component wrapper */}
+
+    <header>
+      <h2 onClick={()=>navigate("/")}>Foodtracker</h2>
+
+      <nav>
+        <button className='roundButton' onClick={()=>navigate("/add-meal")}>
+          <i className="fi fi-rr-add"></i>
+        </button>
+        <button className='roundButton' onClick={()=> navigate("/profile")}>
+          <i className="fi fi-rr-user"></i>
+        </button>
+      </nav>
+      
+    </header>
       
     < loginAuth.Provider value={{loginAuthValue, setLoginAuthValue, checkIfLoggedIn}}>
       {/* <Router> */}

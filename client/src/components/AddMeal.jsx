@@ -12,8 +12,10 @@ export default function AddMeal() {
     const [nextId, setNextId] = useState(0);
     const [suggestions,setSuggestions] = useState([]);
     const [onFocusInput, setOnFocusInput] = useState(null);
+    const [dateInput,setDateInput]=useState(new Date());
 
     const {checkIfLoggedIn}= useContext(loginAuth);
+    const {warningOn,setIsWarningOn} = useState(false);
 
     // const navigate = useNavigate();
 
@@ -54,10 +56,6 @@ export default function AddMeal() {
       setOnFocusInput();
     }
 
-    // function postIngredients(ingList){
-    //     // POST axios
-    //     // data: {ingList}
-    // }
 
     async function calculateNutrients(listIng) {
       let nutrientsObj = {};
@@ -235,9 +233,7 @@ export default function AddMeal() {
     <>
 
       <div id="AddAMeal">
-      <p style={{fontFamily:"impact"}}>foodtracker</p>
-      <hr style={{width:"60%", marginBottom:"30px"}} />
-      <h2>Log the meal for {today.toDateString()}</h2>
+      <h2>Log the meal for <input type='date' value={dateInput} onChange={(event)=>setDateInput(event.value)} /></h2>
         {listIngredients.map((ingredientObj,index)=>(
             // <AddAnIngredient ingredientObj={ingredientObj}  key={ingredientObj.id} />
             <form key={ingredientObj.id}>
@@ -247,7 +243,7 @@ export default function AddMeal() {
                 
                 <input type='number' value={ingredientObj.numberAmount} name='numberAmount' placeholder='Amount'  onChange={(event)=>handleChangeIngredientForm(event,index)} onFocus={()=>setOnFocusInput(null)}/>g
 
-                <button className='deleteIngButton' onClick={(event)=>deleteIngredient(event,index)}>x</button>
+                <button className='roundButton' onClick={(event)=>deleteIngredient(event,index)}>x</button>
 
                 {onFocusInput===index && suggestions &&
                   <div className='suggestionsContainer'>
@@ -262,14 +258,10 @@ export default function AddMeal() {
         {!listIngredients[0] &&
           <p id='emptyIngList'>Add the ingredients of this meal.</p>
         }
-        
-        <button onClick={()=>calculateNutrients(listIngredients)}>Calculate nutrients</button>
-        <button onClick={()=>handleAddIngredientButton()} id='addIngButton'> Add an ingredient</button>
 
         <button id='addMealButton' onClick={()=>addWholeMealToDB()}>Add the meal</button>
 
         </div>
-        <NavBar />
     </>
 
   )

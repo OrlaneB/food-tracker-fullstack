@@ -16,7 +16,6 @@ CREATE TABLE users(
     user_id INT not null AUTO_INCREMENT PRIMARY KEY,
     profile_id INT,
     username VARCHAR(50) not null,
-    email VARCHAR(50) not null,
     `password` VARCHAR(255) not null
 );
 
@@ -79,11 +78,11 @@ FOREIGN KEY (meal_id) REFERENCES meals(meal_id) ON DELETE CASCADE;
 --
 -- Insert Data into users
 --
-INSERT INTO users (profile_id, username, email, password) VALUES
-(1, 'user1', 'user1@example.com', '$2b$10$RYB/mnDI2elkvRV0oPDmMetmzMFXz8t/W6I6XiQA8kVWaCne.hHkC'),
-(2, 'user2', 'user2@example.com', '$2b$10$RYB/mnDI2elkvRV0oPDmMetmzMFXz8t/W6I6XiQA8kVWaCne.hHkC'),
-(3, 'user3', 'user3@example.com', '$2b$10$RYB/mnDI2elkvRV0oPDmMetmzMFXz8t/W6I6XiQA8kVWaCne.hHkC'),
-(4, 'user4', 'user4@example.com', '$2b$10$RYB/mnDI2elkvRV0oPDmMetmzMFXz8t/W6I6XiQA8kVWaCne.hHkC');
+INSERT INTO users (profile_id, username, password) VALUES
+(1, 'user1', '$2b$10$RYB/mnDI2elkvRV0oPDmMetmzMFXz8t/W6I6XiQA8kVWaCne.hHkC'),
+(2, 'user2', '$2b$10$RYB/mnDI2elkvRV0oPDmMetmzMFXz8t/W6I6XiQA8kVWaCne.hHkC'),
+(3, 'user3', '$2b$10$RYB/mnDI2elkvRV0oPDmMetmzMFXz8t/W6I6XiQA8kVWaCne.hHkC'),
+(4, 'user4', '$2b$10$RYB/mnDI2elkvRV0oPDmMetmzMFXz8t/W6I6XiQA8kVWaCne.hHkC');
 
 --
 -- Insert Data into profiles

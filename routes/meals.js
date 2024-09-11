@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const db = require('../model/helper');
-const userShouldBeLoggedIn = require("../guards/userShouldBeLoggedIn")
+// const userShouldBeLoggedIn = require("../guards/userShouldBeLoggedIn")
 
 /* GET meals, ingredients, nutrients*/
 // router.get("/:profile_id", userShouldBeLoggedIn, async(req, res)=>{
@@ -47,7 +47,7 @@ router.get("/:profile_id", async(req, res)=>{
 router.post('/:profile_id', async(req, res) => {
   const { profile_id } = req.params;
   const { date} = req.body;
-  console.log(typeof profile_id); //string
+  console.log(typeof profile_id, profile_id); //string
   console.log(date); //string
     
   try {
@@ -64,7 +64,7 @@ router.post('/:profile_id', async(req, res) => {
                     );
 
   // Send a success message to the frontend
-  res.status(201).send("Meal added!");
+  // res.status(201).send("Meal added!");
   res.status(201).send(getMealId);// need to send meal id to frontend for ingredient list post
 
   } catch (err) {
@@ -76,11 +76,13 @@ router.post('/:profile_id', async(req, res) => {
 router.post('/ingredients/:meal_id', async(req, res) => {
   const { meal_id} = req.params;
   const { ingredientsList} = req.body;
+  // console.log(ingredientsList);
   try {
   // Add ingredients to meal
   for (let ingredient of ingredientsList){
+
     await db(` INSERT INTO ingredients (meal_id, name, number_amount)
-               VALUES (${meal_id},"${ingredient.name}",${ingredient.number_amount})`
+               VALUES (${meal_id},"${ingredient.name}",${ingredient.numberAmount})`
     );
   }
   // Send a success message to the frontend
@@ -95,14 +97,21 @@ router.post('/ingredients/:meal_id', async(req, res) => {
 
 /* POST meal nutrients*/
 router.post('/nutrients/:meal_id', async(req, res) => {
+
   const { meal_id} = req.params;
   const { nutrientsList} = req.body;
+  // console.log("a");
+  console.log(nutrientsList["Protein"])
   try {
   // Add ingredients to meal
-  for (let nutrient of nutrientsList){
+  for (let nutrient in nutrientsList){
+    // console.log("b : ",nutrient);
+
     await db(` INSERT INTO nutrients_by_meal (meal_id, nutrient_name, nutrient_number_amount)
-               VALUES (${meal_id},"${nutrient.name}",${nutrient.number_amount})`
+               VALUES (${meal_id},"${nutrient}",${nutrientsList[nutrient]})`
     );
+
+    // console.log("c")
   }
   // Send a success message to the frontend
   res.status(201).send("Nutrients added!");

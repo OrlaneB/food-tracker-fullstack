@@ -57,62 +57,61 @@ export default function AddMeal() {
     }
 
 
-
-    function calculateNutrients (listIng){
-
-        let nutrientsObj = {};
-
-        const requests = listIng.map(ingredient =>
-            axios.get(`https://api.nal.usda.gov/fdc/v1/foods/list?api_key=${authKey}`, {
+    async function calculateNutrients(listIng) {
+      let nutrientsObj = {};
+      let nutrientMeal = {};
+  
+      // Create an array of axios GET requests
+      const requests = listIng.map(ingredient =>
+          axios.get(`https://api.nal.usda.gov/fdc/v1/foods/list?api_key=${authKey}`, {
               params: {
-                query: ingredient.name,
-                dataType: "Survey (FNDDS)",
-                pageSize: 1, // Limite le nombre de résultats par page si nécessaire
+                  query: ingredient.name,
+                  dataType: "Survey (FNDDS)",
+                  pageSize: 1, // Limit the number of results per page if necessary
               },
-            })
-          );
-          
-          axios.all(requests)
-            .then(axios.spread((...responses) => {
-        
-              responses.forEach((response,index)=>{
-                let ingredientNutrients = {};
-                
-                response.data[0].foodNutrients.filter(nut => nutrientList.includes(nut.name)).forEach(nut=>{
-                    let amountOfIngredient = nut.amount /100;
-                    ingredientNutrients[nut.name]=`${amountOfIngredient*listIng[index].numberAmount} ${nut.unitName}`;
-                })
-                nutrientsObj[response.data[0].description]=ingredientNutrients;
-              })
+          })
+      );
+  
+      try {
+          // Wait for all requests to complete
+          const responses = await axios.all(requests);
+  
+          responses.forEach((response, index) => {
+              let ingredientNutrients = {};
+  
+              response.data[0].foodNutrients
+                  .filter(nut => nutrientList.includes(nut.name))
+                  .forEach(nut => {
+                      let amountOfIngredient = nut.amount / 100;
+                      ingredientNutrients[nut.name] = `${amountOfIngredient * listIng[index].numberAmount} ${nut.unitName}`;
+                  });
+  
+              nutrientsObj[response.data[0].description] = ingredientNutrients;
+          });
+  
+          // Calculate the total nutrients
+          for (let ing in nutrientsObj) {
+              for (let nutrient in nutrientsObj[ing]) {
+                  let amount = nutrientsObj[ing][nutrient].split(" ")[0];
+  
+                  if (nutrientMeal[nutrient]) {
+                      nutrientMeal[nutrient] += Number(amount);
+                  } else {
+                      nutrientMeal[nutrient] = Number(amount);
+                  }
+              }
+          }
+  
+          return nutrientMeal; // Return the calculated nutrients
+  
+      } catch (errors) {
+          console.log(errors); // Handle errors
+          return "Did not work";
+      }
+  }
+  
 
-              console.log(nutrientsObj);
-
-              let nutrientMeal = {};
-
-                for(let ing in nutrientsObj){
-                        for(let nutrient in nutrientsObj[ing]){
-                            let amount = nutrientsObj[ing][nutrient].split(" ")[0];
-
-                            if (nutrientMeal[nutrient]) {
-                                nutrientMeal[nutrient] += Number(amount);
-                            } else {
-                                nutrientMeal[nutrient] = Number(amount);
-                            }
-                        }
-                }
-                    
-                
-
-                console.log(nutrientMeal)
-
-            }))
-            .catch(errors => {
-              console.log(errors); // Gère les erreurs
-            });
-
-           
-
-    }
+    // console.log(calculateNutrients(listIngredients))
 
     function deleteIngredient(event,index){
       event.preventDefault();
@@ -122,7 +121,71 @@ export default function AddMeal() {
       setListIngredients(newList);
     }
 
-  
+    async function addWholeMealToDB(){
+        //Create a new meal
+      let mealID = await postMeal();
+      // console.log(mealID.data.data[0]["max(meal_id)"]);
+      mealID=mealID.data.data[0]["max(meal_id)"]
+      
+      if(mealID){
+        //Add ingredients to the meal
+      postIngredients(mealID);
+
+      //Add nutrients to the meal
+      postNutrients(mealID);
+      }
+      
+
+    }
+
+    async function postMeal(){
+      //Need -> Profile_id (params), date(body)
+
+      const profile_id = 1;
+      const date = new Date();
+      console.log("Post Meal");
+
+      try{
+        const mealID = await axios.post(`http://localhost:5000/api/meals/${profile_id}`, {
+          date
+        });
+
+        console.log("Posted a meal worked!");
+        return mealID;
+      }
+      catch(err){
+        console.log(err);
+      }
+    }
+
+    async function postIngredients(mealID){
+      try {
+
+        await axios.post(`http://localhost:5000/api/meals/ingredients/${mealID}`,{
+          ingredientsList : listIngredients
+        })
+
+        console.log("Posted ingredients worked!")
+
+      } catch(err){
+        console.log(err);
+      }
+    }
+
+    async function postNutrients(mealID){
+      let nutrientsListCalculated = await calculateNutrients(listIngredients);
+      console.log(nutrientsListCalculated)
+
+      try{
+        await axios.post(`http://localhost:5000/api/meals/nutrients/${mealID}`,{
+          nutrientsList:nutrientsListCalculated
+        })
+
+        console.log("Post nutrients worked!")
+      } catch(err){
+        console.log(err);
+      }
+    }
 
     const getSuggestions = debounce(async (inputValue) => {
       if (inputValue) {
@@ -185,7 +248,7 @@ export default function AddMeal() {
                 {onFocusInput===index && suggestions &&
                   <div className='suggestionsContainer'>
                     {suggestions.map(s=>(
-                    <p onClick={()=>handleClickSuggestion(index,s)}>{s}</p>
+                    <p onClick={()=>handleClickSuggestion(index,s)} key={s}>{s}</p>
                     ))}
                   </div>
                 }
@@ -196,16 +259,7 @@ export default function AddMeal() {
           <p id='emptyIngList'>Add the ingredients of this meal.</p>
         }
 
-        {warningOn &&
-          <p>Are you sure you added all the ingredients ?</p>
-        }
-        
-        <button onClick={()=>handleAddIngredientButton()} className='textButton'> Add an ingredient</button>
-
-       
-        <button className='importantTextButton'>Add the meal</button>
-       
-          
+        <button id='addMealButton' onClick={()=>addWholeMealToDB()}>Add the meal</button>
 
         </div>
     </>

@@ -15,14 +15,14 @@ const saltrounds = process.env.SALT_ROUNDS || 10;
 // Register user NEED TO ADD MIDDLEWARE userAlreadyExists
 // This endpoint works but the profile_id value is null for user registered through postman
 router.post("/register", async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, password } = req.body;
 
   console.log("Received password:", password);  // Debugging: log password
   console.log("Salt rounds:", saltrounds);      // Debugging: log saltrounds
 
   const passwordHash = await bcrypt.hash(password, +saltrounds);
   try {
-    const sql = `INSERT INTO users (username, email, password) VALUES ('${username}', '${email}', '${passwordHash}')`;
+    const sql = `INSERT INTO users (username, email, password) VALUES ('${username}', '${passwordHash}')`;
     await db(sql);
     res.send({ message: "it worked" });
   } catch (err) {

@@ -83,7 +83,27 @@ router.post("/register", async (req, res) => {
   }
 });
 
-/* DELETE user account (make sure cascade works)*/
+/* Send user_id to the frontend to display meals */
+router.post("/token", async(req,res)=>{
+  const {token} = req.body;
+  let user_id =null;
+  try{
+    jwt.verify(token, jwtSecret, (err,decoded)=>{
+      if(err) {res.status(401).send({message:err.message})}
+      else {
+        user_id = decoded.user_id;
+      }
+    })
+    res.status(200).send({user_id});
+    
+  }catch(err){
+    res.status(500).send({message:err.message});
+  }
+})
+/* Change username*/
+// router.put
+
+/* Reset password */
 
 module.exports = router;
 

@@ -26,14 +26,15 @@ CREATE TABLE users(
 CREATE TABLE profiles(
     profile_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
-    nutrient_1 VARCHAR(50),
-    nutrient_2 VARCHAR(50),
-    nutrient_3 VARCHAR(50),
-    medical_condition VARCHAR(50),
-    date_of_birth date,
-    gender VARCHAR(20),
-    `weight` INT,
-    height INT
+    nutrient_1_name VARCHAR(50),
+    nutrient_2_name VARCHAR(50),
+    nutrient_3_name VARCHAR(50),
+    nutrient_1_amount INT,
+    nutrient_2_amount INT,
+    nutrient_3_amount INT,
+    nutrient_1_goal VARCHAR(50),
+    nutrient_2_goal VARCHAR(50),
+    nutrient_3_goal VARCHAR(50)
     );
 
 ALTER TABLE profiles
@@ -87,11 +88,27 @@ INSERT INTO users (profile_id, username, email, password) VALUES
 --
 -- Insert Data into profiles
 --
-INSERT INTO profiles (user_id, nutrient_1, nutrient_2, nutrient_3, medical_condition, date_of_birth, gender, weight, height) VALUES
-(1,'Energy (kcal)', 'Protein', 'Calcium, Ca', 'Osteoporosis', '1985-03-25', 'Female', 65, 160),
-(2,'Carbohydrate, by difference', 'Iron, Fe', 'Vitamin C, total ascorbic acid', 'Anemia', '1990-07-19', 'Male', 80, 175),
-(3,'Total lipid (fat)', 'Vitamin A, RAE', 'Zinc, Zn', 'Heart Disease', '1978-11-12', 'Male', 90, 180),
-(4,'Fiber, total dietary', 'Potassium, K', 'Magnesium, Mg', 'High Blood Pressure', '1995-05-14', 'Female', 55, 165);
+INSERT INTO profiles (
+    user_id, 
+    nutrient_1_name, nutrient_2_name, nutrient_3_name, 
+    nutrient_1_amount, nutrient_2_amount, nutrient_3_amount, 
+    nutrient_1_goal, nutrient_2_goal, nutrient_3_goal
+)
+VALUES
+-- User 1
+(1, 'Protein', 'Carbohydrates', 'Fats', 50, 150, 60, '70g', '200g', '80g'),
+
+-- User 2
+(2, 'Fiber', 'Sugar', 'Cholesterol', 25, 30, 200, '30g', '25g', '180mg'),
+
+-- User 3
+(3, 'Vitamin C', 'Calcium', 'Iron', 75, 500, 10, '90mg', '1000mg', '18mg'),
+
+-- User 4
+(4, 'Magnesium', 'Potassium', 'Sodium', 400, 3500, 2300, '420mg', '4700mg', '2400mg');
+
+
+
 
 --
 -- Insert Data into meals

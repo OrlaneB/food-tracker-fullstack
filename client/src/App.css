@@ -1,26 +1,6 @@
 /* Will contain elements */
 
 @font-face {
-  font-family: Shrimp;
-  src: url(assets/SHRIMP.ttf);
-}
-
-@font-face {
-  font-family: Chido;
-  src: url(assets/Chido.otf);
-}
-
-@font-face {
-  font-family: "Super Caramel";
-  src: url(assets/SuperCaramel.ttf);
-}
-
-@font-face {
-  font-family: CakeCafe;
-  src: url(assets/cakecafe.ttf);
-}
-
-@font-face {
   font-family: AnjaEliane;
   src: url(assets/AnjaEliane.ttf);
 }

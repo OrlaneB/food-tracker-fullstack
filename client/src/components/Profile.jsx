@@ -5,6 +5,7 @@ import "../styles/Profile2.css"
 import loginAuth from '../context/loginAuth';
 import { useNavigate } from 'react-router-dom';
 import NavBar from './NavBar';
+import axios from 'axios';
 
 import userFriendlyNutrientNames from '../utilities/userFriendlyNutrientNames';
 
@@ -13,15 +14,45 @@ export default function Profile() {
     const {loginAuthValue,setLoginAuthValue,checkIfLoggedIn}=useContext(loginAuth);
     const navigate = useNavigate();
 
+    const [profileInfo,setProfileInfo] = useState(null);
+
     const nutrientNamesArray = Object.values(userFriendlyNutrientNames);
 
     //Will come from profile
     const chosenNutrients = [{name:"Iron, Fe",goalAmount:18,type:"Aim for"},{name:"Vitamin C, total ascorbic acid",goalAmount:75,type:"At least"},{name:"Calcium, Ca",goalAmount:1000,type:"Less than"}]
+
+    async function getProfileInfo(){
+        let user_id = loginAuthValue.user_id;
+
+        console.log(user_id);
+
+        if(user_id){
+            try {
+
+                const result = await axios.get(`http://localhost:5000/api/profiles/${user_id}`);
+    
+                console.log("It worked!")
+                setProfileInfo(result.data.resObj)
+    
+            }
+            catch(err){
+                console.log(err);
+            }
+        }
+            
+        
+    }
     
 
     useEffect(()=>{
        checkIfLoggedIn();
     },[])
+
+    useEffect(()=>{
+        getProfileInfo();
+    },[loginAuthValue])
+
+
 
 
 
@@ -59,7 +90,8 @@ export default function Profile() {
     return (
         <div id="profile">
             
-                <div id='profileImage'>
+                { profileInfo && 
+                    <div><div id='profileImage'>
                     
                     <img src="https://tinyurl.com/y8kt5xam" alt="Ruth Asawa sitting next to her art"/>
                     <button className='roundButton'><i class="fi fi-rr-refresh"></i></button>
@@ -68,7 +100,7 @@ export default function Profile() {
                 
               
     
-                <h1>Laura</h1>
+                <h1>{profileInfo.username}</h1>
                 
 
 
@@ -104,6 +136,7 @@ export default function Profile() {
 
                 
                 <button className='textButton'>Update changes</button>
+                </div>}
 
 
             </div>

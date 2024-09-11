@@ -31,6 +31,7 @@ export default function Login() {
 
         let newAuthValue = {...loginAuthValue};
         newAuthValue.isLoggedIn = true;
+        newAuthValue.user_id = result.data.user_id;
 
         setLoginAuthValue(newAuthValue);
 

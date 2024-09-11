@@ -13,10 +13,7 @@ const usernameUnavailable = require("../guards/usernameUnavailable")
 
 
 /* POST register new user */
-// Register user NEED TO ADD MIDDLEWARE userAlreadyExists
-// This endpoint works but the profile_id value is null for user registered through postman
 router.post("/register", usernameUnavailable,async (req, res) => {
-// router.post("/register", async (req, res) => {
   const { username, password } = req.body;
 
   console.log("Received password:", password);  // Debugging: log password

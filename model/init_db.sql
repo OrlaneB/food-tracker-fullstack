@@ -40,6 +40,7 @@ ALTER TABLE profiles
 ADD CONSTRAINT fk_user
 FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE;
 
+--
 -- Create Table meals
 --
 CREATE TABLE meals (
@@ -49,7 +50,7 @@ CREATE TABLE meals (
 );
 ALTER TABLE meals
 ADD CONSTRAINT fk_profile_meal
-FOREIGN KEY (profile_id) REFERENCES profiles(profile_id);
+FOREIGN KEY (profile_id) REFERENCES profiles(profile_id) ON DELETE CASCADE;
 --
 -- Create Table ingredients
 --

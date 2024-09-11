@@ -1,12 +1,11 @@
 var express = require('express');
 var router = express.Router();
 const db = require('../model/helper');
-// const userShouldBeLoggedIn = require("../guards/userShouldBeLoggedIn")
-// const userMustExist = require("../guards/userMustExist")
+const userShouldBeLoggedIn = require("../guards/userShouldBeLoggedIn")
+const userMustExist = require("../guards/userMustExist")
 
 /* GET profile information*/
-// router.get("/:user_id", userShouldBeLoggedIn, async(req, res)=>{
-router.get("/:user_id", async(req, res)=>{
+router.get("/:user_id", userShouldBeLoggedIn, async(req, res)=>{
 
   const { user_id } = req.params;
   console.log("user_id", user_id);
@@ -111,6 +110,18 @@ router.put("/nutrients/:profile_id", async (req, res) => {
 });
 
 /* DELETE profile */
-
+router.delete("/:profile_id", async (req, res) => {
+  const {profile_id} = req.params
+  try {
+    // Add the user's profile informaiton
+    await db(`DELETE FROM profiles 
+              WHERE profile_id = (${profile_id})`
+            );
+      // Send a success message to the frontend
+       res.status(201).send("Profile deleted!");
+  } catch (err) {
+    res.status(500).send({ error: err.message });
+  }
+});
 
 module.exports = router;

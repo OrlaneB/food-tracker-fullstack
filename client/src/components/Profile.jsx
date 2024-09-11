@@ -69,16 +69,8 @@ export default function Profile() {
               
     
                 <h1>Laura</h1>
-                <p style={{color:"#9d9d9d"}}>Medical Condition: Anemia</p>
                 
-                        
-                    
-                    
-                <div id='userInfo'>
-                    <p><span>{userObject.age}</span><br/>Age</p>
-                    <p><span>{userObject.height}</span><br/>Height</p>
-                    <p><span>{userObject.weight}</span><br/>Weight</p>
-                </div>
+
 
                     
                 <button className='logout textButton' onClick={()=>logOut()}>Log Out</button>
@@ -113,37 +105,6 @@ export default function Profile() {
                 
                 <button className='textButton'>Update changes</button>
 
-              
-                
-                
-
-                {/* <div id="nutrientGoals">
-                    <h2>Your daily goals</h2>
-                    <p id="warning">We are not doctors, this is an average recommendation, check with your doctor to get precise intructions.</p>
-                    <form>
-                        <label> {userObject.chosenNutrients[0]}
-                            <input type='text' />
-                        </label>
-                        <label> {userObject.chosenNutrients[1]}
-                            <input type='text' />
-                        </label>
-                        <label> {userObject.chosenNutrients[2]}
-                            <input type='text' />
-                        </label>
-                    </form>
-                </div>
-
-
-                <h2 style={{textAlign:"center"}}>Nutrients to track</h2>
-                <div id="nutrientGrid">
-
-                        {nutrients.map((nutrient) => (
-                            <div key={nutrient}>
-                                <input type='checkbox' checked={isChecked(nutrient)? "checked" : ""} />
-                                <label>{nutrient}</label>
-                            </div>
-                        ))}
-                </div> */}
 
             </div>
             

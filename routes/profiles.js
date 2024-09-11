@@ -110,5 +110,7 @@ router.put("/nutrients/:profile_id", async (req, res) => {
   }
 });
 
+/* DELETE profile */
+
 
 module.exports = router;

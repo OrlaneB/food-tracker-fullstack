@@ -16,7 +16,6 @@ CREATE TABLE users(
     user_id INT not null AUTO_INCREMENT PRIMARY KEY,
     profile_id INT,
     username VARCHAR(50) not null,
-    email VARCHAR(50) not null,
     `password` VARCHAR(255) not null
 );
 

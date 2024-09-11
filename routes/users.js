@@ -8,13 +8,15 @@ const jwtSecret = process.env.JWT_SECRET;
 
 const saltrounds = process.env.SALT_ROUNDS || 10;
 
-// const userMustExist = require("../guards/userMustExist")
+const userMustExist = require("../guards/userMustExist")
+const usernameUnavailable = require("../guards/usernameUnavailable")
 
 
 /* POST register new user */
 // Register user NEED TO ADD MIDDLEWARE userAlreadyExists
 // This endpoint works but the profile_id value is null for user registered through postman
-router.post("/register", async (req, res) => {
+router.post("/register", usernameUnavailable,async (req, res) => {
+// router.post("/register", async (req, res) => {
   const { username, password } = req.body;
 
   console.log("Received password:", password);  // Debugging: log password
@@ -22,7 +24,7 @@ router.post("/register", async (req, res) => {
 
   const passwordHash = await bcrypt.hash(password, +saltrounds);
   try {
-    const sql = `INSERT INTO users (username, email, password) VALUES ('${username}', '${passwordHash}')`;
+    const sql = `INSERT INTO users (username, password) VALUES ('${username}', '${passwordHash}')`;
     await db(sql);
     res.send({ message: "it worked" });
   } catch (err) {

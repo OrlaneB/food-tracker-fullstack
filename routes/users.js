@@ -74,6 +74,7 @@ router.post("/register", usernameUnavailable,async (req, res) => {
         // If successful send token to frontend to put in local storage
         res.send({
           token: token,
+          user_id:user.user_id
         });
       }
     }

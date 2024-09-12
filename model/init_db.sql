@@ -95,16 +95,16 @@ INSERT INTO profiles (
 )
 VALUES
 -- User 1
-(1, 'Protein', 'Carbohydrates', 'Fats', 50, 150, 60, '70g', '200g', '80g'),
+(1, 'Protein', "Carbohydrate, by difference", "Total lipid (fat)", 50, 150, 60, 'Equals', 'Equals', 'Less than'),
 
 -- User 2
-(2, 'Fiber', 'Sugar', 'Cholesterol', 25, 30, 200, '30g', '25g', '180mg'),
+(2, "Fiber, total dietary", "Sugars, total including NLEA", 'Cholesterol', 25, 30, 200, 'Less than', 'Less than', 'Less than'),
 
 -- User 3
-(3, 'Vitamin C', 'Calcium', 'Iron', 75, 500, 10, '90mg', '1000mg', '18mg'),
+(3, "Vitamin C, total ascorbic acid", "Calcium, Ca", "Iron, Fe", 75, 500, 10, 'Equals', 'Equals', 'More than'),
 
 -- User 4
-(4, 'Magnesium', 'Potassium', 'Sodium', 400, 3500, 2300, '420mg', '4700mg', '2400mg');
+(4, "Magnesium, Mg", "Potassium, K", "Sodium, Na", 400, 3500, 2300, 'More than', 'Equals', 'Less than');
 
 
 

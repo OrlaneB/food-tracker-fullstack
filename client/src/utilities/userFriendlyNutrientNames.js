@@ -2,7 +2,7 @@ const userFriendlyNutrientNames = {
     Energy: "Calories",
     Protein: "Protein",
     "Carbohydrate, by difference": "Carbs",
-    "Total lipid (fat)": "Fat",
+    "Total lipid (fat)": "Fats",
     "Fiber, total dietary": "Fiber",
     "Sugars, total including NLEA": "Sugars",
     "Calcium, Ca": "Calcium",

@@ -16,8 +16,9 @@
     aspect-ratio: 1/1;
     border-radius: 50%;
     object-fit: cover;
+    object-position: top;
     overflow: hidden; 
-    margin-bottom: 0;
+    margin-bottom: 20px;
 }
 
 #profileImage button {

@@ -15,11 +15,22 @@ export default function Profile() {
     const navigate = useNavigate();
 
     const [profileInfo,setProfileInfo] = useState(null);
+    const [chosenNutrients,setChosenNutrients] = useState([{name:null,amount:null,goal:null}]);
+    const [unsavedChanges,setUnsavedChanges] = useState(false);
 
     const nutrientNamesArray = Object.values(userFriendlyNutrientNames);
 
-    //Will come from profile
-    const chosenNutrients = [{name:"Iron, Fe",goalAmount:18,type:"Aim for"},{name:"Vitamin C, total ascorbic acid",goalAmount:75,type:"At least"},{name:"Calcium, Ca",goalAmount:1000,type:"Less than"}]
+
+    function checkUnsavedChanges(){
+        let {nutrient_1_name,nutrient_1_goal,nutrient_1_amount,nutrient_2_name,nutrient_2_goal,nutrient_2_amount,nutrient_3_name,nutrient_3_goal,nutrient_3_amount} = profileInfo;
+
+        if(nutrient_1_name===chosenNutrients[0].name && nutrient_1_amount===chosenNutrients[0].amount && nutrient_1_goal===chosenNutrients[0].goal &&
+            nutrient_2_name===chosenNutrients[1].name && nutrient_2_amount===chosenNutrients[1].amount && nutrient_2_goal===chosenNutrients[1].goal &&
+            nutrient_3_name===chosenNutrients[2].name && nutrient_3_amount===chosenNutrients[2].amount && nutrient_3_goal===chosenNutrients[2].goal 
+        ) return false
+
+        return true
+    }
 
     async function getProfileInfo(){
         let user_id = loginAuthValue.user_id;
@@ -30,9 +41,18 @@ export default function Profile() {
             try {
 
                 const result = await axios.get(`http://localhost:5000/api/profiles/${user_id}`);
+
+                let profileObj = result.data.resObj;
     
                 console.log("It worked!")
-                setProfileInfo(result.data.resObj)
+                setProfileInfo(profileObj);
+
+
+                setChosenNutrients(
+                    [{name: profileObj.nutrient_1_name, amount:profileObj.nutrient_1_amount, goal:profileObj.nutrient_1_goal},
+                    {name: profileObj.nutrient_2_name, amount:profileObj.nutrient_2_amount, goal:profileObj.nutrient_2_goal},
+                    {name: profileObj.nutrient_3_name, amount:profileObj.nutrient_3_amount, goal:profileObj.nutrient_3_goal}]
+                )
     
             }
             catch(err){
@@ -42,6 +62,32 @@ export default function Profile() {
             
         
     }
+
+    async function updateNutrientChanges(){
+        let user_id = loginAuthValue.user_id;
+
+        try{
+            await axios.put(`http://localhost:5000/api/profiles/${user_id}`, {
+                nutrient_1_name:chosenNutrients[0].name,
+                nutrient_2_name:chosenNutrients[1].name,
+                nutrient_3_name:chosenNutrients[2].name,
+                nutrient_1_amount:chosenNutrients[0].amount,
+                nutrient_2_amount:chosenNutrients[1].amount,
+                nutrient_3_amount:chosenNutrients[2].amount,
+                nutrient_1_goal:chosenNutrients[0].goal,
+                nutrient_2_goal:chosenNutrients[1].goal,
+                nutrient_3_goal:chosenNutrients[2].goal
+            });
+
+            console.log("It worked for pdating nutrients!");
+
+            getProfileInfo()
+        }
+        catch(err){
+            console.log(err)
+        }
+    }
+
     
 
     useEffect(()=>{
@@ -52,19 +98,9 @@ export default function Profile() {
         getProfileInfo();
     },[loginAuthValue])
 
-
-
-
-
-    const nutrients = ["Energy","Protein","Carbohydrate, by difference","Total lipid (fat)","Fiber, total dietary","Sugars, total including NLEA","Calcium, Ca","Iron, Fe","Potassium, K","Sodium, Na","Vitamin A, RAE","Vitamin C, total ascorbic acid","Vitamin D (D2 + D3)","Vitamin E (alpha-tocopherol)","Vitamin K (phylloquinone)","Magnesium, Mg","Zinc, Zn","Cholesterol","Folate, DFE","Omega-3 Fatty Acids (EPA, DHA)"];
-
-    const [userObject, setUserObject] = useState({
-        age:34,
-        height:167,
-        weight:70,
-        chosenNutrients:["Cholesterol","Carbohydrate, by difference","Fiber, total dietary"],
-        username:"Laura"
-    })
+    useEffect(()=>{
+        if(chosenNutrients[0].name) setUnsavedChanges(checkUnsavedChanges());
+    },[chosenNutrients])
 
 
     function logOut(){
@@ -78,14 +114,32 @@ export default function Profile() {
         navigate("/login");
     }
 
-    function isChecked(nutrient){
-        // console.log(userObject.chosenNutrients);
-        return userObject.chosenNutrients.includes(nutrient)? true : false;
+    function getScientificName(value){
+        return Object.keys(userFriendlyNutrientNames).find(key => userFriendlyNutrientNames[key]===value);
     }
 
 
+    function handleChangeInputs(event,index){
+        let {name,value} = event.target;
 
- //Level of activity
+        if(name==="amount") value=Number(value);
+        if(name==="name") value=getScientificName(value)
+
+        let newNutrients = [...chosenNutrients];
+        newNutrients[index][name] = value;
+
+        setChosenNutrients(newNutrients);
+    }
+
+    function handleChangeButtons(type,index){
+
+        let newNutrients = [...chosenNutrients];
+        newNutrients[index].goal = type;
+
+        setChosenNutrients(newNutrients);
+    }
+
+
 
     return (
         <div id="profile">
@@ -93,8 +147,8 @@ export default function Profile() {
                 { profileInfo && 
                     <div><div id='profileImage'>
                     
-                    <img src="https://tinyurl.com/y8kt5xam" alt="Ruth Asawa sitting next to her art"/>
-                    <button className='roundButton'><i class="fi fi-rr-refresh"></i></button>
+                    <img src="/src/assets/avatar-default.jpg" alt="Ruth Asawa sitting next to her art"/>
+                    {/* <button className='roundButton'><i class="fi fi-rr-refresh"></i></button> */}
 
                 </div>
                 
@@ -112,20 +166,20 @@ export default function Profile() {
                 
                 <h3>Nutrients to track</h3>
 
-                <p style={{marginBottom:"30px",fontStyle:"italic"}}>We are not doctors, this is an average recommendation, check with your doctor to get precise intructions.</p>
+                <p style={{marginBottom:"30px",fontStyle:"italic"}}>Please, get your recommendations from experts.</p>
 
                 <div id='flexGoalNutrients'>
-                    {chosenNutrients.map(nutrient=>(
-                        <div className='nutrientDiv'>
+                    {chosenNutrients.map((nutrient,i)=>(
+                        <div className='nutrientDiv' key={i}>
                             <div>
-                                <button className={nutrient.type==="Less than"? "selectedType roundButton" : "roundButton"}>&lt;</button>
-                                <button className={nutrient.type==="Aim for"? "selectedType roundButton" : "roundButton"}>&#61;</button>
-                                <button className={nutrient.type==="At least"? "selectedType roundButton" : "roundButton"}>&gt;</button>
+                                <button className={nutrient.goal==="Less than"? "selectedType roundButton" : "roundButton"} onClick={()=>handleChangeButtons("Less than",i)}>&lt;</button>
+                                <button className={nutrient.goal==="Equals"? "selectedType roundButton" : "roundButton"} onClick={()=>handleChangeButtons("Equals",i)}>&#61;</button>
+                                <button className={nutrient.goal==="More than"? "selectedType roundButton" : "roundButton"} onClick={()=>handleChangeButtons("More than",i)}>&gt;</button>
                             </div>
 
-                            <input value={nutrient.goalAmount} type='number'/>
+                            <input name='amount' value={nutrient.amount} type='number' onChange={(event)=>handleChangeInputs(event,i)}/>
                             
-                            <select name='nutrientName' value={userFriendlyNutrientNames[nutrient.name]}>
+                            <select name='name' value={userFriendlyNutrientNames[nutrient.name]} onChange={(event)=>handleChangeInputs(event,i)}>
                                 {nutrientNamesArray.map((nut,index)=>(
                                     <option key={index} value={nut}>{nut}</option>
                                 ))}
@@ -135,7 +189,7 @@ export default function Profile() {
                 </div>
 
                 
-                <button className='textButton'>Update changes</button>
+                {unsavedChanges && <button className='textButton' onClick={()=>updateNutrientChanges()} >Update changes</button>}
                 </div>}
 
 

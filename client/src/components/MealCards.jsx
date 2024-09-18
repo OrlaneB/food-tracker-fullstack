@@ -48,7 +48,7 @@ export default function MealCards() {
 
              </div>
 
-             <div className='mealNutrients'>
+             {nutrientsByMeal[0][0] && <div className='mealNutrients'>
                <p style={{backgroundColor:colors[0]}}> 
                 <span className='amount'>{nutrientsByMeal[index][0].nutrient_number_amount}g </span><br/>
                     {userFriendlyNutrientNames[nutrientsByMeal[index][0].nutrient_name]}
@@ -59,7 +59,7 @@ export default function MealCards() {
                <p style={{backgroundColor:colors[2]}}> <span className='amount'>{nutrientsByMeal[index][2].nutrient_number_amount}g </span> <br/>
                       {userFriendlyNutrientNames[nutrientsByMeal[index][2].nutrient_name]}
                 </p>
-             </div>
+             </div>}
            </div>
 
          )

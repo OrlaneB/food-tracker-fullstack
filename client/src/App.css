@@ -100,7 +100,7 @@ header h2:hover{
   color: #F79285;
 }
 
-p,li {
+p,li, span {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 

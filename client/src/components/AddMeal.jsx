@@ -22,7 +22,7 @@ export default function AddMeal() {
 
     
 
-    let today = new Date();
+    let today = `${new Date().getFullYear()}-${new Date().getMonth()+1<10?"0"+String(new Date().getMonth()+1):new Date().getMonth()+1}-${new Date().getDate()}`;
 
     const nutrientList = ["Energy","Protein","Carbohydrate, by difference","Total lipid (fat)","Fiber, total dietary","Sugars, total including NLEA","Calcium, Ca","Iron, Fe","Potassium, K","Sodium, Na","Vitamin A, RAE","Vitamin C, total ascorbic acid","Vitamin D (D2 + D3)","Vitamin E (alpha-tocopherol)","Vitamin K (phylloquinone)","Magnesium, Mg","Zinc, Zn","Cholesterol","Folate, DFE","Omega-3 Fatty Acids (EPA, DHA)"];
 
@@ -224,16 +224,16 @@ export default function AddMeal() {
       };
     }
   
-    useEffect(()=>{
-      checkIfLoggedIn()
-    }, [])
+    // useEffect(()=>{
+    //   checkIfLoggedIn()
+    // }, [])
     
 
   return (
     <>
 
       <div id="AddAMeal">
-      <h2>Log the meal for <input type='date' value={dateInput} onChange={(event)=>setDateInput(event.value)} /></h2>
+      <h2>Log the meal for <input type='date' value={today} onChange={(event)=>setDateInput(event.value)} /></h2>
         {listIngredients.map((ingredientObj,index)=>(
             // <AddAnIngredient ingredientObj={ingredientObj}  key={ingredientObj.id} />
             <form key={ingredientObj.id}>

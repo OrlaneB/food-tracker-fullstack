@@ -11,7 +11,7 @@ import userFriendlyNutrientNames from '../utilities/userFriendlyNutrientNames';
 
 export default function Profile() {
 
-    const {loginAuthValue,setLoginAuthValue,checkIfLoggedIn}=useContext(loginAuth);
+    const {loginAuthValue,setLoginAuthValue}=useContext(loginAuth);
     const navigate = useNavigate();
 
     const [profileInfo,setProfileInfo] = useState(null);
@@ -66,36 +66,39 @@ export default function Profile() {
     async function updateNutrientChanges(){
         let user_id = loginAuthValue.user_id;
 
-        try{
-            await axios.put(`http://localhost:5000/api/profiles/${user_id}`, {
-                nutrient_1_name:chosenNutrients[0].name,
-                nutrient_2_name:chosenNutrients[1].name,
-                nutrient_3_name:chosenNutrients[2].name,
-                nutrient_1_amount:chosenNutrients[0].amount,
-                nutrient_2_amount:chosenNutrients[1].amount,
-                nutrient_3_amount:chosenNutrients[2].amount,
-                nutrient_1_goal:chosenNutrients[0].goal,
-                nutrient_2_goal:chosenNutrients[1].goal,
-                nutrient_3_goal:chosenNutrients[2].goal
-            });
-
-            console.log("It worked for pdating nutrients!");
-
-            getProfileInfo()
+        if(user_id){
+            try{
+                await axios.put(`http://localhost:5000/api/profiles/${user_id}`, {
+                    nutrient_1_name:chosenNutrients[0].name,
+                    nutrient_2_name:chosenNutrients[1].name,
+                    nutrient_3_name:chosenNutrients[2].name,
+                    nutrient_1_amount:chosenNutrients[0].amount,
+                    nutrient_2_amount:chosenNutrients[1].amount,
+                    nutrient_3_amount:chosenNutrients[2].amount,
+                    nutrient_1_goal:chosenNutrients[0].goal,
+                    nutrient_2_goal:chosenNutrients[1].goal,
+                    nutrient_3_goal:chosenNutrients[2].goal
+                });
+    
+                console.log("It worked for pdating nutrients!");
+    
+                getProfileInfo()
+            }
+            catch(err){
+                console.log(err)
+            }
         }
-        catch(err){
-            console.log(err)
-        }
+        
     }
 
     
 
-    useEffect(()=>{
-       checkIfLoggedIn();
-    },[])
+    // useEffect(()=>{
+    //    checkIfLoggedIn();
+    // },[])
 
     useEffect(()=>{
-        getProfileInfo();
+        setTimeout(()=>{getProfileInfo()},50)
     },[loginAuthValue])
 
     useEffect(()=>{

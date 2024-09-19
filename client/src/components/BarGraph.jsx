@@ -5,6 +5,7 @@ import mealsForOneDate from '../context/mealsForOneDate';
 import userFriendlyNutrientNames from '../utilities/userFriendlyNutrientNames';
 import loginAuth from '../context/loginAuth';
 import axios from 'axios';
+import unitNutrients from '../utilities/measurmentUnitNutrients';
 
 
 export default function BarGraph({percentage}) {
@@ -111,8 +112,7 @@ export default function BarGraph({percentage}) {
                 ${colors[index]} ${360 - nut.percentage * 3.6}deg 360deg)`,}
           }>
             <div className='text' >
-                    <p>{nut.current}g <br/> 
-                    <span style={{color:"grey",fontSize:"0.7em"}}>/{goalAmounts.filter(a=>a.name=nut.nutrient_name)}g</span></p></div>
+                    <p>{nut.current.toFixed(2)} {unitNutrients[nut.nutrient_name]}</p></div>
             <p className='nutrientName' >{userFriendlyNutrientNames[nut.nutrient_name]}</p>
           </div>
         ))}

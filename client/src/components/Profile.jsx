@@ -6,6 +6,7 @@ import loginAuth from '../context/loginAuth';
 import { useNavigate } from 'react-router-dom';
 import NavBar from './NavBar';
 import axios from 'axios';
+import unitNutrients from '../utilities/measurmentUnitNutrients';
 
 import userFriendlyNutrientNames from '../utilities/userFriendlyNutrientNames';
 
@@ -173,7 +174,7 @@ export default function Profile() {
                 <p style={{marginBottom:"30px",fontStyle:"italic"}}>Please, get your recommendations from experts.</p>
 
                 <div id='flexGoalNutrients'>
-                    {chosenNutrients.map((nutrient,i)=>(
+                    {chosenNutrients.sort().map((nutrient,i)=>(
                         <div className='nutrientDiv' key={i}>
                             <div>
                                 <button className={nutrient.goal==="Less than"? "selectedType roundButton" : "roundButton"} onClick={()=>handleChangeButtons("Less than",i)}>&lt;</button>
@@ -181,7 +182,7 @@ export default function Profile() {
                                 <button className={nutrient.goal==="More than"? "selectedType roundButton" : "roundButton"} onClick={()=>handleChangeButtons("More than",i)}>&gt;</button>
                             </div>
 
-                            <input name='amount' value={nutrient.amount} type='number' onChange={(event)=>handleChangeInputs(event,i)}/>
+                            <input name='amount' value={nutrient.amount} type='number' onChange={(event)=>handleChangeInputs(event,i)}/> <p style={{display:"inline",fontSize:"0.8em"}}>{unitNutrients[nutrient.name]}</p>
                             
                             <select name='name' value={userFriendlyNutrientNames[nutrient.name]} onChange={(event)=>handleChangeInputs(event,i)}>
                                 {nutrientNamesArray.map((nut,index)=>(

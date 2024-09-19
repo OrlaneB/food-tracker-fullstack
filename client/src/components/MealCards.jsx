@@ -4,6 +4,7 @@ import '../styles/MealCards.css'
 import mealsForOneDate from '../context/mealsForOneDate';
 
 import userFriendlyNutrientNames from "../utilities/userFriendlyNutrientNames"
+import unitNutrients from '../utilities/measurmentUnitNutrients';
 
 export default function MealCards() {
  
@@ -55,14 +56,14 @@ export default function MealCards() {
              {nutrientsByMeal[index][0] && <div className='mealNutrients'>
               
                <p style={{backgroundColor:colors[0]}}> 
-                <span className='amount'>{nutrientsByMeal[index][0].nutrient_number_amount}g </span><br/>
-                    {userFriendlyNutrientNames[nutrientsByMeal[index][0].nutrient_name]}
+                <span className='amount'>{nutrientsByMeal[index][0]?nutrientsByMeal[index][0].nutrient_number_amount+unitNutrients[nutrientsByMeal[index][0].nutrient_name]:""} </span><br/>
+                    {nutrientsByMeal[index][0]?userFriendlyNutrientNames[nutrientsByMeal[index][0].nutrient_name]:""}
                </p>
-               <p style={{backgroundColor:colors[1]}}> <span className='amount'>{nutrientsByMeal[index][1].nutrient_number_amount}g </span> <br/>
-                    {userFriendlyNutrientNames[nutrientsByMeal[index][1].nutrient_name]}
+               <p style={{backgroundColor:colors[1]}}> <span className='amount'>{nutrientsByMeal[index][1]?nutrientsByMeal[index][1].nutrient_number_amount+unitNutrients[nutrientsByMeal[index][1].nutrient_name]:""} </span> <br/>
+                    {nutrientsByMeal[index][1]?userFriendlyNutrientNames[nutrientsByMeal[index][1].nutrient_name]:""}
                 </p>
-               <p style={{backgroundColor:colors[2]}}> <span className='amount'>{nutrientsByMeal[index][2].nutrient_number_amount}g </span> <br/>
-                      {userFriendlyNutrientNames[nutrientsByMeal[index][2].nutrient_name]}
+               <p style={{backgroundColor:colors[2]}}> <span className='amount'>{nutrientsByMeal[index][2]?nutrientsByMeal[index][2].nutrient_number_amount+unitNutrients[nutrientsByMeal[index][2].nutrient_name]:""} </span> <br/>
+                      {nutrientsByMeal[index][2]?userFriendlyNutrientNames[nutrientsByMeal[index][2].nutrient_name]:""}
                 </p>
              </div>}
            </div>

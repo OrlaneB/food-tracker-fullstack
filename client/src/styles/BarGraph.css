@@ -12,7 +12,7 @@
     height:120px;
     border-radius:50%;
     margin:20px auto;
-    box-shadow: inset -4px -4px 8px rgba(255, 255, 255, 0.364), inset 5px 5px 10px #0d275024;     
+    box-shadow: inset -4px -4px 8px rgba(255, 255, 255, 0.364), inset 5px 5px 10px #0d275052;     
 }
 
 .nutrientName {
@@ -31,7 +31,7 @@
     background-color:white;
     border-radius:50%;
     text-align:center;
-    box-shadow: 4px 4px 8px #0d275024, -2px -2px 8px rgba(255, 255, 255, 0.499);
+    box-shadow: 4px 4px 8px #0d275057, -2px -2px 8px rgba(255, 255, 255, 0.499);
   }
 
 

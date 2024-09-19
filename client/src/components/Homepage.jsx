@@ -72,7 +72,7 @@ export default function Homepage() {
 
       
   async function getMeals() {
-    if(!chosenNutrients[0].name) return
+    if(!chosenNutrients[0].name) return;
     try {
       const result = await axios.get("http://localhost:5000/api/meals/1", {
         params: { date: `${day.getFullYear()}-${day.getMonth()+1<10? `0${day.getMonth()+1}`:day.getMonth()+1}-${day.getDate()<10? `0${day.getDate()}`:day.getDate()}` }

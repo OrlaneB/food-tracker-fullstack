@@ -17,7 +17,7 @@ export default function AddMeal() {
     const {checkIfLoggedIn}= useContext(loginAuth);
     const {warningOn,setIsWarningOn} = useState(false);
 
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
 
     
@@ -133,6 +133,8 @@ export default function AddMeal() {
 
       //Add nutrients to the meal
       postNutrients(mealID);
+
+      navigate("/");
       }
       
 

@@ -112,25 +112,29 @@ export default function Homepage() {
 
       for (let index in mealsID) {
           let num = mealsID[index];
+          console.log("num : ",num)
 
           console.log("chosen nutrients : ",chosenNutrients)
 
-          let arrayChosenNutrient = chosenNutrients.map(nut=>nut.name);
+          if(chosenNutrients[0].name){
+            let arrayChosenNutrient = chosenNutrients.map(nut=>nut.name);
+            console.log("arrayChosenNutrients : ",arrayChosenNutrient)
+            let meal = dataNutrients.filter(n=>n.meal_id===num && arrayChosenNutrient.includes(n.nutrient_name))
+            console.log("dataNutrients : ",dataNutrients)
+            // console.log(meal);
+            
+            meal = meal.map(n=>{return {"nutrient_name":n.nutrient_name,"nutrient_number_amount":n.nutrient_number_amount} })
+
+            // console.log(meal)
+
+            newNutrientsByMeal.push(meal)
+          }
           
-          let meal = dataNutrients.filter(n=>n.meal_id===num && arrayChosenNutrient.includes(n.nutrient_name))
-
-          console.log(meal);
-          
-          meal = meal.map(n=>{return {"nutrient_name":n.nutrient_name,"nutrient_number_amount":n.nutrient_number_amount} })
-
-          console.log(meal)
-
-          newNutrientsByMeal.push(meal)
         
         }
 
         setNutrientsByMeal(newNutrientsByMeal);
-        console.log(newNutrientsByMeal);
+        // console.log(newNutrientsByMeal);
       
       } else {
         setNoMealsForThisDate(true)
@@ -150,8 +154,13 @@ export default function Homepage() {
   },[day])
 
   useEffect(()=>{
-    setTimeout(()=>{getProfileInfo(),getMeals()},100)
+    setTimeout(()=>{getProfileInfo()},100);
+    // setTimeout(()=>getMeals(),200)
   },[loginAuthValue])
+
+  useEffect(()=>{
+    getMeals()
+  },[chosenNutrients])
       
 
   return (

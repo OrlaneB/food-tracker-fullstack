@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import '../styles/MealCards.css'
 import mealsForOneDate from '../context/mealsForOneDate';
 
@@ -23,6 +23,10 @@ export default function MealCards() {
 
       setOpenedMeals(newList);
     }
+
+    // useEffect(()=>{
+    //   console.log("Show nutrients : ",nutrientsByMeal)
+    // },[nutrientsByMeal])
    
     //render meal information
     return (
@@ -48,7 +52,8 @@ export default function MealCards() {
 
              </div>
 
-             {nutrientsByMeal[0][0] && <div className='mealNutrients'>
+             {nutrientsByMeal[0] && <div className='mealNutrients'>
+              
                <p style={{backgroundColor:colors[0]}}> 
                 <span className='amount'>{nutrientsByMeal[index][0].nutrient_number_amount}g </span><br/>
                     {userFriendlyNutrientNames[nutrientsByMeal[index][0].nutrient_name]}

@@ -15,7 +15,7 @@ export default function AddMeal() {
     const [dateInput,setDateInput]=useState(new Date());
 
     const {checkIfLoggedIn}= useContext(loginAuth);
-    const {warningOn,setIsWarningOn} = useState(false);
+    const [warningOn,setIsWarningOn] = useState(false);
 
     const navigate = useNavigate();
 
@@ -28,12 +28,14 @@ export default function AddMeal() {
 
 
     function handleAddIngredientButton(){
+        setIsWarningOn(false);
         let newIng = {name:"",numberAmount:"",measurement:"g", id:nextId};
         setListIngredients([...listIngredients, newIng])
         setNextId(nextId+1);
     }
 
     function handleChangeIngredientForm(event,index){
+        setIsWarningOn(false);
         const {name,value}=event.target;
 
         let newList = [...listIngredients];
@@ -114,6 +116,7 @@ export default function AddMeal() {
     // console.log(calculateNutrients(listIngredients))
 
     function deleteIngredient(event,index){
+      setIsWarningOn(false);
       event.preventDefault();
 
       let newList = [...listIngredients];
@@ -226,9 +229,7 @@ export default function AddMeal() {
       };
     }
   
-    // useEffect(()=>{
-    //   checkIfLoggedIn()
-    // }, [])
+
     
 
   return (
@@ -237,7 +238,6 @@ export default function AddMeal() {
       <div id="AddAMeal">
       <h2>Log the meal for <input type='date' value={today} onChange={(event)=>setDateInput(event.value)} /></h2>
         {listIngredients.map((ingredientObj,index)=>(
-            // <AddAnIngredient ingredientObj={ingredientObj}  key={ingredientObj.id} />
             <form key={ingredientObj.id}>
                 <input type='text' value={ingredientObj.name} name='name' placeholder='Name of ingredient' onChange={(event)=>handleChangeIngredientForm(event,index)} />
 
@@ -262,12 +262,23 @@ export default function AddMeal() {
         }
 
         {warningOn &&
-          <p>Are you sure you added all the ingredients ?</p>
+          <p style={{color:"red"}}>Are you sure you added all the ingredients ?</p>
         }
 
-        <button onClick={()=>handleAddIngredientButton()} className='textButton'> Add an ingredient</button>
-
-        <button className='importantTextButton' id='addMealButton' onClick={()=>addWholeMealToDB()}>Add the meal</button>
+        {!warningOn &&
+          <div>
+            <button onClick={()=>handleAddIngredientButton()} className='textButton'> Add an ingredient</button>
+            <button className='importantTextButton' id='addMealButton' onClick={()=>setIsWarningOn(true)}>Add the meal</button>
+          </div>
+        }
+        
+        {warningOn &&
+          <div>
+            <button className='textButton' onClick={()=>setIsWarningOn(false)}>No</button>
+            <button className='importantTextButton' onClick={()=>addWholeMealToDB()}>Yes</button>
+          </div>
+        }
+        
 
         </div>
     </>

@@ -52,7 +52,7 @@ export default function MealCards() {
 
              </div>
 
-             {nutrientsByMeal[0] && <div className='mealNutrients'>
+             {nutrientsByMeal[0][0] && <div className='mealNutrients'>
               
                <p style={{backgroundColor:colors[0]}}> 
                 <span className='amount'>{nutrientsByMeal[index][0].nutrient_number_amount}g </span><br/>

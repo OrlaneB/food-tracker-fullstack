@@ -37,9 +37,7 @@ router.post("/register", usernameUnavailable,async (req, res) => {
 /* POST login user */
 
 // Login user NEED TO ADD MIDDLEWARE userMustExist
-// router.post("/login", userMustExist, async (req, res) => {
-  router.post("/login", async (req, res) => {
-
+router.post("/login/:id", userMustExist, async (req, res) => {
   const { username, password } = req.body;
   
   try {

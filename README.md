@@ -45,7 +45,7 @@ This application is built with an Express server, MySQL database, and React fron
 ## :rocket: Collaborators 
 
 #### Orlane Brun
-:email: biancaharris150808@gmail.com<br> 
+:email: orlaane.brun@gmail.com<br> 
 :octocat: [GitHub Profile](https://github.com/OrlaneB)<br> 
 🔗 [LinkedIn Profile](https://www.linkedin.com/in/orlane-brun/) 
 

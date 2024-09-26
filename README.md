@@ -1,4 +1,4 @@
-# :computer: Food Tracker
+# :apple: Food Tracker
 
 Foodtracker...
 

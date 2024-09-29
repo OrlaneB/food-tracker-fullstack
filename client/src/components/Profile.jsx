@@ -78,6 +78,7 @@ export default function Profile() {
         newAuthValue.isLoggedIn = false;
 
         setLoginAuthValue(newAuthValue);
+        setProfileInfo();
 
         navigate("/login");
     }

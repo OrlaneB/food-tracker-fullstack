@@ -3,7 +3,6 @@ const authKey = import.meta.env.VITE_APP_API_KEY;
 import axios from 'axios'
 
 import "../styles/AddAMeal.css"
-import NavBar from './NavBar';
 import loginAuth from '../context/loginAuth';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,7 +11,10 @@ export default function AddMeal() {
     const [nextId, setNextId] = useState(0);
     const [suggestions,setSuggestions] = useState([]);
     const [onFocusInput, setOnFocusInput] = useState(null);
-    const [dateInput,setDateInput]=useState(new Date());
+
+    let today = `${new Date().getFullYear()}-${new Date().getMonth()+1<10?"0"+String(new Date().getMonth()+1):new Date().getMonth()+1}-${new Date().getDate()}`;
+
+    const [dateInput,setDateInput]=useState(today);
 
     const {checkIfLoggedIn}= useContext(loginAuth);
     const [warningOn,setIsWarningOn] = useState(false);
@@ -22,7 +24,7 @@ export default function AddMeal() {
 
     
 
-    let today = `${new Date().getFullYear()}-${new Date().getMonth()+1<10?"0"+String(new Date().getMonth()+1):new Date().getMonth()+1}-${new Date().getDate()}`;
+    
 
     const nutrientList = ["Energy","Protein","Carbohydrate, by difference","Total lipid (fat)","Fiber, total dietary","Sugars, total including NLEA","Calcium, Ca","Iron, Fe","Potassium, K","Sodium, Na","Vitamin A, RAE","Vitamin C, total ascorbic acid","Vitamin D (D2 + D3)","Vitamin E (alpha-tocopherol)","Vitamin K (phylloquinone)","Magnesium, Mg","Zinc, Zn","Cholesterol","Folate, DFE","Omega-3 Fatty Acids (EPA, DHA)"];
 
@@ -147,7 +149,8 @@ export default function AddMeal() {
       //Need -> Profile_id (params), date(body)
 
       const profile_id = 1;
-      const date = new Date();
+      console.log(new Date(), dateInput, new Date(dateInput))
+      const date = new Date(dateInput);
       console.log("Post Meal");
 
       try{
@@ -236,7 +239,7 @@ export default function AddMeal() {
     <>
 
       <div id="AddAMeal">
-      <h2>Log the meal for <input type='date' value={today} onChange={(event)=>setDateInput(event.value)} /></h2>
+      <h2>Log the meal for <input type='date' value={dateInput} onChange={(event)=>setDateInput(event.target.value)} /></h2>
         {listIngredients.map((ingredientObj,index)=>(
             <form key={ingredientObj.id}>
                 <input type='text' value={ingredientObj.name} name='name' placeholder='Name of ingredient' onChange={(event)=>handleChangeIngredientForm(event,index)} />

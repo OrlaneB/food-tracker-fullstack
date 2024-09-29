@@ -17,7 +17,7 @@ export default function Day({dateObj}) {
 
     function createDisplayedDates(){
         let startDate = DateTime.local(dateObj.day.getFullYear(),dateObj.day.getMonth()+1,dateObj.day.getDate());
-        console.log(startDate);
+        // console.log(startDate);
 
 
         let dayMinusThree= startDate.minus({days:3});

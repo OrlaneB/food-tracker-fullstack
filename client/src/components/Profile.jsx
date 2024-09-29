@@ -1,22 +1,22 @@
 
 import { useContext, useEffect, useState } from 'react'
-import "../styles/Profile2.css"
+import "../styles/Profile.css"
 
 import loginAuth from '../context/loginAuth';
 import { useNavigate } from 'react-router-dom';
-import NavBar from './NavBar';
 import axios from 'axios';
 import unitNutrients from '../utilities/measurmentUnitNutrients';
 
 import userFriendlyNutrientNames from '../utilities/userFriendlyNutrientNames';
+import profileInfoContext from '../context/profileInfo';
 
 export default function Profile() {
 
     const {loginAuthValue,setLoginAuthValue}=useContext(loginAuth);
+    const {profileInfo,setProfileInfo}=useContext(profileInfoContext);
     const navigate = useNavigate();
 
-    const [profileInfo,setProfileInfo] = useState(null);
-    const [chosenNutrients,setChosenNutrients] = useState([{name:null,amount:null,goal:null}]);
+    const [chosenNutrients,setChosenNutrients] = useState([{name:"",amount:"",goal:""}]);
     const [unsavedChanges,setUnsavedChanges] = useState(false);
 
     const nutrientNamesArray = Object.values(userFriendlyNutrientNames);
@@ -31,37 +31,6 @@ export default function Profile() {
         ) return false
 
         return true
-    }
-
-    async function getProfileInfo(){
-        let user_id = loginAuthValue.user_id;
-
-        console.log(user_id);
-
-        if(user_id){
-            try {
-
-                const result = await axios.get(`http://localhost:5000/api/profiles/${user_id}`);
-
-                let profileObj = result.data.resObj;
-    
-                console.log("It worked!")
-                setProfileInfo(profileObj);
-
-
-                setChosenNutrients(
-                    [{name: profileObj.nutrient_1_name, amount:profileObj.nutrient_1_amount, goal:profileObj.nutrient_1_goal},
-                    {name: profileObj.nutrient_2_name, amount:profileObj.nutrient_2_amount, goal:profileObj.nutrient_2_goal},
-                    {name: profileObj.nutrient_3_name, amount:profileObj.nutrient_3_amount, goal:profileObj.nutrient_3_goal}]
-                )
-    
-            }
-            catch(err){
-                console.log(err);
-            }
-        }
-            
-        
     }
 
     async function updateNutrientChanges(){
@@ -92,15 +61,10 @@ export default function Profile() {
         
     }
 
-    
-
-    // useEffect(()=>{
-    //    checkIfLoggedIn();
-    // },[])
 
     useEffect(()=>{
-        setTimeout(()=>{getProfileInfo()},50)
-    },[loginAuthValue])
+        if(profileInfo) setChosenNutrients(profileInfo.chosenNutrients)
+    },[profileInfo])
 
     useEffect(()=>{
         if(chosenNutrients[0].name) setUnsavedChanges(checkUnsavedChanges());

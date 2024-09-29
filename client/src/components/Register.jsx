@@ -1,24 +1,20 @@
-import React, { useContext, useState } from 'react'
-import NavBar from './NavBar'
+import React, {  useState } from 'react'
 import axios from 'axios';
 
 import "../styles/Register.css"
 import { useNavigate } from 'react-router-dom';
 
-// import loginAuth from '../context/loginAuth';
 
 export default function Register() {
 
   async function register() {
-    const { username, email, password } = registerObj;
-    // console.log(username, email, password);
+    const { username, password } = registerObj;
   
     try {
 
   
       await axios.post("http://localhost:5000/api/users/register", {
         username,
-        email,
         password,
       });
   
@@ -31,12 +27,8 @@ export default function Register() {
     setStep(2);
   }
 
-  // const register = useContext(loginAuth).register;
-
-  const [step,setStep]=useState(1);
   const [registerObj,setRegisterObj]=useState({
     username:"",
-    email:"",
     password:""
   })
 
@@ -46,18 +38,6 @@ export default function Register() {
     event.preventDefault();
 
     register(registerObj);
-  }
-
-  function handleGoBack(event){
-    event.preventDefault();
-    setStep(1);
-  }
-
-  function handleSubmitTwo(event){
-    event.preventDefault();
-
-    //Put into database
-
     navigate("/profile");
   }
 
@@ -77,12 +57,9 @@ export default function Register() {
         <div id='register'>
             <h1>Please sign up to start</h1>
 
-            { step===1 &&
+            
               <form onSubmit={(event)=>handleSubmitOne(event)}>
-                <label>
-                  Your email
-                  <input type='email' value={registerObj.email} name='email' autoComplete='email' onChange={(event)=>handleChangeRegister(event)}/>
-                </label>
+
 
                 <label>
                   Your username
@@ -96,59 +73,8 @@ export default function Register() {
 
                 <button type='submit' className='textButton'>Sign up</button>
                 <p onClick={()=>navigate("/login")} className='buttonLink'>Already have an account ? Log in</p>
-            </form>}
+            </form>
 
-            { step===2 &&
-              <form onSubmit={(event)=>handleSubmitTwo(event)}>
-
-                <p>Let us know some more info about you</p>
-                <label>
-                  Your age
-                  <input type='number' />
-                </label>
-
-                Your gender
-                <label id='genderLabel'>
-                  <label>  <input type='radio' name='gender'/>Female</label>
-                  <label><input type='radio' name='gender'/>Male</label>
-                  <label>  <input type='radio' name='gender'/>Non-Binary</label>
-                  <label>  <input type='radio' name='gender'/>Other/I'd rather not say</label>
-                </label>
-
-                <label>
-                  Your weight
-                  <input type='number' />
-                </label>
-
-                <label>
-                  Your height
-                  <input type='number' />
-                </label>
-
-                <label>
-                  Your medical condition
-                  <input type='text' list='medical-condition'/>
-                    <datalist id="medical-condition">
-                      <option value="Diabetes" />
-                      <option value="Hypertension" />
-                      <option value="Osteoporosis" />
-                      <option value="Chronic Kidney Disease (CKD)" />
-                      <option value="Celiac Disease" />
-                      <option value="Hypercholesterolemia (High Cholesterol)" />
-                      <option value="Anemia" />
-                      <option value="Irritable Bowel Syndrome (IBS)" />
-                      <option value="Other/I'd rather not say" />
-                    </datalist>
-                </label>
-
-                <button onClick={(event)=>handleGoBack(event)} className='textButton'>Go back</button>
-                <button type='submit' className='importantTextButton' >Save my informations</button>
-
-                <p onClick={()=>navigate("/login")} className='buttonLink'>Pass this step</p>
-
-              </form>
-
-            }
         </div>
         
 

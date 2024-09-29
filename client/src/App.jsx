@@ -31,7 +31,7 @@ function App() {
 
   async function getProfileInfo(user_id){
 
-    console.log(user_id);
+    // console.log(user_id);
 
     if(user_id){
         try {
@@ -46,7 +46,7 @@ function App() {
               {name: profileObj.nutrient_3_name, amount:profileObj.nutrient_3_amount, goal:profileObj.nutrient_3_goal}];
 
             setProfileInfo(profileObj);
-            console.log(profileObj);
+            // console.log(profileObj);
 
         }
         catch(err){
@@ -67,7 +67,7 @@ function App() {
           token
         })
 
-        console.log(result)
+        // console.log(result)
         if(result.statusText==="OK") {
           loginAuthValue.user_id=result.data;
           loginAuthValue.isLoggedIn=true;

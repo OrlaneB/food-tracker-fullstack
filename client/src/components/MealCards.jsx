@@ -10,7 +10,7 @@ export default function MealCards() {
  
 
     let {meals,nutrientsByMeal} = useContext(mealsForOneDate);
-    console.log(meals,nutrientsByMeal);
+    // console.log(meals,nutrientsByMeal);
 
     const colors = ["#EA5F3A","#F79285","#FBC46C"]
 
@@ -25,11 +25,7 @@ export default function MealCards() {
       setOpenedMeals(newList);
     }
 
-    // useEffect(()=>{
-    //   console.log("Show nutrients : ",nutrientsByMeal)
-    // },[nutrientsByMeal])
-   
-    //render meal information
+
     return (
      <div className='Meals'>
          { meals &&

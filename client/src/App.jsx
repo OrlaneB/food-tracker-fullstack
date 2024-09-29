@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react'
 import Homepage from './components/Homepage.jsx'
-import NavBar from './components/NavBar.jsx';
 // import Profile from './components/Profile.jsx'
 import AddMeal from './components/AddMeal.jsx'
 import './App.css'
@@ -122,7 +121,6 @@ function App() {
           <Route path="/" element={<Homepage />}/>
           <Route path="/profile" element={<Profile />}/>
           <Route path="/add-meal" element={<AddMeal />}/>
-          <Route path="/navbar" element={<NavBar/>} />
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
         </Routes>

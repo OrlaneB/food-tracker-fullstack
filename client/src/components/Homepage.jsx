@@ -3,10 +3,8 @@ import React, { useContext, useEffect, useState } from 'react'
 import Day from './Day'
 import BarGraph from './BarGraph'
 import MealCards from './MealCards'
-import NavBar from "./NavBar"
 import '../styles/Homepage.css'
-import '../styles/NavBar.css'
-import loginAuth from '../context/loginAuth'
+// import loginAuth from '../context/loginAuth'
 import axios from 'axios'
 
 import mealsForOneDate from '../context/mealsForOneDate'
@@ -17,7 +15,6 @@ import profileInfoContext from '../context/profileInfo'
 
 export default function Homepage() {
 
-  const {loginAuthValue,setLoginAuthValue}=useContext(loginAuth);
   const {profileInfo,setProfileInfo} = useContext(profileInfoContext);
   const [day,setDay]=useState(new Date())
 
@@ -37,35 +34,6 @@ export default function Homepage() {
     {name:"",percentage:50}];
 
   const [nutrientPercentage,setNutrientPercentage] = useState(dummyData);
-
-//   async function getProfileInfo(){
-//     let user_id = loginAuthValue.user_id;
-
-//     console.log(user_id);
-
-//     if(user_id){
-//         try {
-
-//             const result = await axios.get(`http://localhost:5000/api/profiles/${user_id}`);
-
-//             let profileObj = result.data.resObj;
-
-//             console.log("It worked!")
-
-//             setChosenNutrients(
-//                 [{name: profileObj.nutrient_1_name, amount:profileObj.nutrient_1_amount, goal:profileObj.nutrient_1_goal},
-//                 {name: profileObj.nutrient_2_name, amount:profileObj.nutrient_2_amount, goal:profileObj.nutrient_2_goal},
-//                 {name: profileObj.nutrient_3_name, amount:profileObj.nutrient_3_amount, goal:profileObj.nutrient_3_goal}]
-//             )
-
-//         }
-//         catch(err){
-//             console.log(err);
-//         }
-//     }
-        
-    
-// }
 
 
       
@@ -183,7 +151,6 @@ export default function Homepage() {
         <button onClick={()=>navigate("/add-meal")} className='textButton'>Add one here</button>
       </div>
     }
-      {/* <NavBar/> */}
     
 
     </div>

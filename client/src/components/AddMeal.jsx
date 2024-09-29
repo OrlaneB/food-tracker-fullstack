@@ -3,7 +3,6 @@ const authKey = import.meta.env.VITE_APP_API_KEY;
 import axios from 'axios'
 
 import "../styles/AddAMeal.css"
-import NavBar from './NavBar';
 import loginAuth from '../context/loginAuth';
 import { useNavigate } from 'react-router-dom';
 

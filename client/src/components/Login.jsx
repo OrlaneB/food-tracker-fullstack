@@ -1,6 +1,5 @@
 import React, { useContext, useState } from 'react'
 import "../styles/Login.css"
-import NavBar from './NavBar'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 

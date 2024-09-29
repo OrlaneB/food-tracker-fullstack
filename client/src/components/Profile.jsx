@@ -1,6 +1,6 @@
 
 import { useContext, useEffect, useState } from 'react'
-import "../styles/Profile2.css"
+import "../styles/Profile.css"
 
 import loginAuth from '../context/loginAuth';
 import { useNavigate } from 'react-router-dom';

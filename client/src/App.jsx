@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Homepage from './components/Homepage.jsx'
 import NavBar from './components/NavBar.jsx';
 // import Profile from './components/Profile.jsx'
@@ -21,10 +21,42 @@ function App() {
 
   const authKey = import.meta.env.VITE_APP_API_KEY;
 
-  function checkIfLoggedIn(){
-    console.log(`User is logged in : ${loginAuthValue.isLoggedIn}`);
-    if(!loginAuthValue.isLoggedIn) navigate("/login");
+  async function checkToken(){
+    let token = localStorage.getItem("token");
+
+    if(token){
+      try{
+        let result = await axios.post("http://localhost:5000/api/users/token",{
+          token
+        })
+
+        console.log(result)
+        if(result.statusText==="OK") {
+          loginAuthValue.user_id=result.data;
+          loginAuthValue.isLoggedIn=true;
+        } else {
+          console.log("Token is uncorrect")
+          navigate("/login");
+        }
+
+      }
+      catch(err){
+        console.log(err);
+      }
+    } else {
+      console.log("There's no token");
+      navigate("/login");
+    }
   }
+
+  useEffect(()=>{
+    checkToken()
+  },[])
+
+  // function checkIfLoggedIn(){
+  //   console.log(`User is logged in : ${loginAuthValue.isLoggedIn}`);
+  //   if(!loginAuthValue.isLoggedIn) navigate("/login");
+  // }
 
 
   const [loginAuthValue,setLoginAuthValue] = useState({
@@ -50,7 +82,7 @@ function App() {
       
     </header>
       
-    < loginAuth.Provider value={{loginAuthValue, setLoginAuthValue, checkIfLoggedIn}}>
+    < loginAuth.Provider value={{loginAuthValue, setLoginAuthValue}}>
       {/* <Router> */}
         <Routes>
           <Route path="/" element={<Homepage />}/>

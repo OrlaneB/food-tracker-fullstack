@@ -15,25 +15,27 @@ export default function AddMeal() {
     const [dateInput,setDateInput]=useState(new Date());
 
     const {checkIfLoggedIn}= useContext(loginAuth);
-    const {warningOn,setIsWarningOn} = useState(false);
+    const [warningOn,setIsWarningOn] = useState(false);
 
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
 
     
 
-    let today = new Date();
+    let today = `${new Date().getFullYear()}-${new Date().getMonth()+1<10?"0"+String(new Date().getMonth()+1):new Date().getMonth()+1}-${new Date().getDate()}`;
 
     const nutrientList = ["Energy","Protein","Carbohydrate, by difference","Total lipid (fat)","Fiber, total dietary","Sugars, total including NLEA","Calcium, Ca","Iron, Fe","Potassium, K","Sodium, Na","Vitamin A, RAE","Vitamin C, total ascorbic acid","Vitamin D (D2 + D3)","Vitamin E (alpha-tocopherol)","Vitamin K (phylloquinone)","Magnesium, Mg","Zinc, Zn","Cholesterol","Folate, DFE","Omega-3 Fatty Acids (EPA, DHA)"];
 
 
     function handleAddIngredientButton(){
+        setIsWarningOn(false);
         let newIng = {name:"",numberAmount:"",measurement:"g", id:nextId};
         setListIngredients([...listIngredients, newIng])
         setNextId(nextId+1);
     }
 
     function handleChangeIngredientForm(event,index){
+        setIsWarningOn(false);
         const {name,value}=event.target;
 
         let newList = [...listIngredients];
@@ -114,6 +116,7 @@ export default function AddMeal() {
     // console.log(calculateNutrients(listIngredients))
 
     function deleteIngredient(event,index){
+      setIsWarningOn(false);
       event.preventDefault();
 
       let newList = [...listIngredients];
@@ -133,6 +136,8 @@ export default function AddMeal() {
 
       //Add nutrients to the meal
       postNutrients(mealID);
+
+      navigate("/");
       }
       
 
@@ -224,18 +229,15 @@ export default function AddMeal() {
       };
     }
   
-    useEffect(()=>{
-      checkIfLoggedIn()
-    }, [])
+
     
 
   return (
     <>
 
       <div id="AddAMeal">
-      <h2>Log the meal for <input type='date' value={dateInput} onChange={(event)=>setDateInput(event.value)} /></h2>
+      <h2>Log the meal for <input type='date' value={today} onChange={(event)=>setDateInput(event.value)} /></h2>
         {listIngredients.map((ingredientObj,index)=>(
-            // <AddAnIngredient ingredientObj={ingredientObj}  key={ingredientObj.id} />
             <form key={ingredientObj.id}>
                 <input type='text' value={ingredientObj.name} name='name' placeholder='Name of ingredient' onChange={(event)=>handleChangeIngredientForm(event,index)} />
 
@@ -260,12 +262,23 @@ export default function AddMeal() {
         }
 
         {warningOn &&
-          <p>Are you sure you added all the ingredients ?</p>
+          <p style={{color:"red"}}>Are you sure you added all the ingredients ?</p>
         }
 
-        <button onClick={()=>handleAddIngredientButton()} className='textButton'> Add an ingredient</button>
-
-        <button className='importantTextButton' id='addMealButton' onClick={()=>addWholeMealToDB()}>Add the meal</button>
+        {!warningOn &&
+          <div>
+            <button onClick={()=>handleAddIngredientButton()} className='textButton'> Add an ingredient</button>
+            <button className='importantTextButton' id='addMealButton' onClick={()=>setIsWarningOn(true)}>Add the meal</button>
+          </div>
+        }
+        
+        {warningOn &&
+          <div>
+            <button className='textButton' onClick={()=>setIsWarningOn(false)}>No</button>
+            <button className='importantTextButton' onClick={()=>addWholeMealToDB()}>Yes</button>
+          </div>
+        }
+        
 
         </div>
     </>

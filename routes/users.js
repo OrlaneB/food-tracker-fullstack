@@ -86,13 +86,18 @@ router.post("/token", async(req,res)=>{
   const {token} = req.body;
   let user_id =null;
   try{
+
     jwt.verify(token, jwtSecret, (err,decoded)=>{
-      if(err) {res.status(401).send({message:err.message})}
+      if(err) {
+        res.status(401).send({message:err.message})}
       else {
-        user_id = decoded.user_id;
+        
+        res.status(200).send(String(decoded.userId));
       }
+
+      
     })
-    res.status(200).send({user_id});
+    
     
   }catch(err){
     res.status(500).send({message:err.message});

@@ -16,23 +16,22 @@ import { useNavigate } from 'react-router-dom'
 
 export default function Homepage() {
 
+  const {loginAuthValue,setLoginAuthValue}=useContext(loginAuth);
   const [day,setDay]=useState(new Date())
 
-  const {checkIfLoggedIn} = useContext(loginAuth);
-
-  useEffect(()=>{
-    checkIfLoggedIn();
-  },[])
+  // useEffect(()=>{
+  //   checkIfLoggedIn();
+  // },[])
   const navigate = useNavigate();
 
   //"2024-08-01"
   const [meals,setMeals]=useState();
   const [nutrientsByMeal,setNutrientsByMeal]=useState();
   const [noMealsForThisDate,setNoMealsForThisDate]=useState(false);
+  const [chosenNutrients,setChosenNutrients]=useState([{name:null,amount:null,goal:null}]);
 
   //Will come from AuthContext
-  const isLoggedIn = true;
-  const chosenNutrients=["Protein","Vitamin A, RAE","Iron, Fe"]
+  // const chosenNutrients=["Protein","Vitamin A, RAE","Iron, Fe"]
 
   let dummyData = [
     {name:"", percentage:50},
@@ -41,8 +40,39 @@ export default function Homepage() {
 
   const [nutrientPercentage,setNutrientPercentage] = useState(dummyData);
 
+  async function getProfileInfo(){
+    let user_id = loginAuthValue.user_id;
+
+    console.log(user_id);
+
+    if(user_id){
+        try {
+
+            const result = await axios.get(`http://localhost:5000/api/profiles/${user_id}`);
+
+            let profileObj = result.data.resObj;
+
+            console.log("It worked!")
+
+            setChosenNutrients(
+                [{name: profileObj.nutrient_1_name, amount:profileObj.nutrient_1_amount, goal:profileObj.nutrient_1_goal},
+                {name: profileObj.nutrient_2_name, amount:profileObj.nutrient_2_amount, goal:profileObj.nutrient_2_goal},
+                {name: profileObj.nutrient_3_name, amount:profileObj.nutrient_3_amount, goal:profileObj.nutrient_3_goal}]
+            )
+
+        }
+        catch(err){
+            console.log(err);
+        }
+    }
+        
+    
+}
+
+
       
   async function getMeals() {
+    if(!chosenNutrients[0].name) return;
     try {
       const result = await axios.get("http://localhost:5000/api/meals/1", {
         params: { date: `${day.getFullYear()}-${day.getMonth()+1<10? `0${day.getMonth()+1}`:day.getMonth()+1}-${day.getDate()<10? `0${day.getDate()}`:day.getDate()}` }
@@ -53,6 +83,7 @@ export default function Homepage() {
         setNoMealsForThisDate(false)
 
       const {dataIngredients,dataNutrients} = result.data;
+      console.log(dataNutrients)
 
 
       let mealsID = new Set(dataIngredients.map(meal=>meal.meal_id));
@@ -82,14 +113,29 @@ export default function Homepage() {
 
       for (let index in mealsID) {
           let num = mealsID[index];
-          
-          let meal = dataNutrients.filter(n=>n.meal_id===num && chosenNutrients.includes(n.nutrient_name)).map(n=>{return {"nutrient_name":n.nutrient_name,"nutrient_number_amount":n.nutrient_number_amount} })
+          console.log("num : ",num)
 
-          newNutrientsByMeal.push(meal)
+          console.log("chosen nutrients : ",chosenNutrients)
+
+          if(chosenNutrients[0].name){
+            let arrayChosenNutrient = chosenNutrients.map(nut=>nut.name);
+            console.log("arrayChosenNutrients : ",arrayChosenNutrient)
+            let meal = dataNutrients.filter(n=>n.meal_id===num && arrayChosenNutrient.includes(n.nutrient_name))
+            console.log("dataNutrients : ",dataNutrients)
+            // console.log(meal);
+            
+            meal = meal.map(n=>{return {"nutrient_name":n.nutrient_name,"nutrient_number_amount":n.nutrient_number_amount} })
+
+            // console.log(meal)
+
+            newNutrientsByMeal.push(meal)
+          }
+          
         
         }
 
         setNutrientsByMeal(newNutrientsByMeal);
+        // console.log(newNutrientsByMeal);
       
       } else {
         setNoMealsForThisDate(true)
@@ -108,7 +154,13 @@ export default function Homepage() {
     getMeals()
   },[day])
 
+  useEffect(()=>{
+    setTimeout(()=>{getProfileInfo()},100);
+  },[loginAuthValue])
 
+  useEffect(()=>{
+    getMeals()
+  },[chosenNutrients])
       
 
   return (

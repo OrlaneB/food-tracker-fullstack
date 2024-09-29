@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 export default function Register() {
 
   async function register() {
-    const { username, email, password } = registerObj;
+    const { username, password } = registerObj;
     // console.log(username, email, password);
   
     try {
@@ -18,7 +18,6 @@ export default function Register() {
   
       await axios.post("http://localhost:5000/api/users/register", {
         username,
-        email,
         password,
       });
   
@@ -33,10 +32,9 @@ export default function Register() {
 
   // const register = useContext(loginAuth).register;
 
-  const [step,setStep]=useState(1);
+  // const [step,setStep]=useState(1);
   const [registerObj,setRegisterObj]=useState({
     username:"",
-    email:"",
     password:""
   })
 
@@ -46,20 +44,21 @@ export default function Register() {
     event.preventDefault();
 
     register(registerObj);
-  }
-
-  function handleGoBack(event){
-    event.preventDefault();
-    setStep(1);
-  }
-
-  function handleSubmitTwo(event){
-    event.preventDefault();
-
-    //Put into database
-
     navigate("/profile");
   }
+
+  // function handleGoBack(event){
+  //   event.preventDefault();
+  //   setStep(1);
+  // }
+
+  // function handleSubmitTwo(event){
+  //   event.preventDefault();
+
+  //   //Put into database
+
+  //   navigate("/profile");
+  // }
 
 
   function handleChangeRegister(event){
@@ -77,12 +76,12 @@ export default function Register() {
         <div id='register'>
             <h1>Please sign up to start</h1>
 
-            { step===1 &&
+            
               <form onSubmit={(event)=>handleSubmitOne(event)}>
-                <label>
-                  Your email
-                  <input type='email' value={registerObj.email} name='email' autoComplete='email' onChange={(event)=>handleChangeRegister(event)}/>
-                </label>
+              {/* //   <label>
+              //     Your email
+              //     <input type='email' value={registerObj.email} name='email' autoComplete='email' onChange={(event)=>handleChangeRegister(event)}/>
+              //   </label> */}
 
                 <label>
                   Your username
@@ -96,9 +95,9 @@ export default function Register() {
 
                 <button type='submit' className='textButton'>Sign up</button>
                 <p onClick={()=>navigate("/login")} className='buttonLink'>Already have an account ? Log in</p>
-            </form>}
+            </form>
 
-            { step===2 &&
+            {/* { step===2 &&
               <form onSubmit={(event)=>handleSubmitTwo(event)}>
 
                 <p>Let us know some more info about you</p>
@@ -148,7 +147,7 @@ export default function Register() {
 
               </form>
 
-            }
+            } */}
         </div>
         
 

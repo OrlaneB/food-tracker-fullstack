@@ -33,36 +33,36 @@ export default function Profile() {
         return true
     }
 
-    async function getProfileInfo(){
-        let user_id = loginAuthValue.user_id;
+    // async function getProfileInfo(){
+    //     let user_id = loginAuthValue.user_id;
 
-        console.log(user_id);
+    //     console.log(user_id);
 
-        if(user_id){
-            try {
+    //     if(user_id){
+    //         try {
 
-                const result = await axios.get(`http://localhost:5000/api/profiles/${user_id}`);
+    //             const result = await axios.get(`http://localhost:5000/api/profiles/${user_id}`);
 
-                let profileObj = result.data.resObj;
+    //             let profileObj = result.data.resObj;
     
-                console.log("It worked!")
-                setProfileInfo(profileObj);
+    //             console.log("It worked!")
+    //             setProfileInfo(profileObj);
 
 
-                setChosenNutrients(
-                    [{name: profileObj.nutrient_1_name, amount:profileObj.nutrient_1_amount, goal:profileObj.nutrient_1_goal},
-                    {name: profileObj.nutrient_2_name, amount:profileObj.nutrient_2_amount, goal:profileObj.nutrient_2_goal},
-                    {name: profileObj.nutrient_3_name, amount:profileObj.nutrient_3_amount, goal:profileObj.nutrient_3_goal}]
-                )
+    //             setChosenNutrients(
+    //                 [{name: profileObj.nutrient_1_name, amount:profileObj.nutrient_1_amount, goal:profileObj.nutrient_1_goal},
+    //                 {name: profileObj.nutrient_2_name, amount:profileObj.nutrient_2_amount, goal:profileObj.nutrient_2_goal},
+    //                 {name: profileObj.nutrient_3_name, amount:profileObj.nutrient_3_amount, goal:profileObj.nutrient_3_goal}]
+    //             )
     
-            }
-            catch(err){
-                console.log(err);
-            }
-        }
+    //         }
+    //         catch(err){
+    //             console.log(err);
+    //         }
+    //     }
             
         
-    }
+    // }
 
     async function updateNutrientChanges(){
         let user_id = loginAuthValue.user_id;

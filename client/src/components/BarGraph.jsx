@@ -3,56 +3,26 @@ import { useContext, useEffect, useState } from 'react';
 import '../styles/BarGraph.css'
 import mealsForOneDate from '../context/mealsForOneDate';
 import userFriendlyNutrientNames from '../utilities/userFriendlyNutrientNames';
-import loginAuth from '../context/loginAuth';
-import axios from 'axios';
+// import loginAuth from '../context/loginAuth';
+// import axios from 'axios';
 import unitNutrients from '../utilities/measurmentUnitNutrients';
+import profileInfoContext from '../context/profileInfo';
 
 
 export default function BarGraph({percentage}) {
 
-    const {loginAuthValue,setLoginAuthValue}=useContext(loginAuth);
+    // const {loginAuthValue,setLoginAuthValue}=useContext(loginAuth);
+    const {profileInfo,setProfileInfo} = useContext(profileInfoContext);
+
+    
 
     const colors = ["#EA5F3A","#F79285","#FBC46C"]
 
-    // const recommendations = {
-    //   Protein:120,
-    //   "Iron, Fe":180,
-    //   "Vitamin A, RAE":2500
-    // }
 
     const {nutrientsByMeal} = useContext(mealsForOneDate);
     const [nutrients,setNutrients] = useState();
-    let goalAmounts = [];
+ 
 
-
-    async function getProfileInfo(){
-      let user_id = loginAuthValue.user_id;
-
-      // console.log(user_id);
-
-      if(user_id){
-          try {
-
-              const result = await axios.get(`http://localhost:5000/api/profiles/${user_id}`);
-
-              let profileObj = result.data.resObj;
-  
-              // console.log("It worked!")
-              
-              goalAmounts = [{name:profileObj.nutrient_1_name, amount:profileObj.nutrient_1_amount},{name:profileObj.nutrient_2_name, amount:profileObj.nutrient_2_amount},{name:profileObj.nutrient_3_name, amount:profileObj.nutrient_3_amount}]
-              
-              calculatePercentage()
-
-              
-  
-          }
-          catch(err){
-              console.log(err);
-          }
-      }
-          
-      
-  }
 
     function calculatePercentage(){
 
@@ -71,7 +41,7 @@ export default function BarGraph({percentage}) {
         let nutrientsPercentage = [];
 
         for(let nutName in listNutrients){
-          let thisNutrientGoal = goalAmounts.filter(a=>a.name===nutName)[0]
+          let thisNutrientGoal = profileInfo.chosenNutrients.filter(a=>a.name===nutName)[0]
           let percentage;
           
           if(thisNutrientGoal){
@@ -90,8 +60,8 @@ export default function BarGraph({percentage}) {
 
     }
 
+
     useEffect(()=>{
-      getProfileInfo();
       calculatePercentage();
     },[nutrientsByMeal]);
 

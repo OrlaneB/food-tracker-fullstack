@@ -4,7 +4,6 @@ import Day from './Day'
 import BarGraph from './BarGraph'
 import MealCards from './MealCards'
 import '../styles/Homepage.css'
-// import loginAuth from '../context/loginAuth'
 import axios from 'axios'
 
 import mealsForOneDate from '../context/mealsForOneDate'
@@ -15,7 +14,7 @@ import profileInfoContext from '../context/profileInfo'
 
 export default function Homepage() {
 
-  const {profileInfo,setProfileInfo} = useContext(profileInfoContext);
+  const {profileInfo} = useContext(profileInfoContext);
   const [day,setDay]=useState(new Date())
 
 
@@ -39,66 +38,49 @@ export default function Homepage() {
 
         setNoMealsForThisDate(false)
 
-      const {dataIngredients,dataNutrients} = result.data;
-      // console.log(dataNutrients)
+        const {dataIngredients,dataNutrients} = result.data;
+
+        let mealsID = new Set(dataIngredients.map(meal=>meal.meal_id));
+        mealsID = Array.from(mealsID);
 
 
-      let mealsID = new Set(dataIngredients.map(meal=>meal.meal_id));
-      mealsID = Array.from(mealsID);
+        // Create Meals
+            let newMeals=[];
 
-      // Create Meals
-      
+            for(let i =0; i<mealsID.length ; i++){
+              let num = mealsID[i];
 
-      let newMeals=[];
+              let meal = {}
+              dataIngredients.filter(m=>m.meal_id===num).map(ing=>{
+                meal[ing.name]=ing.number_amount;
+              })
+              newMeals.push(meal);
+            }
 
-        for(let i =0; i<mealsID.length ; i++){
-          let num = mealsID[i];
-
-          let meal = {}
-          dataIngredients.filter(m=>m.meal_id===num).map(ing=>{
-            meal[ing.name]=ing.number_amount;
-          })
-          newMeals.push(meal);
-        }
-
-        setMeals(newMeals);
+            setMeals(newMeals);
 
       
-      //Create nutrients
+        //Create nutrients
+          let newNutrientsByMeal = [];
 
-      let newNutrientsByMeal = [];
+          for (let index in mealsID) {
+              let num = mealsID[index];
 
-      for (let index in mealsID) {
-          let num = mealsID[index];
-          // console.log("num : ",num)
+              if(chosenNutrients[0].name){
+                let arrayChosenNutrient = chosenNutrients.map(nut=>nut.name);
+                let meal = dataNutrients
+                  .filter(n=>n.meal_id===num && arrayChosenNutrient.includes(n.nutrient_name))
+                  .map(n=>{return {"nutrient_name":n.nutrient_name,"nutrient_number_amount":n.nutrient_number_amount} })
 
-          // console.log("chosen nutrients : ",chosenNutrients)
-
-          if(chosenNutrients[0].name){
-            let arrayChosenNutrient = chosenNutrients.map(nut=>nut.name);
-            // console.log("arrayChosenNutrients : ",arrayChosenNutrient)
-            let meal = dataNutrients.filter(n=>n.meal_id===num && arrayChosenNutrient.includes(n.nutrient_name))
-            // console.log("dataNutrients : ",dataNutrients)
-            // console.log(meal);
-            
-            meal = meal.map(n=>{return {"nutrient_name":n.nutrient_name,"nutrient_number_amount":n.nutrient_number_amount} })
-
-            // console.log(meal)
-
-            newNutrientsByMeal.push(meal)
-          }
-          
-        
+                newNutrientsByMeal.push(meal)
+              }
         }
 
         setNutrientsByMeal(newNutrientsByMeal);
-        // console.log(newNutrientsByMeal);
       
       } else {
         setNoMealsForThisDate(true)
       }
-      
-      
 
     } catch (err) {
       console.log(err);
@@ -123,26 +105,23 @@ export default function Homepage() {
   return (
     <div className='Homepage'>
 
-      
-    <mealsForOneDate.Provider value={{meals,nutrientsByMeal}}>
-      <Day dateObj={{day,setDay}}/>
-      <hr style={{width:"80%",borderWidth:"0.5px", marginTop:"0",marginBottom:"15px"}}/>
-      {!noMealsForThisDate &&
-          <>
+      <mealsForOneDate.Provider value={{meals,nutrientsByMeal}}>
+        
+        <Day dateObj={{day,setDay}}/>
+
+        <hr style={{width:"80%",borderWidth:"0.5px", marginTop:"0",marginBottom:"15px"}}/>
+
+        {!noMealsForThisDate && <>
             <BarGraph/>
             <MealCards />
-          </>
-      }
-      
-    </mealsForOneDate.Provider>
+        </>}
 
-    {noMealsForThisDate &&
-      <div id='noMealWarning'>
-        <p>There are no meals for this date.</p>
-        <button onClick={()=>navigate("/add-meal")} className='textButton'>Add one here</button>
-      </div>
-    }
-    
+      </mealsForOneDate.Provider>
+
+      {noMealsForThisDate && <div id='noMealWarning'>
+          <p>There are no meals for this date.</p>
+          <button onClick={()=>navigate("/add-meal")} className='textButton'>Add one here</button>
+      </div>}
 
     </div>
   )

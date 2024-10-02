@@ -23,8 +23,6 @@ export default function Register() {
       console.log(err);
     }
 
-
-    setStep(2);
   }
 
   const [registerObj,setRegisterObj]=useState({
@@ -37,7 +35,7 @@ export default function Register() {
   function handleSubmitOne(event){
     event.preventDefault();
 
-    register(registerObj);
+    register();
     navigate("/profile");
   }
 

@@ -13,7 +13,9 @@ const usernameUnavailable = require("../guards/usernameUnavailable")
 
 
 /* POST register new user */
-router.post("/register", usernameUnavailable,async (req, res) => {
+// router.post("/register", usernameUnavailable,async (req, res) => {
+  router.post("/register", async (req, res) => {
+
   const { username, password } = req.body;
 
   console.log("Received password:", password);  // Debugging: log password
@@ -34,7 +36,9 @@ router.post("/register", usernameUnavailable,async (req, res) => {
 /* POST login user */
 
 // Login user NEED TO ADD MIDDLEWARE userMustExist
-router.post("/login/:id", userMustExist, async (req, res) => {
+// router.post("/login/:id", userMustExist, async (req, res) => {
+  router.post("/login",  async (req, res) => {
+
   const { username, password } = req.body;
   
   try {

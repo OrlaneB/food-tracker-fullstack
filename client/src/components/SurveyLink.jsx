@@ -4,8 +4,8 @@ import "../styles/SurveyLink.css"
 export default function SurveyLink() {
   return (
     <div id='surveyLink'>
-        <button className='textButton'>Share an issue</button>
-        <button className='textButton'>Learn about the project</button>
+        <button className='textButton'>Report an issue</button>
+        <button className='importantTextButton'>Learn about the project</button>
     </div>
   )
 }

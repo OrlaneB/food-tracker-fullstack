@@ -1,9 +1,10 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react'
+
 import Homepage from './components/Homepage.jsx'
-// import Profile from './components/Profile.jsx'
 import AddMeal from './components/AddMeal.jsx'
+
 import './App.css'
+
 import axios from 'axios'
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 
@@ -25,13 +26,8 @@ function App() {
     isLoggedIn:false,
   })
 
-  const authKey = import.meta.env.VITE_APP_API_KEY;
-
-
 
   async function getProfileInfo(user_id){
-
-    // console.log(user_id);
 
     if(user_id){
         try {
@@ -46,8 +42,6 @@ function App() {
               {name: profileObj.nutrient_3_name, amount:profileObj.nutrient_3_amount, goal:profileObj.nutrient_3_goal}];
 
             setProfileInfo(profileObj);
-            // console.log(profileObj);
-
         }
         catch(err){
             console.log(err);
@@ -67,7 +61,6 @@ function App() {
           token
         })
 
-        // console.log(result)
         if(result.statusText==="OK") {
           loginAuthValue.user_id=result.data;
           loginAuthValue.isLoggedIn=true;

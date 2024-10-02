@@ -1,14 +1,14 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 const authKey = import.meta.env.VITE_APP_API_KEY;
 import axios from 'axios'
 
 import "../styles/AddAMeal.css"
-import loginAuth from '../context/loginAuth';
 import { useNavigate } from 'react-router-dom';
+import userFriendlyNutrientNames from '../utilities/userFriendlyNutrientNames';
+import profileInfoContext from '../context/profileInfo';
 
 export default function AddMeal() {
     const [listIngredients, setListIngredients] = useState([]);
-    const [nextId, setNextId] = useState(0);
     const [suggestions,setSuggestions] = useState([]);
     const [onFocusInput, setOnFocusInput] = useState(null);
 
@@ -16,24 +16,18 @@ export default function AddMeal() {
 
     const [dateInput,setDateInput]=useState(today);
 
-    const {checkIfLoggedIn}= useContext(loginAuth);
     const [warningOn,setIsWarningOn] = useState(false);
+
+    const {profileInfo,setProfileInfo} = useContext(profileInfoContext);
+
 
     const navigate = useNavigate();
 
 
-    
-
-    
-
-    const nutrientList = ["Energy","Protein","Carbohydrate, by difference","Total lipid (fat)","Fiber, total dietary","Sugars, total including NLEA","Calcium, Ca","Iron, Fe","Potassium, K","Sodium, Na","Vitamin A, RAE","Vitamin C, total ascorbic acid","Vitamin D (D2 + D3)","Vitamin E (alpha-tocopherol)","Vitamin K (phylloquinone)","Magnesium, Mg","Zinc, Zn","Cholesterol","Folate, DFE","Omega-3 Fatty Acids (EPA, DHA)"];
-
-
     function handleAddIngredientButton(){
         setIsWarningOn(false);
-        let newIng = {name:"",numberAmount:"",measurement:"g", id:nextId};
+        let newIng = {name:"",numberAmount:"",measurement:"g"};
         setListIngredients([...listIngredients, newIng])
-        setNextId(nextId+1);
     }
 
     function handleChangeIngredientForm(event,index){
@@ -84,7 +78,7 @@ export default function AddMeal() {
               let ingredientNutrients = {};
   
               response.data[0].foodNutrients
-                  .filter(nut => nutrientList.includes(nut.name))
+                  .filter(nut => Object.keys(userFriendlyNutrientNames).includes(nut.name))
                   .forEach(nut => {
                       let amountOfIngredient = nut.amount / 100;
                       ingredientNutrients[nut.name] = `${amountOfIngredient * listIng[index].numberAmount} ${nut.unitName}`;
@@ -115,8 +109,6 @@ export default function AddMeal() {
   }
   
 
-    // console.log(calculateNutrients(listIngredients))
-
     function deleteIngredient(event,index){
       setIsWarningOn(false);
       event.preventDefault();
@@ -129,7 +121,6 @@ export default function AddMeal() {
     async function addWholeMealToDB(){
         //Create a new meal
       let mealID = await postMeal();
-      // console.log(mealID.data.data[0]["max(meal_id)"]);
       mealID=mealID.data.data[0]["max(meal_id)"]
       
       if(mealID){
@@ -146,19 +137,18 @@ export default function AddMeal() {
     }
 
     async function postMeal(){
-      //Need -> Profile_id (params), date(body)
 
-      const profile_id = 1;
-      console.log(new Date(), dateInput, new Date(dateInput))
+      const {profile_id} = profileInfo;
+      // console.log(new Date(), dateInput, new Date(dateInput))
       const date = new Date(dateInput);
-      console.log("Post Meal");
+      // console.log("Post Meal");
 
       try{
         const mealID = await axios.post(`http://localhost:5000/api/meals/${profile_id}`, {
           date
         });
 
-        console.log("Posted a meal worked!");
+        // console.log("Posted a meal worked!");
         return mealID;
       }
       catch(err){
@@ -173,7 +163,7 @@ export default function AddMeal() {
           ingredientsList : listIngredients
         })
 
-        console.log("Posted ingredients worked!")
+        // console.log("Posted ingredients worked!")
 
       } catch(err){
         console.log(err);
@@ -182,14 +172,14 @@ export default function AddMeal() {
 
     async function postNutrients(mealID){
       let nutrientsListCalculated = await calculateNutrients(listIngredients);
-      console.log(nutrientsListCalculated)
+      // console.log(nutrientsListCalculated)
 
       try{
         await axios.post(`http://localhost:5000/api/meals/nutrients/${mealID}`,{
           nutrientsList:nutrientsListCalculated
         })
 
-        console.log("Post nutrients worked!")
+        // console.log("Post nutrients worked!")
       } catch(err){
         console.log(err);
       }
@@ -206,12 +196,10 @@ export default function AddMeal() {
                   },
               });
 
-              // let newSuggestions = response.data.map(obj=>obj.description);
               
               if(response.data.foods) {
                 let newSuggestions = response.data.foods.map(s=>s.description);
                 setSuggestions(newSuggestions)
-                // console.log(newSuggestions)
               }
               
           } catch (err) {
@@ -241,7 +229,7 @@ export default function AddMeal() {
       <div id="AddAMeal">
       <h2>Log the meal for <input type='date' value={dateInput} onChange={(event)=>setDateInput(event.target.value)} /></h2>
         {listIngredients.map((ingredientObj,index)=>(
-            <form key={ingredientObj.id}>
+            <form key={index}>
                 <input type='text' value={ingredientObj.name} name='name' placeholder='Name of ingredient' onChange={(event)=>handleChangeIngredientForm(event,index)} />
 
                 

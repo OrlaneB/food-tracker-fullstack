@@ -27,15 +27,6 @@ export default function Homepage() {
   const [chosenNutrients,setChosenNutrients]=useState([{name:"",amount:"",goal:""}]);
 
 
-
-  let dummyData = [
-    {name:"", percentage:50},
-    {name:"", percentage:50},
-    {name:"",percentage:50}];
-
-  const [nutrientPercentage,setNutrientPercentage] = useState(dummyData);
-
-
       
   async function getMeals() {
     if(!chosenNutrients[0].name) return;
@@ -138,7 +129,7 @@ export default function Homepage() {
       <hr style={{width:"80%",borderWidth:"0.5px", marginTop:"0",marginBottom:"15px"}}/>
       {!noMealsForThisDate &&
           <>
-            <BarGraph percentage={nutrientPercentage}/>
+            <BarGraph/>
             <MealCards />
           </>
       }

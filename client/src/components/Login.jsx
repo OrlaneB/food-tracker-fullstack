@@ -22,11 +22,7 @@ export default function Login() {
           username,password
         })
 
-        let token = result.data.token;
-
-        localStorage.setItem("token",token);
-
-        console.log("it worked!");
+        localStorage.setItem("token",result.data.token);
 
         let newAuthValue = {...loginAuthValue};
         newAuthValue.isLoggedIn = true;
@@ -38,7 +34,6 @@ export default function Login() {
 
       } catch(err){
         console.log(err);
-
       }
     }
 
@@ -52,26 +47,25 @@ export default function Login() {
     }
 
   return (
-    <>
+    
         <div id='login'>
             <h1>Login to continue</h1>
+
             <form onSubmit={(event)=>login(event)}>
 
                     <label>
-                    Your username
-                    <input type='text' name='username' value={credentials.username} autoComplete='username' onChange={(event)=>handleChange(event)}/>
+                      Your username
+                      <input type='text' name='username' value={credentials.username} autoComplete='username' onChange={(event)=>handleChange(event)}/>
                     </label>
 
                     <label>
-                    Your password
-                    <input type='password' name='password' value={credentials.password} autoComplete='password' onChange={(event)=>handleChange(event)} />
+                      Your password
+                      <input type='password' name='password' value={credentials.password} autoComplete='password' onChange={(event)=>handleChange(event)} />
                     </label>
 
                     <button type='submit' className='textButton'>Sign up</button>
                     <p onClick={()=>navigate("/register")} className='buttonLink'>Don't have an account ? Sign up here</p>
             </form>
         </div>
-        
-    </>
   )
 }

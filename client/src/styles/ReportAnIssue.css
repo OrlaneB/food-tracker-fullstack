@@ -1,0 +1,40 @@
+#reportAnIssue {
+    text-align: left;
+    width: 550px;
+    margin: auto;
+}
+
+#reportAnIssue * {
+    display: block;
+    margin-left: 0;
+}
+
+#reportAnIssue input {
+    width: 65%;
+}
+
+#reportAnIssue p {
+    margin-left: 15px;
+}
+
+#reportAnIssue textarea {
+    width:90%;
+    height:150px;
+}
+
+#reportAnIssue textarea:focus, #reportAnIssue input:focus {
+    outline: solid #951327;
+}
+
+
+@media screen and (max-width:600px){
+    #reportAnIssue {
+        text-align: center;
+        width : 80%;
+        margin-top: 80px;
+    }
+
+    #reportAnIssue * {
+        margin-left: auto;
+    }
+}

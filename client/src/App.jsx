@@ -11,7 +11,8 @@ import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-route
 import Register from './components/Register.jsx';
 import Login from './components/Login.jsx';
 import Profile from './components/Profile.jsx';
-import SurveyLink from './components/SurveyLink.jsx'
+import SurveyLink from './components/SurveyLink.jsx';
+import ReportAnIssue from './components/ReportAnIssue.jsx';
 
 import loginAuth from './context/loginAuth.jsx';
 import profileInfoContext from './context/profileInfo.jsx';
@@ -117,6 +118,7 @@ function App() {
           <Route path="/add-meal" element={<AddMeal />}/>
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/report-issue' element={<ReportAnIssue />} />
         </Routes>
       </profileInfoContext.Provider>
     </loginAuth.Provider>

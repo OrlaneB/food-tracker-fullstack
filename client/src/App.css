@@ -71,7 +71,7 @@ h1,h2,h3,h4,h5,h6{
   cursor: pointer;
 }
 
-input {
+input, textarea {
     margin: 8px auto;
     padding:10px 15px;
     border-radius: 20px;
@@ -80,6 +80,8 @@ input {
     ;
     border:none;
 }
+
+
 
 
 header {
@@ -100,7 +102,7 @@ header h2:hover{
   color: #F79285;
 }
 
-p,li, span,button {
+p,li, span,button, input::placeholder, textarea::placeholder {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 

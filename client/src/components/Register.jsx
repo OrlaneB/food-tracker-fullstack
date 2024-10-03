@@ -33,7 +33,7 @@ export default function Register() {
     event.preventDefault();
 
     register();
-    navigate("/profile");
+    navigate("/login");
   }
 
 

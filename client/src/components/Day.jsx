@@ -9,7 +9,7 @@ export default function Day({dateObj}) {
 
     const [displayedDates, setDisplayedDates] = useState([]);
 
-    const week = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+    const week = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
     const month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
 
     function createDisplayedDates(){

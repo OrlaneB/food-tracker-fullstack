@@ -97,7 +97,7 @@ function App() {
     <> 
 
     <header>
-      <h2 onClick={()=>navigate("/")}>Foodtracker</h2>
+      <h2 onClick={()=>navigate("/")}>Food Pulse</h2>
 
       <nav>
         <button className='roundButton' onClick={()=>navigate("/add-meal")}>

@@ -36,7 +36,7 @@ app.use('/api/meals', mealsRouter);
 
 // Anything that doesn't match the above, send back index.html
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname + "/client/dist/index.html"));
+  res.sendFile(path.join(__dirname + "/client/dist", "index.html"));
 });
 
 // catch 404 and forward to error handler

@@ -22,6 +22,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 // Serve static files from the React frontend app
+//This is to link app.js to the client side
 app.use(express.static(path.join(__dirname, 'client/dist')));
 
 app.get("/", function(req, res, next) {

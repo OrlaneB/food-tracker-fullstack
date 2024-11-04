@@ -8,6 +8,8 @@ const DB_PASS = process.env.DB_PASS;
 const DB_NAME = process.env.DB_NAME;
 
 const createConnection =()=> {
+  console.log("A- Top of database.js...");
+
   const con = mysql.createConnection({
     host: DB_HOST || "127.0.0.1",
     user: DB_USER || "root",
@@ -15,6 +17,8 @@ const createConnection =()=> {
     database: DB_NAME || "foodtracker",
     multipleStatements: true
   });
+
+  console.log("B- Created Connection...");
   
   con.connect(function(err) {
     if (err) throw err;
@@ -27,6 +31,8 @@ const createConnection =()=> {
   
       console.log("Closing...");
     });
+
+    console.log("C-End of database.js..");
   
     con.end();
   });

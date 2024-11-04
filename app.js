@@ -5,6 +5,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');  // add at the top 
 
+console.log("1-Beginning of app.js...");
+
 // Import the database connection
 const createConnection = require('./model/database');
 
@@ -12,6 +14,8 @@ const createConnection = require('./model/database');
 var usersRouter = require('./routes/users');
 var profilesRouter = require('./routes/profiles');
 var mealsRouter = require('./routes/meals');
+
+console.log("2-Router was imported...");
 
 var app = express();
 app.use(cors());
@@ -28,6 +32,8 @@ app.set('view engine', 'jade');
 //This is to link app.js to the client side
 app.use(express.static(path.join(__dirname, 'client','dist')));
 
+console.log("3-Static files were served...");
+
 app.get("/", function(req, res, next) {
   res.send("Access the API at path /api");
 });
@@ -38,6 +44,8 @@ app.use((req, res, next) => {
   next();
 });
 
+console.log("5-Connection with db...");
+
 // app.use('/api/', indexRouter); -- removed index.js route
 app.use('/api/users', usersRouter);
 app.use('/api/profiles', profilesRouter);
@@ -47,6 +55,8 @@ app.use('/api/meals', mealsRouter);
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname + "client","dist", "index.html"));
 });
+
+console.log("6- Send to index.html...");
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -65,6 +75,14 @@ app.use(function(err, req, res, next) {
     message: err.message,
     error: process.env.NODE_ENV === 'development' ? err : {}
   });
+});
+
+console.log("7- End of app.js...");
+
+// Set up server to listen on port
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
 });
 
 module.exports = app;

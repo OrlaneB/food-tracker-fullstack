@@ -5,6 +5,9 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');  // add at the top 
 
+// Import the database connection
+require('./database');
+
 // var indexRouter = require('./routes/index'); -- removed idex.js route
 var usersRouter = require('./routes/users');
 var profilesRouter = require('./routes/profiles');
@@ -23,7 +26,7 @@ app.set('view engine', 'jade');
 
 // Serve static files from the React frontend app
 //This is to link app.js to the client side
-app.use(express.static(path.join(__dirname, 'client/dist')));
+app.use(express.static(path.join(__dirname, 'client','dist')));
 
 app.get("/", function(req, res, next) {
   res.send("Access the API at path /api");
@@ -36,7 +39,7 @@ app.use('/api/meals', mealsRouter);
 
 // Anything that doesn't match the above, send back index.html
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname + "/client/dist", "index.html"));
+  res.sendFile(path.join(__dirname + "client","dist", "index.html"));
 });
 
 // catch 404 and forward to error handler

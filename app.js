@@ -6,7 +6,7 @@ var logger = require('morgan');
 const cors = require('cors');  // add at the top 
 
 // Import the database connection
-const createConnection = require('./models/database');
+const createConnection = require('./model/database');
 
 // var indexRouter = require('./routes/index'); -- removed idex.js route
 var usersRouter = require('./routes/users');

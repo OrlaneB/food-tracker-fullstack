@@ -6,7 +6,7 @@ var logger = require('morgan');
 const cors = require('cors');  // add at the top 
 
 // Import the database connection
-require('./database');
+const createConnection = require('./models/database');
 
 // var indexRouter = require('./routes/index'); -- removed idex.js route
 var usersRouter = require('./routes/users');
@@ -30,6 +30,12 @@ app.use(express.static(path.join(__dirname, 'client','dist')));
 
 app.get("/", function(req, res, next) {
   res.send("Access the API at path /api");
+});
+
+// Middleware to create a database connection for each request
+app.use((req, res, next) => {
+  req.db = createConnection(); // Create a new connection for the request
+  next();
 });
 
 // app.use('/api/', indexRouter); -- removed index.js route

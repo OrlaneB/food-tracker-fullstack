@@ -1,15 +1,18 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react'
+
 import Homepage from './components/Homepage.jsx'
-// import Profile from './components/Profile.jsx'
 import AddMeal from './components/AddMeal.jsx'
+
 import './App.css'
+
 import axios from 'axios'
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 
 import Register from './components/Register.jsx';
 import Login from './components/Login.jsx';
 import Profile from './components/Profile.jsx';
+import SurveyLink from './components/SurveyLink.jsx';
+import ReportAnIssue from './components/ReportAnIssue.jsx';
 
 import loginAuth from './context/loginAuth.jsx';
 import profileInfoContext from './context/profileInfo.jsx';
@@ -24,13 +27,8 @@ function App() {
     isLoggedIn:false,
   })
 
-  const authKey = import.meta.env.VITE_APP_API_KEY;
-
-
 
   async function getProfileInfo(user_id){
-
-    // console.log(user_id);
 
     if(user_id){
         try {
@@ -45,8 +43,6 @@ function App() {
               {name: profileObj.nutrient_3_name, amount:profileObj.nutrient_3_amount, goal:profileObj.nutrient_3_goal}];
 
             setProfileInfo(profileObj);
-            // console.log(profileObj);
-
         }
         catch(err){
             console.log(err);
@@ -66,7 +62,6 @@ function App() {
           token
         })
 
-        // console.log(result)
         if(result.statusText==="OK") {
           loginAuthValue.user_id=result.data;
           loginAuthValue.isLoggedIn=true;
@@ -102,7 +97,7 @@ function App() {
     <> 
 
     <header>
-      <h2 onClick={()=>navigate("/")}>Foodtracker</h2>
+      <h2 onClick={()=>navigate("/")}>Food Pulse</h2>
 
       <nav>
         <button className='roundButton' onClick={()=>navigate("/add-meal")}>
@@ -123,12 +118,13 @@ function App() {
           <Route path="/add-meal" element={<AddMeal />}/>
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/report-issue' element={<ReportAnIssue />} />
         </Routes>
       </profileInfoContext.Provider>
     </loginAuth.Provider>
       
 
-
+    <SurveyLink />
       
     </>
   )

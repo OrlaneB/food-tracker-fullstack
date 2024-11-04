@@ -25,15 +25,15 @@ CREATE TABLE users(
 CREATE TABLE profiles(
     profile_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
-    nutrient_1_name VARCHAR(50),
-    nutrient_2_name VARCHAR(50),
-    nutrient_3_name VARCHAR(50),
-    nutrient_1_amount INT,
-    nutrient_2_amount INT,
-    nutrient_3_amount INT,
-    nutrient_1_goal VARCHAR(50),
-    nutrient_2_goal VARCHAR(50),
-    nutrient_3_goal VARCHAR(50)
+    nutrient_1_name VARCHAR(50) DEFAULT "Vitamin A, RAE",
+    nutrient_2_name VARCHAR(50) DEFAULT "Vitamin C, total ascorbic acid",
+    nutrient_3_name VARCHAR(50) DEFAULT "Vitamin E (alpha-tocopherol)",
+    nutrient_1_amount INT DEFAULT 800,
+    nutrient_2_amount INT DEFAULT 80,
+    nutrient_3_amount INT DEFAULT 15,
+    nutrient_1_goal VARCHAR(50) DEFAULT "Equals",
+    nutrient_2_goal VARCHAR(50) DEFAULT "Equals",
+    nutrient_3_goal VARCHAR(50) DEFAULT "Equals"
     );
 
 ALTER TABLE profiles

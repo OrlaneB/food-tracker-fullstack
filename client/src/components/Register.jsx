@@ -11,20 +11,15 @@ export default function Register() {
     const { username, password } = registerObj;
   
     try {
-
-  
       await axios.post("http://localhost:5000/api/users/register", {
         username,
         password,
       });
   
-      console.log("It worked!");
     } catch (err) {
       console.log(err);
     }
 
-
-    setStep(2);
   }
 
   const [registerObj,setRegisterObj]=useState({
@@ -37,8 +32,8 @@ export default function Register() {
   function handleSubmitOne(event){
     event.preventDefault();
 
-    register(registerObj);
-    navigate("/profile");
+    register();
+    navigate("/login");
   }
 
 

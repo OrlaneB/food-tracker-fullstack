@@ -7,71 +7,54 @@ import { DateTime } from "luxon";
 
 export default function Day({dateObj}) {
 
-    const today = new Date();
     const [displayedDates, setDisplayedDates] = useState([]);
 
-    const week = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+    const week = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
     const month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
-
-   
 
     function createDisplayedDates(){
         let startDate = DateTime.local(dateObj.day.getFullYear(),dateObj.day.getMonth()+1,dateObj.day.getDate());
-        // console.log(startDate);
 
-
-        let dayMinusThree= startDate.minus({days:3});
-        let dayMinusTwo=startDate.minus({days:2});
-        let dayMinusOne=startDate.minus({days:1});
-        let dayPlusOne= startDate.plus({days:1});
-        let dayPlusTwo= startDate.plus({days:2});
-        let dayPlusThree= startDate.plus({days:3});
-
-        let newDates = [
-            dayMinusThree,
-            dayMinusTwo,
-            dayMinusOne,
+        setDisplayedDates([
+            startDate.minus({days:3}),
+            startDate.minus({days:2}),
+            startDate.minus({days:1}),
             dateObj.day,
-            dayPlusOne,
-            dayPlusTwo,
-            dayPlusThree,
-        ]
-
-        setDisplayedDates(newDates);
+            startDate.plus({days:1}),
+            startDate.plus({days:2}),
+            startDate.plus({days:3}),
+        ])
     }
 
     function handleChangeDate(event,date){
         event.preventDefault();
 
-        let newDate = new Date(date);
-        dateObj.setDay(newDate);
+        dateObj.setDay(new Date(date));
     }
 
 
     function moveSelectedDates(event,type){
         event.preventDefault();
 
+        let newDates = [...displayedDates];
 
         if(type==="down"){
 
-            let newDates = [...displayedDates];
             let copiedDate = new Date(newDates[0]);
             let addedDate = DateTime.local(copiedDate.getFullYear(), copiedDate.getMonth()+1, copiedDate.getDate()).minus({days:1});
             newDates.unshift(addedDate);
             newDates.pop();
 
-            setDisplayedDates(newDates);
-
         }else if(type==="up"){
 
-            let newDates = [...displayedDates];
             let copiedDate = new Date(newDates[6]);
             let addedDate = DateTime.local(copiedDate.getFullYear(), copiedDate.getMonth()+1, copiedDate.getDate()).plus({days:1});
             newDates.push(addedDate);
             newDates.shift();
 
-            setDisplayedDates(newDates);
         }
+
+        setDisplayedDates(newDates)
     }
 
     useEffect(()=>{
@@ -85,7 +68,9 @@ export default function Day({dateObj}) {
             <h3 id="displayedDate">{dateObj.day.toDateString()}</h3>
 
             <div id="datesContainer">
+                
                 <button className="roundButton" onClick={(event)=>moveSelectedDates(event,"down")}>←</button>
+
                 {displayedDates.map((date,index)=>(
                     <div 
                         className={new Date(date).getTime()==dateObj.day.getTime()? "selectedDate dateBlock":"dateBlock"}
@@ -97,6 +82,7 @@ export default function Day({dateObj}) {
                         <p className="greyText">{month[new Date(date).getMonth()]}</p>
                     </div>
                 ))}
+
                 <button className="roundButton" onClick={(event)=>moveSelectedDates(event,"up")}>→</button>
 
             </div>

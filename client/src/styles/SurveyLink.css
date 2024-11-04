@@ -1,0 +1,13 @@
+#surveyLink {
+    padding:10px 0;
+    background-color: #FBC46C;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    bottom: 0;
+}
+
+#surveyLink button {
+    margin: 0 10px;
+}

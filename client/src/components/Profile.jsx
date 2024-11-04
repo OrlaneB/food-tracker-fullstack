@@ -25,7 +25,7 @@ export default function Profile() {
     function checkUnsavedChanges(){
         let {nutrient_1_name,nutrient_1_goal,nutrient_1_amount,nutrient_2_name,nutrient_2_goal,nutrient_2_amount,nutrient_3_name,nutrient_3_goal,nutrient_3_amount} = profileInfo;
 
-        if(nutrient_1_name===chosenNutrients[0].name && nutrient_1_amount===chosenNutrients[0].amount && nutrient_1_goal===chosenNutrients[0].goal &&
+        if(nutrient_1_name===chosenNutrients[0].name && nutrient_1_amount===chosenNutrients[0].amount &&                nutrient_1_goal===chosenNutrients[0].goal &&
             nutrient_2_name===chosenNutrients[1].name && nutrient_2_amount===chosenNutrients[1].amount && nutrient_2_goal===chosenNutrients[1].goal &&
             nutrient_3_name===chosenNutrients[2].name && nutrient_3_amount===chosenNutrients[2].amount && nutrient_3_goal===chosenNutrients[2].goal 
         ) return false
@@ -49,10 +49,7 @@ export default function Profile() {
                     nutrient_2_goal:chosenNutrients[1].goal,
                     nutrient_3_goal:chosenNutrients[2].goal
                 });
-    
-                console.log("It worked for pdating nutrients!");
-    
-                getProfileInfo()
+        
             }
             catch(err){
                 console.log(err)
@@ -78,6 +75,7 @@ export default function Profile() {
         newAuthValue.isLoggedIn = false;
 
         setLoginAuthValue(newAuthValue);
+        setProfileInfo();
 
         navigate("/login");
     }
@@ -113,21 +111,16 @@ export default function Profile() {
     return (
         <div id="profile">
             
-                { profileInfo && 
-                    <div><div id='profileImage'>
+            { profileInfo && <div>
+                <div id='profileImage'>
                     
                     <img src="/src/assets/avatar-default.jpg" alt="Ruth Asawa sitting next to her art"/>
                     {/* <button className='roundButton'><i class="fi fi-rr-refresh"></i></button> */}
 
                 </div>
                 
-              
-    
                 <h1>{profileInfo.username}</h1>
                 
-
-
-                    
                 <button className='logout textButton' onClick={()=>logOut()}>Log Out</button>
                 <button className='importantTextButton' style={{marginLeft:"0"}} >Edit profile</button>
 

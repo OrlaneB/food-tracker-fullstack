@@ -8,7 +8,7 @@ const cors = require('cors');  // add at the top
 console.log("1-Beginning of app.js...");
 
 // Import the database connection
-const createConnection = require('./model/database');
+const connectToDatabase = require('./model/database');
 
 // var indexRouter = require('./routes/index'); -- removed idex.js route
 var usersRouter = require('./routes/users');
@@ -39,10 +39,7 @@ app.get("/", function(req, res, next) {
 });
 
 // Middleware to create a database connection for each request
-app.use((req, res, next) => {
-  req.db = createConnection(); // Create a new connection for the request
-  next();
-});
+connectToDatabase();
 
 console.log("5-Connection with db...");
 

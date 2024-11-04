@@ -7,7 +7,7 @@ const DB_USER = process.env.DB_USER;
 const DB_PASS = process.env.DB_PASS;
 const DB_NAME = process.env.DB_NAME;
 
-const createConnection =()=> {
+const connectToDatabase =()=> {
   console.log("A- Top of database.js...");
 
   const con = mysql.createConnection({
@@ -41,4 +41,4 @@ const createConnection =()=> {
   
 }
 
-module.exports = createConnection;
+module.exports = connectToDatabase;

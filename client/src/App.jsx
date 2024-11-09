@@ -58,7 +58,7 @@ function App() {
 
     if(token){
       try{
-        let result = await axios.post("http://localhost:5000/api/users/token",{
+        let result = await axios.post(`{process.env.VITE_URL_REQUESTS}/api/users/token`,{
           token
         })
 

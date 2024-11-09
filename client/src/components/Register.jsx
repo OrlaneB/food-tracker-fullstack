@@ -11,7 +11,7 @@ export default function Register() {
     const { username, password } = registerObj;
   
     try {
-      await axios.post("http://localhost:5000/api/users/register", {
+      await axios.post(`{process.env.VITE_URL_REQUESTS}/api/users/register`, {
         username,
         password,
       });

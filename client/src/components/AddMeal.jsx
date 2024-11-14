@@ -144,7 +144,7 @@ export default function AddMeal() {
       // console.log("Post Meal");
 
       try{
-        const mealID = await axios.post(`{process.env.VITE_URL_REQUESTS}/api/meals/${profile_id}`, {
+        const mealID = await axios.post(`${import.meta.env.VITE_URL_REQUESTS}/api/meals/${profile_id}`, {
           date
         });
 
@@ -159,7 +159,7 @@ export default function AddMeal() {
     async function postIngredients(mealID){
       try {
 
-        await axios.post(`{process.env.VITE_URL_REQUESTS}/api/meals/ingredients/${mealID}`,{
+        await axios.post(`${import.meta.env.VITE_URL_REQUESTS}/api/meals/ingredients/${mealID}`,{
           ingredientsList : listIngredients
         })
 
@@ -175,7 +175,7 @@ export default function AddMeal() {
       // console.log(nutrientsListCalculated)
 
       try{
-        await axios.post(`{process.env.VITE_URL_REQUESTS}/api/meals/nutrients/${mealID}`,{
+        await axios.post(`${import.meta.env.VITE_URL_REQUESTS}/api/meals/nutrients/${mealID}`,{
           nutrientsList:nutrientsListCalculated
         })
 

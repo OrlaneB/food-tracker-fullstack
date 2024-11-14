@@ -33,7 +33,7 @@ function App() {
     if(user_id){
         try {
 
-            const result = await axios.get(`http://localhost:5000/api/profiles/${user_id}`);
+            const result = await axios.get(`${import.meta.env.VITE_URL_REQUESTS}/api/profiles/${user_id}`);
 
             let profileObj = result.data.resObj;
 
@@ -58,7 +58,7 @@ function App() {
 
     if(token){
       try{
-        let result = await axios.post(`{process.env.VITE_URL_REQUESTS}/api/users/token`,{
+        let result = await axios.post(`${import.meta.env.VITE_URL_REQUESTS}/api/users/token`,{
           token
         })
 

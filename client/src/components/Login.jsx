@@ -18,9 +18,11 @@ export default function Login() {
       const {username,password} = credentials;
 
       try{
-        let result = await axios.post(`{process.env.VITE_URL_REQUESTS}/api/users/login`,{
+        let result = await axios.post(`${import.meta.env.VITE_URL_REQUESTS}/api/users/login`,{
           username,password
-        })
+        },{
+           headers:{'Content-Type': 'application/json'}
+	});
 
         localStorage.setItem("token",result.data.token);
 

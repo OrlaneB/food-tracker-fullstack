@@ -8,7 +8,7 @@ const jwtSecret = process.env.JWT_SECRET;
 
 const saltrounds = process.env.SALT_ROUNDS || 10;
 
-const userMustExist = require("../guards/userMustExist")
+//const userMustExist = require("../guards/userMustExist")
 const usernameUnavailable = require("../guards/usernameUnavailable")
 
 
@@ -16,6 +16,7 @@ const usernameUnavailable = require("../guards/usernameUnavailable")
 // router.post("/register", usernameUnavailable,async (req, res) => {
   router.post("/register", usernameUnavailable, async (req, res) => {
 
+  console.log(req.body);
   const { username, password } = req.body;
 
   console.log("Received password:", password);  // Debugging: log password
@@ -34,11 +35,11 @@ const usernameUnavailable = require("../guards/usernameUnavailable")
     await db(`INSERT INTO profiles (user_id)
       VALUES (${userId})`);
 
-    res.send({ message: "it worked" });
+    res.json({ message: "it worked" });
   } catch (err) {
     res
       .status(500)
-      .send({ myMessage: "registration failed", serverError: err.message });
+      .json({ myMessage: "registration failed", serverError: err.message });
   }
 });
 
@@ -46,32 +47,39 @@ const usernameUnavailable = require("../guards/usernameUnavailable")
 
 // Login user NEED TO ADD MIDDLEWARE userMustExist
 // router.post("/login/:id", userMustExist, async (req, res) => {
-  router.post("/login", userMustExist,  async (req, res) => {
+  router.post("/login",  async (req, res) => {
 
-  const { password } = req.body;
+  const { password,username } = req.body;
   
   try {
-      const {user} = req;
-      // console.log("user is : ",user)
+      const user = req.body;
+      console.log("user is : ",user)
+      
+      //Check if username exists 
+      const userWithUsername = await db(`SELECT * FROM users WHERE username="${username}"`);
 
+	if(userWithUsername.data.length <1) res.status(404).json({error:"There's no user with that username"});
+	console.log("user with username ",userWithUsername);
+	const passwordToCompare = userWithUsername.data[0].password;
+	console.log("PasswordToCompare , ",passwordToCompare);
       const userPassword = user.password;
-      const passwordCorrect = await bcrypt.compare(password, userPassword);
+      const passwordCorrect = await bcrypt.compare(password, passwordToCompare);
 
       if (!passwordCorrect) {
-        console.log("Password is correct!")
-        res.status(401).send({ error: "password incorrect" });
+        console.log("Password is incorrect!")
+        res.status(401).json({ error: "password incorrect" });
       } else {
         const tokenPayload = { userId: user.user_id };
         const token = jwt.sign(tokenPayload, jwtSecret);
 
-        res.send({
+        res.status(200).json({
           token: token,
           user_id:user.user_id
         });
       
     }
   } catch (err) {
-    res.status(500).send({ error: err.message });
+    res.status(500).json({ error: err.message });
   }
 });
 
@@ -83,10 +91,10 @@ router.post("/token", async(req,res)=>{
 
     jwt.verify(token, jwtSecret, (err,decoded)=>{
       if(err) {
-        res.status(401).send({message:err.message})}
+        res.status(401).json({message:err.message})}
       else {
         
-        res.status(200).send(String(decoded.userId));
+        res.status(200).json(String(decoded.userId));
       }
 
       
@@ -94,7 +102,7 @@ router.post("/token", async(req,res)=>{
     
     
   }catch(err){
-    res.status(500).send({message:err.message});
+    res.status(500).json({message:err.message});
   }
 })
 /* Change username*/

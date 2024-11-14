@@ -38,7 +38,7 @@ export default function Profile() {
 
         if(user_id){
             try{
-                await axios.put(`{process.env.VITE_URL_REQUESTS}/api/profiles/${user_id}`, {
+                await axios.put(`${import.meta.env.VITE_URL_REQUESTS}/api/profiles/${user_id}`, {
                     nutrient_1_name:chosenNutrients[0].name,
                     nutrient_2_name:chosenNutrients[1].name,
                     nutrient_3_name:chosenNutrients[2].name,

@@ -12,7 +12,7 @@ router.get("/:user_id", async(req, res)=>{
   console.log("user_id", user_id);
 
   if (!user_id) {
-    return res.status(400).send({ error: "User ID is required!" });
+    return res.status(400).json({ error: "User ID is required!" });
   }
   try {
     const results = await db(`SELECT * 
@@ -22,17 +22,17 @@ router.get("/:user_id", async(req, res)=>{
                               WHERE users.user_id = ${user_id}`);
 
     if (results.length === 0) {
-      return res.status(404).send({ error: "Profile not found!" });
+      return res.status(404).json({ error: "Profile not found!" });
     } else {
       // Initialize result object
       let resObj = results.data[0]
 
       // Add success message
-      res.status(200).send({message:'Welcome', resObj});
+      res.status(200).json({message:'Welcome', resObj});
     }
   } catch (e) {
     console.log("something happened");
-    res.status(500).send({ error: e.message });
+    res.status(500).json({ error: e.message });
   }
 
 })
@@ -46,9 +46,9 @@ router.post("/:user_id", async (req, res) => {
               VALUES (${user_id})`
             );
       // Send a success message to the frontend
-       res.status(201).send("Profile created!");
+       res.status(201).json("Profile created!");
   } catch (err) {
-    res.status(500).send({ error: err.message });
+    res.status(500).json({ error: err.message });
   }
 });
 
@@ -82,9 +82,9 @@ router.put("/:profile_id", async (req, res) => {
       
             `);
       // Send a success message to the frontend
-       res.status(201).send("Profile changed!");
+       res.status(201).json("Profile changed!");
   } catch (err) {
-    res.status(500).send({ error: err.message });
+    res.status(500).json({ error: err.message });
   }
 });
 
@@ -104,9 +104,9 @@ router.put("/nutrients/:profile_id", async (req, res) => {
               WHERE profile_id = ${profile_id}`
             );
       // Send a success message to the frontend
-       res.status(201).send("Nutrients to track updated!");
+       res.status(201).json("Nutrients to track updated!");
   } catch (err) {
-    res.status(500).send({ error: err.message });
+    res.status(500).json({ error: err.message });
   }
 });
 

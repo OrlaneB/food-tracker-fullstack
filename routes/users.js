@@ -58,26 +58,31 @@ const usernameUnavailable = require("../guards/usernameUnavailable")
       //Check if username exists 
       const userWithUsername = await db(`SELECT * FROM users WHERE username="${username}"`);
 
-	if(userWithUsername.data.length <1) res.status(404).json({error:"There's no user with that username"});
-	console.log("user with username ",userWithUsername);
-	const passwordToCompare = userWithUsername.data[0].password;
-	console.log("PasswordToCompare , ",passwordToCompare);
-      const userPassword = user.password;
-      const passwordCorrect = await bcrypt.compare(password, passwordToCompare);
+      if(userWithUsername.data.length <1) res.status(404).json({error:"There's no user with that username"});
+      else {
 
-      if (!passwordCorrect) {
-        console.log("Password is incorrect!")
-        res.status(401).json({ error: "password incorrect" });
-      } else {
-        const tokenPayload = { userId: userWithUsername.data[0].user_id };
-        const token = jwt.sign(tokenPayload, jwtSecret);
+          console.log("user with username ",userWithUsername);
+        const passwordToCompare = userWithUsername.data[0].password;
+        console.log("PasswordToCompare , ",passwordToCompare);
+        const userPassword = user.password;
+        const passwordCorrect = await bcrypt.compare(password, passwordToCompare);
 
-        res.status(200).json({
-          token: token,
-          user_id:user.user_id
-        });
+        if (!passwordCorrect) {
+          console.log("Password is incorrect!")
+          res.status(401).json({ error: "password incorrect" });
+        } else {
+          const tokenPayload = { userId: userWithUsername.data[0].user_id };
+          const token = jwt.sign(tokenPayload, jwtSecret);
+
+          res.status(200).json({
+            token: token,
+            user_id:user.user_id
+          });
+        
+        }
+
+      }
       
-    }
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

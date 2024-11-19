@@ -9,6 +9,7 @@ export default function Login() {
     const navigate = useNavigate();
 
     const [credentials,setCredentials]=useState({username:"",password:""});
+    const [unauthorized,setUnauthorized]=useState(false);
 
     const {loginAuthValue, setLoginAuthValue} = useContext(loginAuth);
 
@@ -16,13 +17,16 @@ export default function Login() {
     async function login(event){
       event.preventDefault();
       const {username,password} = credentials;
+      setUnauthorized(false)
 
       try{
         let result = await axios.post(`${import.meta.env.VITE_URL_REQUESTS}/api/users/login`,{
           username,password
-        },{
+          },{
            headers:{'Content-Type': 'application/json'}
-	});
+	        });
+
+          console.log(result);
 
         localStorage.setItem("token",result.data.token);
 
@@ -36,6 +40,12 @@ export default function Login() {
 
       } catch(err){
         console.log(err);
+        console.log("status : ",err.response.status)
+
+        if(err.response.status===401 || err.response.status===404){
+          setUnauthorized(true);
+          setCredentials({username:"",password:""})
+        }
       }
     }
 
@@ -65,7 +75,11 @@ export default function Login() {
                       <input type='password' name='password' value={credentials.password} autoComplete='password' onChange={(event)=>handleChange(event)} />
                     </label>
 
-                    <button type='submit' className='textButton'>Sign up</button>
+                    {unauthorized && 
+                      <p id='unauthorized'>Your password or username is uncorrect.</p>
+                    }
+
+                    <button type='submit' className='textButton'>Login</button>
                     <p onClick={()=>navigate("/register")} className='buttonLink'>Don't have an account ? Sign up here</p>
             </form>
         </div>

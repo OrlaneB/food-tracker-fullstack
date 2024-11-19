@@ -61,7 +61,7 @@ function App() {
           token
         })
 
-	console.log("Token has been fetched, result : ",result);
+	      console.log("Token has been fetched, result : ",result);
 
         if(result.statusText==="OK") {
           loginAuthValue.user_id=result.data.userId;
@@ -75,6 +75,7 @@ function App() {
       }
       catch(err){
         console.log(err);
+        navigate("/login");
       }
     } else {
       console.log("There's no token");

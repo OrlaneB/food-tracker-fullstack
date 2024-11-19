@@ -16,16 +16,16 @@ router.get("/:profile_id", async(req, res)=>{
   try {
     // Join ingredients, meals, and nutrients_by_meal tables 
     const resultsIngredients = await db(`SELECT *
-                              FROM meals 
-                              LEFT JOIN ingredients ON ingredients.meal_id = meals.meal_id 
-                              WHERE meals.profile_id = ${profile_id}
-                              AND meals.date = "${date.slice(0,10)}"
+                              FROM meals m 
+                              JOIN ingredients i ON m.meal_id = i.meal_id 
+                              WHERE m.profile_id = ${profile_id}
+                              AND m.date = "${date.slice(0,10)}"
                             `);
     const resultsNutrients = await db(`SELECT *
-                              FROM meals 
-                              LEFT JOIN nutrients_by_meal nutrients ON nutrients.meal_id = meals.meal_id 
-                              WHERE meals.profile_id = ${profile_id}
-                              AND meals.date = "${date.slice(0,10)}"
+                              FROM meals m 
+                              JOIN nutrients_by_meal n ON m.meal_id = n.meal_id 
+                              WHERE m.profile_id = ${profile_id}
+                              AND m.date = "${date.slice(0,10)}"
                             `);
 
     if (resultsIngredients.length === 0 || resultsNutrients.length === 0 ) {

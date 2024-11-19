@@ -32,9 +32,8 @@ function App() {
 
     if(user_id){
         try {
-
-            const result = await axios.get(`${import.meta.env.VITE_URL_REQUESTS}/api/profiles/${user_id}`);
-
+		console.log("user id in getProfileInfo is : ",user_id);
+            const result = await axios.get(`${import.meta.env.VITE_URL_REQUESTS}/api/profiles/${typeof user_id==="number"?user_id: user_id.userId}`);
             let profileObj = result.data.resObj;
 
             profileObj.chosenNutrients = 
@@ -62,8 +61,10 @@ function App() {
           token
         })
 
+	console.log("Token has been fetched, result : ",result);
+
         if(result.statusText==="OK") {
-          loginAuthValue.user_id=result.data;
+          loginAuthValue.user_id=result.data.userId;
           loginAuthValue.isLoggedIn=true;
           getProfileInfo(result.data)
         } else {

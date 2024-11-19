@@ -4,7 +4,7 @@ const userFriendlyNutrientNames = {
     "Carbohydrate, by difference": "Carbs",
     "Total lipid (fat)": "Fats",
     "Fiber, total dietary": "Fiber",
-    "Sugars, total including NLEA": "Sugars",
+    "Sugars, total": "Sugars",
     "Calcium, Ca": "Calcium",
     "Iron, Fe": "Iron",
     "Potassium, K": "Potassium",

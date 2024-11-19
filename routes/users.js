@@ -69,7 +69,7 @@ const usernameUnavailable = require("../guards/usernameUnavailable")
         console.log("Password is incorrect!")
         res.status(401).json({ error: "password incorrect" });
       } else {
-        const tokenPayload = { userId: user.user_id };
+        const tokenPayload = { userId: userWithUsername.data[0].user_id };
         const token = jwt.sign(tokenPayload, jwtSecret);
 
         res.status(200).json({
@@ -86,15 +86,15 @@ const usernameUnavailable = require("../guards/usernameUnavailable")
 /* Send user_id to the frontend to display meals */
 router.post("/token", async(req,res)=>{
   const {token} = req.body;
-  let user_id =null;
+ 
   try{
 
     jwt.verify(token, jwtSecret, (err,decoded)=>{
       if(err) {
         res.status(401).json({message:err.message})}
       else {
-        
-        res.status(200).json(String(decoded.userId));
+ 	console.log("Decoded user is : ",decoded);       
+        res.status(200).json(decoded);
       }
 
       

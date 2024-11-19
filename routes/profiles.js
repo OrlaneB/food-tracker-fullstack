@@ -12,7 +12,7 @@ router.get("/:user_id", async(req, res)=>{
   console.log("user_id", user_id);
 
   if (!user_id) {
-    return res.status(400).json({ error: "User ID is required!" });
+    res.status(400).json({ error: "User ID is required!" });
   }
   try {
     const results = await db(`SELECT * 

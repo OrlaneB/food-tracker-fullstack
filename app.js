@@ -76,6 +76,8 @@ app.use(cookieParser());
 //This is to link app.js to the client side
 app.use(express.static(path.join(__dirname, 'client','dist')));
 
+app.use(express.static('public'));
+
 // Catch-all route to serve React index.html for client-side routing
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));

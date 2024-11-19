@@ -114,7 +114,7 @@ export default function Profile() {
             { profileInfo && <div>
                 <div id='profileImage'>
                     
-                    <img src="/src/assets/avatar-default.jpg" alt="Ruth Asawa sitting next to her art"/>
+                    <img src="/avatar-default.jpg" alt="User image default picture"/>
                     {/* <button className='roundButton'><i class="fi fi-rr-refresh"></i></button> */}
 
                 </div>

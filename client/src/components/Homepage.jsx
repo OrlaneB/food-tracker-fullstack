@@ -68,11 +68,11 @@ export default function Homepage() {
           for (let index in mealsID) {
               let num = mealsID[index];
 		// console.log("This item of mealsID is :",num);
-		// console.log("chosenNutrients : ",chosenNutrients);
+		 console.log("chosenNutrients : ",chosenNutrients);
               if(chosenNutrients[0].name){
                 let arrayChosenNutrient = chosenNutrients.map(nut=>nut.name);
     // console.log("ArrChosenNutrients : ",arrayChosenNutrient)
-		// console.log("dataNutrients",dataNutrients);
+		 console.log("dataNutrients",dataNutrients);
                 let meal = dataNutrients
                   .filter(n=>n.meal_id===num && arrayChosenNutrient.includes(n.nutrient_name))
                   .map(n=>{return {"nutrient_name":n.nutrient_name,"nutrient_number_amount":n.nutrient_number_amount} })

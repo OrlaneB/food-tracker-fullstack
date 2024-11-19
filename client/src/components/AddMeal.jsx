@@ -76,6 +76,8 @@ export default function AddMeal() {
   
           responses.forEach((response, index) => {
               let ingredientNutrients = {};
+
+              // console.log("Nutrients : ",response.data[0].foodNutrients);
   
               response.data[0].foodNutrients
                   .filter(nut => Object.keys(userFriendlyNutrientNames).includes(nut.name))
@@ -173,6 +175,7 @@ export default function AddMeal() {
     async function postNutrients(mealID){
       let nutrientsListCalculated = await calculateNutrients(listIngredients);
       // console.log(nutrientsListCalculated)
+  
 
       try{
         await axios.post(`${import.meta.env.VITE_URL_REQUESTS}/api/meals/nutrients/${mealID}`,{

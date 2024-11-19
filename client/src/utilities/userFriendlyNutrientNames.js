@@ -4,7 +4,7 @@ const userFriendlyNutrientNames = {
     "Carbohydrate, by difference": "Carbs",
     "Total lipid (fat)": "Fats",
     "Fiber, total dietary": "Fiber",
-    "Sugars, total": "Sugars",
+    "Total Sugars": "Sugars",
     "Calcium, Ca": "Calcium",
     "Iron, Fe": "Iron",
     "Potassium, K": "Potassium",
@@ -18,7 +18,7 @@ const userFriendlyNutrientNames = {
     "Zinc, Zn": "Zinc",
     Cholesterol: "Cholesterol",
     "Folate, DFE": "Folate",
-    "Omega-3 Fatty Acids (EPA, DHA)": "Omega-3s"
+    "Fatty acids, total polyunsaturated": "Omega3/Omega6"
 }
 
 export default userFriendlyNutrientNames;

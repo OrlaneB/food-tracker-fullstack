@@ -4,7 +4,7 @@ const unitNutrients = {
     "Carbohydrate, by difference": "g",
     "Total lipid (fat)": "g",
     "Fiber, total dietary": "g",
-    "Sugars, total including NLEA": "g",
+    "Total Sugars": "g",
     "Calcium, Ca": "mg",
     "Iron, Fe": "mg",
     "Potassium, K": "mg",
@@ -18,7 +18,7 @@ const unitNutrients = {
     "Zinc, Zn": "mg",
     Cholesterol: "mg",
     "Folate, DFE": "mcg_DFE",
-    "Omega-3 Fatty Acids (EPA, DHA)": "g"
+    "Fatty acids, total polyunsaturated": "g"
 }
 
 export default unitNutrients;

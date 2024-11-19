@@ -34,7 +34,7 @@ export default function Homepage() {
         params: { date: `${day.getFullYear()}-${day.getMonth()+1<10? `0${day.getMonth()+1}`:day.getMonth()+1}-${day.getDate()<10? `0${day.getDate()}`:day.getDate()}` }
       });
 
-	console.log("result is : ",result);
+	// console.log("result is : ",result);
       
       if(result.data.dataIngredients[0]){
 
@@ -45,7 +45,7 @@ export default function Homepage() {
         let mealsID = new Set(dataIngredients.map(meal=>meal.meal_id));
         mealsID = Array.from(mealsID);
 
-	console.log("mealsID is : ",mealsID);
+	// console.log("mealsID is : ",mealsID);
         // Create Meals
             let newMeals=[];
 
@@ -67,15 +67,16 @@ export default function Homepage() {
 
           for (let index in mealsID) {
               let num = mealsID[index];
-		console.log("This item of mealsID is :",num);
-		console.log("chosenNutrients : ",chosenNutrients);
+		// console.log("This item of mealsID is :",num);
+		// console.log("chosenNutrients : ",chosenNutrients);
               if(chosenNutrients[0].name){
                 let arrayChosenNutrient = chosenNutrients.map(nut=>nut.name);
-		console.log("dataNutrients",dataNutrients);
+    // console.log("ArrChosenNutrients : ",arrayChosenNutrient)
+		// console.log("dataNutrients",dataNutrients);
                 let meal = dataNutrients
                   .filter(n=>n.meal_id===num && arrayChosenNutrient.includes(n.nutrient_name))
                   .map(n=>{return {"nutrient_name":n.nutrient_name,"nutrient_number_amount":n.nutrient_number_amount} })
-		console.log("meal : ",meal);
+		// console.log("meal : ",meal);
                 newNutrientsByMeal.push(meal)
               }
         }

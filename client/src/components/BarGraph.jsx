@@ -15,6 +15,7 @@ export default function BarGraph({}) {
 
 
     const {nutrientsByMeal} = useContext(mealsForOneDate);
+    console.log(nutrientsByMeal)
     const [nutrients,setNutrients] = useState();
  
 

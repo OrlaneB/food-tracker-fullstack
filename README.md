@@ -4,7 +4,8 @@ Food Pulse is a full-stack app designed to empower users who need to track nutri
 
 The inspiration for Food Pulse came from one of the app developers [Laura Castro](#Laura-Castro). Her friend's daughter had been diagnosed with anemia. This sparked a deep dive into iron deficiency, during which she came across an article discussing how pairing certain foods can maximize nutrient absorption. And voilà! She brought the idea to her classmate, [Orlane Brun](#Orlane-Brun), who enthusiastically joined her in creating this helpful tool.
 
-Together, we developed Food Pulse to provide personalized insights into nutrient intake. Through collaboration and careful planning, we designed an application to meet diverse dietary needs while making nutrition tracking accessible and user-friendly.
+Together, we developed Food Pulse to provide personalized insights into nutrient intake. Through collaboration and careful planning, we designed an application to meet diverse dietary needs while making nutrition tracking accessible and user-friendly. Enjoy a **3-month free trial** by [signing up](https://991f2449.sibforms.com/serve/MUIFAM4F5bfiWPgw7l0NfBbyB1-WCK3Cb7a0YvOpRcxIJDIKetySXbO6gPLqXhDo0q4OeABEJCUMfAPhCRpw5xot_icUjzC2y4VSYj0ze55Drn49dp1ARPfLeN3iJa4bfAvH_S_6SEMyvQL-M6gyE6_-KPL4anlzhk0Wl55qWsBJXMtB-7EHgIkYOcyteDa2v1BnJjXnZAza6gA2)
+up as a tester! 
 
 ## :sparkles: Features 
 - Mobile responsive 

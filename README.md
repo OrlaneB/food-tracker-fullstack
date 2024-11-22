@@ -1,10 +1,10 @@
 # :apple: Food Pulse
 
-Food Pulse is a full-stack app designed to empower users who need to track nutrient intake. While we aim to support users in meeting their goals, we are not medical providers, and the application is not an authoritative source for medical nutrition counseling.
+Food Pulse is a full-stack app designed to empower users who need to track nutrient intake. The key difference between this tracker and others on the market is its focus on health rather than weight loss. Calorie intake is optional and not prominently displayed, with the choice to hide it if it's a trigger. While we aim to support all bodies in meeting their goals, we are not medical providers, and the application is not an authoritative source for medical nutrition counseling.
 
 The inspiration for Food Pulse came from one of the app developers [Laura Castro](#Laura-Castro). Her friend's daughter had been diagnosed with anemia. This sparked a deep dive into iron deficiency, during which she came across an article discussing how pairing certain foods can maximize nutrient absorption. And voilà! She brought the idea to her classmate, [Orlane Brun](#Orlane-Brun), who enthusiastically joined her in creating this helpful tool.
 
-Together, we developed Food Pulse to provide personalized insights into nutrient intake. Through collaboration and careful planning, we designed an application to meet diverse dietary needs while making nutrition tracking accessible and user-friendly. Enjoy a **3-month free trial** by [signing up](https://991f2449.sibforms.com/serve/MUIFAM4F5bfiWPgw7l0NfBbyB1-WCK3Cb7a0YvOpRcxIJDIKetySXbO6gPLqXhDo0q4OeABEJCUMfAPhCRpw5xot_icUjzC2y4VSYj0ze55Drn49dp1ARPfLeN3iJa4bfAvH_S_6SEMyvQL-M6gyE6_-KPL4anlzhk0Wl55qWsBJXMtB-7EHgIkYOcyteDa2v1BnJjXnZAza6gA2)
+Together, we developed Food Pulse to provide personalized insights into nutrient intake. Through collaboration and careful planning, we designed an application to meet diverse dietary needs while making nutrition tracking accessible and user-friendly. Enjoy a **free trial** by [signing up](https://991f2449.sibforms.com/serve/MUIFAM4F5bfiWPgw7l0NfBbyB1-WCK3Cb7a0YvOpRcxIJDIKetySXbO6gPLqXhDo0q4OeABEJCUMfAPhCRpw5xot_icUjzC2y4VSYj0ze55Drn49dp1ARPfLeN3iJa4bfAvH_S_6SEMyvQL-M6gyE6_-KPL4anlzhk0Wl55qWsBJXMtB-7EHgIkYOcyteDa2v1BnJjXnZAza6gA2)
 up as a tester! 
 
 ## :sparkles: Features 

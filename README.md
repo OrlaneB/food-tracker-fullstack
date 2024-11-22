@@ -1,4 +1,4 @@
-# :apple: Food Tracker
+# :apple: Food Pulse
 
 Foodtracker...
 

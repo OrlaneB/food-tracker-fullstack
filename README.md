@@ -3,9 +3,6 @@
 Foodtracker...
 
 ## :sparkles: Features 
-
-###Add image or live video
-
 - Mobile responsive 
 - Login Authentication
 - Profile page 

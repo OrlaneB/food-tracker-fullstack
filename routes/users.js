@@ -122,40 +122,30 @@ const pool = require("../model/pool");
 /* Send user_id to the frontend to display meals */
 router.post("/token", async(req,res)=>{
   const {token} = req.body;
- 
   try{
 
-    jwt.verify(token, jwtSecret, async (err,decoded)=>{
-      if(err) {
-        res.status(401).json({message:"Unvalid token",err})}
-      else {
- 	      console.log("Decoded user is : ",decoded);
-        const getProfile = await db(`select * from profiles where user_id=${decoded.userId}`);
-        const username = await db(`select users.username from users where user_id=${decoded.userId}`)
-        console.log("profile is : ",getProfile);
-        const profile = getProfile.data[0]
+    const decoded = jwt.verify(token,jwtSecret);
 
-        const profileInfo = {
-          id:profile.user_id,
-          username:username.data[0].username,
-          chosenNutrients:profile.chosenNutrients||null
-        }
-        
-        res.status(200).json(profileInfo);
-      }
+    const profile = await db("SELECT chosenNutrients FROM profiles WHERE user_id = ?", [decoded.user_id]);
 
-      
-    })
+    if(!profile){
+      return res.status(404).json({ message: "Profile not found" });
+    }
+
+    const profileInfo = {
+      id : decoded.user_id,
+      username : decoded.username,
+      chosenNutrients : profile.data[0].chosenNutrients
+    }
+
+    res.status(200).json({message:"Successful login from token", profileInfo});
+
     
-    
-  }catch(err){
-    res.status(500).json({message:"Login with token failed",err});
+  } catch(err){
+    res.status(500).json({message:"Login with token failed", err});
   }
 })
-/* Change username*/
-// router.put
 
-/* Reset password */
 
 module.exports = router;
 

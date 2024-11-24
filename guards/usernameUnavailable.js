@@ -4,19 +4,23 @@ async function usernameUnavailable(req, res, next) {
     const {username} = req.body;
 
     try {
-    const result = await db(
-      `SELECT * FROM users WHERE username = "${username}"`
-    );
+    const {data,error} = await db("SELECT COUNT(*) AS user_count FROM users WHERE username = ?",[username]);
 
-    if (result.data.length === 1) {
-      res.send('Username unavailable');
+    if(error) {
+      console.error('Database error:', error);
+      return res.status(500).json({ message: 'An error occurred while checking username availability.' });
+    }
+
+    if (data[0].user_count > 0) {
+      res.status(400).send({message:'Username unavailable'});
     }
 
     next();
     
-  } catch {
-    res.status(500).send({ error: e.message });
+  } catch (err) {
+    console.error('Unexpected error:', err);
+    res.status(500).json({ message: 'An unexpected error occurred.' });
   }
 }
 
-module.exports = usernameUnavailable;
+module.exports= usernameUnavailable;

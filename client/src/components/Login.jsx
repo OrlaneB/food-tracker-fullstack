@@ -26,7 +26,7 @@ export default function Login() {
            headers:{'Content-Type': 'application/json'}
 	        });
 
-
+        console.log("response: ",response)
         localStorage.setItem("token",response.data.token);
         setProfileInfo(response.data.profileInfo)
 
@@ -34,8 +34,7 @@ export default function Login() {
         navigate("/profile");
 
       } catch(err){
-        console.log(err.response.data.message);
-        console.log(err.response.data.err);
+        console.log(err.response.data);
 
         if(err.response.status===401){
           setErrorMessage("Password is incorrect.");
@@ -74,7 +73,7 @@ export default function Login() {
                     </label>
 
                     
-                    <p id='unauthorized'>{errorMessage}</p>
+                    {errorMessage && <p id='unauthorized'>{errorMessage}</p>}
 
                     <button type='submit' className='textButton'>Login</button>
                     <p onClick={()=>navigate("/register")} className='buttonLink'>Don't have an account ? Sign up here</p>

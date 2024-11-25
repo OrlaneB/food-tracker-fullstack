@@ -3,6 +3,26 @@ var router = express.Router();
 const db = require('../model/helper');
 // const userShouldBeLoggedIn = require("../guards/userShouldBeLoggedIn")
 
+const nutrientNames = [ "Energy","Protein", "Carbohydrate, by difference","Total lipid (fat)","Fiber, total dietary","Total Sugars","Calcium, Ca","Iron, Fe","Potassium, K","Sodium, Na","Vitamin A, RAE","Vitamin C, total ascorbic acid","Vitamin D (D2 + D3)","Vitamin E (alpha-tocopherol)","Vitamin K (phylloquinone)","Magnesium, Mg","Zinc, Zn","Cholesterol","Folate, DFE","Fatty acids, total polyunsaturated" ]
+
+
+function checkObjectFormat(obj, type) {
+  if (!obj || typeof obj !== "object") return false;
+
+  if (type === "nutrients") {
+    const keys = Object.keys(obj);
+    return (
+      keys.length === 20 &&
+      keys.every((key) => nutrientNames.includes(key) && typeof obj[key] === "number")
+    );
+  } else if (type === "ingredients") {
+    return Object.entries(obj).every(
+      ([key, value]) => typeof key === "string" && typeof value === "number"
+    );
+  }
+  return false;
+}
+
 /* GET meals, ingredients, nutrients*/
 // router.get("/:profile_id", userShouldBeLoggedIn, async(req, res)=>{
 router.get("/:profile_id", async(req, res)=>{
@@ -46,78 +66,29 @@ router.get("/:profile_id", async(req, res)=>{
 /* POST meal */
 router.post('/:profile_id', async(req, res) => {
   const { profile_id } = req.params;
-  const { date} = req.body;
-  console.log(typeof profile_id, profile_id); //string
-  console.log(date); //string
-    
+  const { date, nutrients, ingredients} = req.body;
+
   try {
+    // if(checkObjectFormat(nutrients,"nutrients") && checkObjectFormat(ingredients,"ingredients")){
+    if(!checkObjectFormat(nutrients,"nutrients")) return res.status(400).json({message:"Invalid nutrients format."});
+    if(!checkObjectFormat(ingredients,"ingredients")) return res.status(400).json({message:"Invalid ingredients format."});
 
-  // Add profile_id and date to meals
-  await db(`INSERT INTO meals (profile_id, date)
-            VALUES (${profile_id}, "${date.slice(0,10)}");`
-        );
 
-  // Send the meal_id for this meal to frontend 
-  const getMealId = await db(`SELECT max(meal_id) 
-                     FROM meals
-                     WHERE profile_id=${profile_id}`
-                    );
+      await db("INSERT INTO meals (profile_id,date,nutrients,ingredients) VALUES (?,?,?,?);",
+        [profile_id,date,JSON.stringify(nutrients),JSON.stringify(ingredients)]
+      );
 
-  // Send a success message to the frontend
-  // res.status(201).send("Meal added!");
-  res.status(201).send(getMealId);// need to send meal id to frontend for ingredient list post
+      res.status(201).json({message:"Meal created successfully"});
 
-  } catch (err) {
-  res.status(500).send({ error: err.message });
+
+    // } else {
+    //   return res.status(401).json({message:"Nutrients or ingredients don't have the correct format."});
+    // }
+  } catch(err){
+    console.error("Error creating meal : ",err);
+    res.status(500).json({message:"An error occured during meal creation.",err});
   }
-})
 
-/* POST meal ingredients*/
-router.post('/ingredients/:meal_id', async(req, res) => {
-  const { meal_id} = req.params;
-  const { ingredientsList} = req.body;
-  // console.log(ingredientsList);
-  try {
-  // Add ingredients to meal
-  for (let ingredient of ingredientsList){
-
-    await db(` INSERT INTO ingredients (meal_id, name, number_amount)
-               VALUES (${meal_id},"${ingredient.name}",${ingredient.numberAmount})`
-    );
-  }
-  // Send a success message to the frontend
-  res.status(201).send("Ingredients added!");
-  
-  // NEED to send meal_id to frontend
-
-  } catch (err) {
-  res.status(500).send({ error: err.message });
-  }
-})
-
-/* POST meal nutrients*/
-router.post('/nutrients/:meal_id', async(req, res) => {
-
-  const { meal_id} = req.params;
-  const { nutrientsList} = req.body;
-  // console.log("a");
-  console.log(nutrientsList["Protein"])
-  try {
-  // Add ingredients to meal
-  for (let nutrient in nutrientsList){
-    // console.log("b : ",nutrient);
-
-    await db(` INSERT INTO nutrients_by_meal (meal_id, nutrient_name, nutrient_number_amount)
-               VALUES (${meal_id},"${nutrient}",${nutrientsList[nutrient]})`
-    );
-
-    // console.log("c")
-  }
-  // Send a success message to the frontend
-  res.status(201).send("Nutrients added!");
-  } catch (err) {
-  res.status(500).send({ error: err.message });
-  }
 })
 
 /* PUT ingredients*/

@@ -95,12 +95,14 @@ const pool = require("../model/pool");
         [user_id]
       );
 
-      console.log(profile);
+      //console.log(profile);
+
+      const chosenNutrients = profile.data[0].chosenNutrients? JSON.parse(profile.data[0].chosenNutrients) : {};
 
       const profileInfo = {
         id:user_id,
         username,
-        chosenNutrients:profile[0][0].chosenNutrients
+        chosenNutrients
       }
 
       res.status(200).json({token, profileInfo});
@@ -132,10 +134,12 @@ router.post("/token", async(req,res)=>{
       return res.status(404).json({ message: "Profile not found" });
     }
 
+    const chosenNutrients = profile.data[0].chosenNutrients? JSON.parse(profile.data[0].chosenNutrients) : {};
+
     const profileInfo = {
       id : decoded.user_id,
       username : decoded.username,
-      chosenNutrients : profile.data[0].chosenNutrients
+      chosenNutrients
     }
 
     res.status(200).json({message:"Successful login from token", profileInfo});

@@ -2,7 +2,6 @@
 import { useContext, useEffect, useState } from 'react'
 import "../styles/Profile.css"
 
-import loginAuth from '../context/loginAuth';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import unitNutrients from '../utilities/measurmentUnitNutrients';
@@ -12,70 +11,81 @@ import profileInfoContext from '../context/profileInfo';
 
 export default function Profile() {
 
-    const {loginAuthValue,setLoginAuthValue}=useContext(loginAuth);
     const {profileInfo,setProfileInfo}=useContext(profileInfoContext);
     const navigate = useNavigate();
 
-    const [chosenNutrients,setChosenNutrients] = useState([{name:"",amount:"",goal:""}]);
+    const [chosenNutrients,setChosenNutrients] = useState({
+        nutrient1:{name:"",amount:0,goal:""},
+        nutrient2:{name:"",amount:0,goal:""},
+        nutrient3:{name:"",amount:0,goal:""}
+    })
     const [unsavedChanges,setUnsavedChanges] = useState(false);
 
     const nutrientNamesArray = Object.values(userFriendlyNutrientNames);
 
 
     function checkUnsavedChanges(){
-        let {nutrient_1_name,nutrient_1_goal,nutrient_1_amount,nutrient_2_name,nutrient_2_goal,nutrient_2_amount,nutrient_3_name,nutrient_3_goal,nutrient_3_amount} = profileInfo;
+ 
+        const {nutrient1,nutrient2,nutrient3} = profileInfo.chosenNutrients
+        const nutrient1State = chosenNutrients.nutrient1;
+        const nutrient2State = chosenNutrients.nutrient2;
+        const nutrient3State = chosenNutrients.nutrient3;
 
-        if(nutrient_1_name===chosenNutrients[0].name && nutrient_1_amount===chosenNutrients[0].amount &&                nutrient_1_goal===chosenNutrients[0].goal &&
-            nutrient_2_name===chosenNutrients[1].name && nutrient_2_amount===chosenNutrients[1].amount && nutrient_2_goal===chosenNutrients[1].goal &&
-            nutrient_3_name===chosenNutrients[2].name && nutrient_3_amount===chosenNutrients[2].amount && nutrient_3_goal===chosenNutrients[2].goal 
-        ) return false
 
-        return true
+        if(
+            nutrient1State.name === nutrient1.name && nutrient1State.amount === nutrient1.amount && nutrient1State.goal === nutrient1.goal &&
+            nutrient2State.name === nutrient2.name && nutrient2State.amount === nutrient2.amount && nutrient2State.goal === nutrient2.goal &&
+            nutrient3State.name === nutrient3.name && nutrient3State.amount === nutrient3.amount && nutrient3State.goal === nutrient3.goal
+        ) {
+            return false
+            
+        } else {
+            return true
+        }
+
+    }
+
+
+    function getButtonClass(type,goal){
+        if(type===goal){
+            return "selectedType roundButton"
+        } else {
+            return "roundButton"
+        }
     }
 
     async function updateNutrientChanges(){
-        let user_id = loginAuthValue.user_id;
+        let user_id = profileInfo.id;
 
         if(user_id){
             try{
-                await axios.put(`${import.meta.env.VITE_URL_REQUESTS}/api/profiles/${user_id}`, {
-                    nutrient_1_name:chosenNutrients[0].name,
-                    nutrient_2_name:chosenNutrients[1].name,
-                    nutrient_3_name:chosenNutrients[2].name,
-                    nutrient_1_amount:chosenNutrients[0].amount,
-                    nutrient_2_amount:chosenNutrients[1].amount,
-                    nutrient_3_amount:chosenNutrients[2].amount,
-                    nutrient_1_goal:chosenNutrients[0].goal,
-                    nutrient_2_goal:chosenNutrients[1].goal,
-                    nutrient_3_goal:chosenNutrients[2].goal
+                const response = await axios.put(`${import.meta.env.VITE_URL_REQUESTS}/api/profiles/${user_id}`, {
+                    chosenNutrients
                 });
+
+                if(response.status===201){
+                    console.log(response.data)
+                    setUnsavedChanges(false);
+                }
         
             }
             catch(err){
-                console.log(err)
+                console.log(err.response.data.message)
+                console.error(err.response.data.err)
             }
         }
         
     }
 
 
-    useEffect(()=>{
-        if(profileInfo) setChosenNutrients(profileInfo.chosenNutrients)
-    },[profileInfo])
-
-    useEffect(()=>{
-        if(chosenNutrients[0].name) setUnsavedChanges(checkUnsavedChanges());
-    },[chosenNutrients])
-
 
     function logOut(){
         localStorage.removeItem("token");
-
-        let newAuthValue = {...loginAuthValue};
-        newAuthValue.isLoggedIn = false;
-
-        setLoginAuthValue(newAuthValue);
-        setProfileInfo();
+        setProfileInfo({
+            id:null,
+            username:"",
+            chosenNutrients:null
+          });
 
         navigate("/login");
     }
@@ -90,20 +100,32 @@ export default function Profile() {
 
         if(name==="amount") value=Number(value);
         if(name==="name") value=getScientificName(value)
+        
+        const nutrient = `nutrient${index+1}`
 
-        let newNutrients = [...chosenNutrients];
-        newNutrients[index][name] = value;
+        const newNutrient = {...chosenNutrients};
+        newNutrient[nutrient][name] = value;
 
-        setChosenNutrients(newNutrients);
+        setChosenNutrients(newNutrient);
     }
 
     function handleChangeButtons(type,index){
 
-        let newNutrients = [...chosenNutrients];
-        newNutrients[index].goal = type;
+        let newNutrients = {...chosenNutrients}
+        const nutrient = `nutrient${index+1}`
 
-        setChosenNutrients(newNutrients);
+        newNutrients[nutrient].goal = type;
+
+        setChosenNutrients(newNutrients)
     }
+
+    useEffect(()=>{
+        if(profileInfo.chosenNutrients) setChosenNutrients(JSON.parse(JSON.stringify(profileInfo.chosenNutrients)))
+    },[profileInfo.id])
+
+    useEffect(()=>{
+        if(profileInfo.chosenNutrients) setUnsavedChanges(checkUnsavedChanges());
+    },[chosenNutrients])
 
 
 
@@ -130,25 +152,47 @@ export default function Profile() {
 
                 <p style={{marginBottom:"30px",fontStyle:"italic"}}>Please, get your recommendations from experts.</p>
 
-                <div id='flexGoalNutrients'>
-                    {chosenNutrients.sort().map((nutrient,i)=>(
+
+                {profileInfo.chosenNutrients && typeof profileInfo.chosenNutrients === 'object' &&
+                
+                    <div id='flexGoalNutrients'>
+
+                    {Object.entries(chosenNutrients || {}).map(([key,nutrient],i)=>(
                         <div className='nutrientDiv' key={i}>
                             <div>
-                                <button className={nutrient.goal==="Less than"? "selectedType roundButton" : "roundButton"} onClick={()=>handleChangeButtons("Less than",i)}>&lt;</button>
-                                <button className={nutrient.goal==="Equals"? "selectedType roundButton" : "roundButton"} onClick={()=>handleChangeButtons("Equals",i)}>&#61;</button>
-                                <button className={nutrient.goal==="More than"? "selectedType roundButton" : "roundButton"} onClick={()=>handleChangeButtons("More than",i)}>&gt;</button>
+                                <button className={getButtonClass("Less than",nutrient.goal)}
+                                        onClick={()=>handleChangeButtons("Less than",i)}
+                                >&lt;</button>
+                                <button className={getButtonClass("Equals",nutrient.goal)}
+                                        onClick={()=>handleChangeButtons("Equals",i)}
+                                >&#61;</button>
+                                <button className={getButtonClass("More than",nutrient.goal)}
+                                        onClick={()=>handleChangeButtons("More than",i)}
+                                >&gt;</button>
                             </div>
 
-                            <input name='amount' value={nutrient.amount} type='number' onChange={(event)=>handleChangeInputs(event,i)}/> <p style={{display:"inline",fontSize:"0.8em"}}>{unitNutrients[nutrient.name]}</p>
-                            
-                            <select name='name' value={userFriendlyNutrientNames[nutrient.name]} onChange={(event)=>handleChangeInputs(event,i)}>
+                            <input
+                                name='amount'
+                                value={nutrient.amount}
+                                type='number'
+                                onChange={(event)=>handleChangeInputs(event,i)}
+                            />
+                            <p>{unitNutrients[nutrient.name]}</p>
+
+                            <select
+                                name='name'
+                                value={userFriendlyNutrientNames[nutrient.name]}  
+                                onChange={(event)=>handleChangeInputs(event,i)} >
+
                                 {nutrientNamesArray.map((nut,index)=>(
                                     <option key={index} value={nut}>{nut}</option>
                                 ))}
+
                             </select>
                         </div>
                     ))}
-                </div>
+                    
+                </div>}
 
                 
                 {unsavedChanges && <button className='textButton' onClick={()=>updateNutrientChanges()} >Update changes</button>}

@@ -24,9 +24,6 @@ export default function BarGraph({}) {
 
     const {nutrients} = useContext(mealsForOneDate);
     const [nutrientPercentage,setNutrientPercentage] = useState(null);
-    // const [totalNutrients,setTotalNutrients] = useState({})
- 
-    
 
 
     function calculatePercentage(){
@@ -99,27 +96,6 @@ export default function BarGraph({}) {
 
         ))}
 
-
-
-            {/* {nutrients && nutrients.sort().map((nut,index)=>(
-                <div className='pie' key={index} 
-                  style={
-                    nut.percentage < 50
-                    ? { backgroundImage: `conic-gradient(
-                      transparent 0deg ${360 - nut.percentage * 3.6}deg,
-                      ${colors[index]} ${360 - nut.percentage * 3.6}deg 360deg)`,}
-                    : {backgroundImage: `conic-gradient(
-                      transparent 0deg ${360 - nut.percentage * 3.6}deg,
-                      ${colors[index]} ${360 - nut.percentage * 3.6}deg 360deg)`,}
-                  }>
-
-                  <div className='text' >
-                    <p>{nut.current.toFixed(2)} {unitNutrients[nut.nutrient_name]}</p>
-                  </div>
-
-                  <p className='nutrientName' >{userFriendlyNutrientNames[nut.nutrient_name]}</p>
-                </div>
-            ))} */}
         </div>
       </>
     )

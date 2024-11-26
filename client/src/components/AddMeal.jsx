@@ -8,6 +8,7 @@ import userFriendlyNutrientNames from '../utilities/userFriendlyNutrientNames';
 import profileInfoContext from '../context/profileInfo';
 
 export default function AddMeal() {
+
     const [listIngredients, setListIngredients] = useState([]);
     const [suggestions,setSuggestions] = useState([]);
     const [onFocusInput, setOnFocusInput] = useState(null);
@@ -56,8 +57,6 @@ export default function AddMeal() {
 
 
     async function calculateNutrients(listIng) {
-      let nutrientsObj = {};
-      let nutrientMeal = {};
   
       // Create an array of axios GET requests
       const requests = listIng.map(ingredient =>
@@ -73,36 +72,32 @@ export default function AddMeal() {
       try {
           // Wait for all requests to complete
           const responses = await axios.all(requests);
-  
-          responses.forEach((response, index) => {
-              let ingredientNutrients = {};
 
-              // console.log("Nutrients : ",response.data[0].foodNutrients);
-  
-              response.data[0].foodNutrients
-                  .filter(nut => Object.keys(userFriendlyNutrientNames).includes(nut.name))
-                  .forEach(nut => {
-                      let amountOfIngredient = nut.amount / 100;
-                      ingredientNutrients[nut.name] = `${amountOfIngredient * listIng[index].numberAmount} ${nut.unitName}`;
-                  });
-  
-              nutrientsObj[response.data[0].description] = ingredientNutrients;
-          });
-  
-          // Calculate the total nutrients
-          for (let ing in nutrientsObj) {
-              for (let nutrient in nutrientsObj[ing]) {
-                  let amount = nutrientsObj[ing][nutrient].split(" ")[0];
-  
-                  if (nutrientMeal[nutrient]) {
-                      nutrientMeal[nutrient] += Number(amount);
-                  } else {
-                      nutrientMeal[nutrient] = Number(amount);
-                  }
-              }
+          const allNutrients = {};
+          
+          //Create object with 20 nutrient names
+          Object.keys(userFriendlyNutrientNames).map(nut=>{
+            allNutrients[nut]=0;
+          })
+
+          //For each ingredient, add nutrients to object
+          responses.forEach((res)=>{
+            const ing = res.data[0].description;
+            const ingAmount = listIngredients.filter(i=>i.name===ing)[0].numberAmount;
+
+            res.data[0].foodNutrients
+            .filter(nut=>Object.keys(userFriendlyNutrientNames).includes(nut.name))
+            .forEach(nut=>{
+              allNutrients[nut.name]+=((nut.amount/100)*ingAmount);
+            })
+          })
+
+          //Round nutrients to 2nd decimal
+          for(let key in allNutrients){
+            allNutrients[key] = Math.round(allNutrients[key]*100)/100;
           }
-  
-          return nutrientMeal; // Return the calculated nutrients
+
+          return allNutrients
   
       } catch (errors) {
           console.log(errors); // Handle errors
@@ -121,72 +116,37 @@ export default function AddMeal() {
     }
 
     async function addWholeMealToDB(){
-        //Create a new meal
-      let mealID = await postMeal();
-      mealID=mealID.data.data[0]["max(meal_id)"]
-      
-      if(mealID){
-        //Add ingredients to the meal
-      postIngredients(mealID);
 
-      //Add nutrients to the meal
-      postNutrients(mealID);
+        let nutrients;
 
-      navigate("/");
-      }
-      
-
-    }
-
-    async function postMeal(){
-
-      const {profile_id} = profileInfo;
-      // console.log(new Date(), dateInput, new Date(dateInput))
-      const date = new Date(dateInput);
-      // console.log("Post Meal");
-
-      try{
-        const mealID = await axios.post(`${import.meta.env.VITE_URL_REQUESTS}/api/meals/${profile_id}`, {
-          date
-        });
-
-        // console.log("Posted a meal worked!");
-        return mealID;
-      }
-      catch(err){
-        console.log(err);
-      }
-    }
-
-    async function postIngredients(mealID){
-      try {
-
-        await axios.post(`${import.meta.env.VITE_URL_REQUESTS}/api/meals/ingredients/${mealID}`,{
-          ingredientsList : listIngredients
+        await calculateNutrients(listIngredients)
+        .then(result=> {
+          nutrients=result;
+        }).catch(err=>{
+          console.log(err)
         })
 
-        // console.log("Posted ingredients worked!")
+        let ingredients={}
 
-      } catch(err){
-        console.log(err);
-      }
-    }
-
-    async function postNutrients(mealID){
-      let nutrientsListCalculated = await calculateNutrients(listIngredients);
-      // console.log(nutrientsListCalculated)
-  
-
-      try{
-        await axios.post(`${import.meta.env.VITE_URL_REQUESTS}/api/meals/nutrients/${mealID}`,{
-          nutrientsList:nutrientsListCalculated
+        listIngredients.forEach(i=>{
+          ingredients[i.name]=Number(i.numberAmount);
         })
 
-        // console.log("Post nutrients worked!")
-      } catch(err){
-        console.log(err);
-      }
+        const date = new Date(dateInput).toLocaleDateString('en-CA')
+
+
+        await axios.post(`${import.meta.env.VITE_URL_REQUESTS}/api/meals/${profileInfo.id}`,{
+          date,nutrients,ingredients
+        }).then(response=>{
+          console.log(response.data.message)
+          navigate("/");
+        }).catch(err=>{
+          console.log(err)
+        })
+
     }
+
+    
 
     const getSuggestions = debounce(async (inputValue) => {
       if (inputValue) {

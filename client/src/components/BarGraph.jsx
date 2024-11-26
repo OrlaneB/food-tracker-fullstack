@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+
 import { useContext, useEffect, useState } from 'react';
 import '../styles/BarGraph.css'
 import mealsForOneDate from '../context/mealsForOneDate';
@@ -11,73 +11,87 @@ export default function BarGraph({}) {
 
     const {profileInfo} = useContext(profileInfoContext);
 
-    const colors = ["#EA5F3A","#F79285","#FBC46C"]
+    const colors = ["#EA5F3A","#F79285","#FBC46C"];
+
+    const chosenNutrients = [];
+
+    for(let key in profileInfo.chosenNutrients){
+      const nutrient = profileInfo.chosenNutrients[key];
+
+      chosenNutrients.push(nutrient.name);
+    }
 
 
-    const {nutrientsByMeal} = useContext(mealsForOneDate);
-    console.log(nutrientsByMeal)
-    const [nutrients,setNutrients] = useState();
- 
+    const {nutrients} = useContext(mealsForOneDate);
+    const [nutrientPercentage,setNutrientPercentage] = useState(null);
 
 
     function calculatePercentage(){
 
-        if(nutrientsByMeal){
-          let allNutrients = [...nutrientsByMeal].flat();
-          let listNutrients = {}
+      if(!nutrients) return null;
 
-          allNutrients.forEach(nut=>{
-            if(!Object.keys(listNutrients).includes(nut.nutrient_name)){
-              listNutrients[nut.nutrient_name]=nut.nutrient_number_amount;
-            }else {
-              listNutrients[nut.nutrient_name]+=nut.nutrient_number_amount;
-            }
-          })
 
-          let nutrientsPercentage = [];
+      const percentageArray = [];
+      const totalNutrients = {[chosenNutrients[0]]:0,[chosenNutrients[1]]:0,[chosenNutrients[2]]:0};
 
-          for(let nutName in listNutrients){
-            let thisNutrientGoal = profileInfo.chosenNutrients.filter(a=>a.name===nutName)[0]
-            let percentage;
-            
-            if(thisNutrientGoal) percentage = (100*listNutrients[nutName])/thisNutrientGoal.amount;
-            
-            nutrientsPercentage.push({nutrient_name:nutName,current:listNutrients[nutName],percentage})
-          }
 
-          setNutrients(nutrientsPercentage);
-        }
+      Object.keys(nutrients).map((item,index)=>{
+        const nutrient = nutrients[item];
+        Object.keys(nutrient).filter(n=>chosenNutrients.includes(n)).map(n=>{
+          totalNutrients[n]+=nutrient[n];
+        })
+      })
+
+
+      for(let key in profileInfo.chosenNutrients){
+        const nutName = profileInfo.chosenNutrients[key].name;
+        const nutGoal = profileInfo.chosenNutrients[key].amount;
+
+        const percentage = Math.round((totalNutrients[nutName] * 100)/nutGoal);
+        percentageArray.push({name:nutName,percentage,total:totalNutrients[nutName]})
+      }
+
+
+      setNutrientPercentage(percentageArray);
     }
 
 
     useEffect(()=>{
       calculatePercentage();
-    },[nutrientsByMeal]);
+    },[nutrients]);
 
 
     return (
       <>
         <h2 style={{textAlign:"center",margin:"0"}}>Your nutrients</h2>
         <div className = "BarGraph">
-            {nutrients && nutrients.sort().map((nut,index)=>(
-                <div className='pie' key={index} 
-                  style={
-                    nut.percentage < 50
-                    ? { backgroundImage: `conic-gradient(
-                      transparent 0deg ${360 - nut.percentage * 3.6}deg,
-                      ${colors[index]} ${360 - nut.percentage * 3.6}deg 360deg)`,}
-                    : {backgroundImage: `conic-gradient(
-                      transparent 0deg ${360 - nut.percentage * 3.6}deg,
-                      ${colors[index]} ${360 - nut.percentage * 3.6}deg 360deg)`,}
-                  }>
+          
+        {nutrients && profileInfo.chosenNutrients && nutrientPercentage && nutrientPercentage.sort((a,b)=>a.name.localeCompare(b.name)).map((nut,index)=>(
 
-                  <div className='text' >
-                    <p>{nut.current.toFixed(2)} {unitNutrients[nut.nutrient_name]}</p>
-                  </div>
+          <div key={index}>
+          <div className='pie' style={{
+            backgroundImage: `conic-gradient(
+              transparent 0deg ${360 - nut.percentage * 3.6}deg,
+              ${colors[index]} ${360 - nut.percentage * 3.6}deg 360deg
+            )`
+          }}>
 
-                  <p className='nutrientName' >{userFriendlyNutrientNames[nut.nutrient_name]}</p>
-                </div>
-            ))}
+            <div className='text'>
+              <p>{userFriendlyNutrientNames[nut.name]}</p>
+            </div>
+
+          </div>
+
+          {profileInfo.chosenNutrients &&
+            <p> {Math.round(nut.total)} / {Object.values(profileInfo.chosenNutrients).filter(item=>item.name===nut.name)[0].amount}
+            {unitNutrients[nut.name]}
+            </p>
+          }
+         
+          </div>
+
+        ))}
+
         </div>
       </>
     )

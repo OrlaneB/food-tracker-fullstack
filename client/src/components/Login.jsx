@@ -3,49 +3,46 @@ import "../styles/Login.css"
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
-import loginAuth from '../context/loginAuth';
+import profileInfoContext from '../context/profileInfo'
 
 export default function Login() {
     const navigate = useNavigate();
 
-    const [credentials,setCredentials]=useState({username:"",password:""});
-    const [unauthorized,setUnauthorized]=useState(false);
+    const {setProfileInfo} = useContext(profileInfoContext);
 
-    const {loginAuthValue, setLoginAuthValue} = useContext(loginAuth);
+    const [credentials,setCredentials]=useState({username:"",password:""});
+    const [errorMessage,setErrorMessage]=useState("");
 
 
     async function login(event){
       event.preventDefault();
       const {username,password} = credentials;
-      setUnauthorized(false)
+      setErrorMessage("");
 
       try{
-        let result = await axios.post(`${import.meta.env.VITE_URL_REQUESTS}/api/users/login`,{
+        let response = await axios.post(`${import.meta.env.VITE_URL_REQUESTS}/api/users/login`,{
           username,password
           },{
            headers:{'Content-Type': 'application/json'}
 	        });
 
-          console.log(result);
+        console.log("response: ",response)
+        localStorage.setItem("token",response.data.token);
+        setProfileInfo(response.data.profileInfo)
 
-        localStorage.setItem("token",result.data.token);
-
-        let newAuthValue = {...loginAuthValue};
-        newAuthValue.isLoggedIn = true;
-        newAuthValue.user_id = result.data.user_id;
-
-        setLoginAuthValue(newAuthValue);
 
         navigate("/profile");
 
       } catch(err){
-        console.log(err);
-        console.log("status : ",err.response.status)
+        console.log(err.response.data);
 
-        if(err.response.status===401 || err.response.status===404){
-          setUnauthorized(true);
-          setCredentials({username:"",password:""})
+        if(err.response.status===401){
+          setErrorMessage("Password is incorrect.");
+        } else if(err.response.status===404){
+          setErrorMessage("No user exists with that username.");
         }
+
+        setCredentials({username:"",password:""})
       }
     }
 
@@ -75,9 +72,8 @@ export default function Login() {
                       <input type='password' name='password' value={credentials.password} autoComplete='password' onChange={(event)=>handleChange(event)} />
                     </label>
 
-                    {unauthorized && 
-                      <p id='unauthorized'>Your password or username is uncorrect.</p>
-                    }
+                    
+                    {errorMessage && <p id='unauthorized'>{errorMessage}</p>}
 
                     <button type='submit' className='textButton'>Login</button>
                     <p onClick={()=>navigate("/register")} className='buttonLink'>Don't have an account ? Sign up here</p>

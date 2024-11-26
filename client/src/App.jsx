@@ -14,59 +14,32 @@ import Profile from './components/Profile.jsx';
 import SurveyLink from './components/SurveyLink.jsx';
 import ReportAnIssue from './components/ReportAnIssue.jsx';
 
-import loginAuth from './context/loginAuth.jsx';
 import profileInfoContext from './context/profileInfo.jsx';
 
 
 function App() {
   let navigate = useNavigate();
 
-  const [profileInfo,setProfileInfo] = useState();
-  const [loginAuthValue,setLoginAuthValue] = useState({
-    user_id:null,
-    isLoggedIn:false,
-  })
-
-
-  async function getProfileInfo(user_id){
-
-    if(user_id){
-        try {
-		console.log("user id in getProfileInfo is : ",user_id);
-            const result = await axios.get(`${import.meta.env.VITE_URL_REQUESTS}/api/profiles/${typeof user_id==="number"?user_id: user_id.userId}`);
-            let profileObj = result.data.resObj;
-
-            profileObj.chosenNutrients = 
-              [{name: profileObj.nutrient_1_name, amount:profileObj.nutrient_1_amount, goal:profileObj.nutrient_1_goal},
-              {name: profileObj.nutrient_2_name, amount:profileObj.nutrient_2_amount, goal:profileObj.nutrient_2_goal},
-              {name: profileObj.nutrient_3_name, amount:profileObj.nutrient_3_amount, goal:profileObj.nutrient_3_goal}];
-
-            setProfileInfo(profileObj);
-        }
-        catch(err){
-            console.log(err);
-        }
-    }
-        
-    
-  }
+  const [profileInfo,setProfileInfo] = useState({
+    id:null,
+    username:"",
+    chosenNutrients:null
+  });
 
 
   async function checkToken(){
-    let token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
     if(token){
       try{
-        let result = await axios.post(`${import.meta.env.VITE_URL_REQUESTS}/api/users/token`,{
+
+        const response = await axios.post(`${import.meta.env.VITE_URL_REQUESTS}/api/users/token`,{
           token
-        })
+        });
 
-	      console.log("Token has been fetched, result : ",result);
-
-        if(result.statusText==="OK") {
-          loginAuthValue.user_id=result.data.userId;
-          loginAuthValue.isLoggedIn=true;
-          getProfileInfo(result.data)
+        if(response.statusText==="OK") {
+          console.log(response.data.message);
+          setProfileInfo(response.data.profileInfo);
         } else {
           console.log("Token is uncorrect")
           navigate("/login");
@@ -87,12 +60,6 @@ function App() {
     checkToken()
   },[])
 
-  useEffect(()=>{
-    if(loginAuthValue.user_id) getProfileInfo(loginAuthValue.user_id)
-  },[loginAuthValue])
-
-
-  
 
 
   return (
@@ -112,7 +79,6 @@ function App() {
       
     </header>
       
-    < loginAuth.Provider value={{loginAuthValue, setLoginAuthValue}}>
       <profileInfoContext.Provider value={{profileInfo,setProfileInfo}}>
         <Routes>
           <Route path="/" element={<Homepage />}/>
@@ -123,7 +89,6 @@ function App() {
           <Route path='/report-issue' element={<ReportAnIssue />} />
         </Routes>
       </profileInfoContext.Provider>
-    </loginAuth.Provider>
       
 
     <SurveyLink />

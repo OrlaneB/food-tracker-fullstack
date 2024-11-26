@@ -21,103 +21,58 @@ export default function Homepage() {
   const navigate = useNavigate();
 
   const [meals,setMeals]=useState();
-  const [nutrientsByMeal,setNutrientsByMeal]=useState();
+
+  const [nutrients,setNutrients]=useState();
+
   const [noMealsForThisDate,setNoMealsForThisDate]=useState(false);
-  const [chosenNutrients,setChosenNutrients]=useState([{name:"",amount:"",goal:""}]);
 
 
-      
-  async function getMeals() {
-    if(!chosenNutrients[0].name) return;
+  async function getMeals(){
+
     try {
-      const result = await axios.get(`${import.meta.env.VITE_URL_REQUESTS}/api/meals/${profileInfo.user_id}`, {
-        params: { date: `${day.getFullYear()}-${day.getMonth()+1<10? `0${day.getMonth()+1}`:day.getMonth()+1}-${day.getDate()<10? `0${day.getDate()}`:day.getDate()}` }
-      });
 
-	// console.log("result is : ",result);
-      
-      if(result.data.dataIngredients[0]){
+      const date = new Date(day).toLocaleDateString('en-CA');
 
-        setNoMealsForThisDate(false)
 
-        const {dataIngredients,dataNutrients} = result.data;
+      const response = await axios.get(`${import.meta.env.VITE_URL_REQUESTS}/api/meals/${profileInfo.id}/${date}`);
 
-        let mealsID = new Set(dataIngredients.map(meal=>meal.meal_id));
-        mealsID = Array.from(mealsID);
-
-	// console.log("mealsID is : ",mealsID);
-        // Create Meals
-            let newMeals=[];
-
-            for(let i =0; i<mealsID.length ; i++){
-              let num = mealsID[i];
-
-              let meal = {}
-              dataIngredients.filter(m=>m.meal_id===num).map(ing=>{
-                meal[ing.name]=ing.number_amount;
-              })
-              newMeals.push(meal);
-            }
-
-            setMeals(newMeals);
-
-      
-        //Create nutrients
-          let newNutrientsByMeal = [];
-
-          for (let index in mealsID) {
-              let num = mealsID[index];
-		// console.log("This item of mealsID is :",num);
-		 console.log("chosenNutrients : ",chosenNutrients);
-              if(chosenNutrients[0].name){
-                let arrayChosenNutrient = chosenNutrients.map(nut=>nut.name);
-    // console.log("ArrChosenNutrients : ",arrayChosenNutrient)
-		 console.log("dataNutrients",dataNutrients);
-                let meal = dataNutrients
-                  .filter(n=>n.meal_id===num && arrayChosenNutrient.includes(n.nutrient_name))
-                  .map(n=>{return {"nutrient_name":n.nutrient_name,"nutrient_number_amount":n.nutrient_number_amount} })
-		// console.log("meal : ",meal);
-                newNutrientsByMeal.push(meal)
-              }
-        }
-
-        setNutrientsByMeal(newNutrientsByMeal);
-      
-      } else {
-        setNoMealsForThisDate(true)
+      if(response.status===200){
+        console.log(response.data.message);
+        setMeals(response.data.meals);
+        setNutrients(response.data.nutrients);
+        // console.log("meals : ",response.data.meals)
+        // console.log("nutrients : ",response.data.nutrients)
       }
 
-    } catch (err) {
+      if(response.data.meals.length===0) {
+        setNoMealsForThisDate(true);
+      } else {
+        setNoMealsForThisDate(false);
+      }
+
+    } catch(err) {
       console.log(err);
     }
   }
 
 
-
   useEffect(()=>{
-    getMeals()
-  },[day])
+    if(profileInfo.id) getMeals()
+  },[day,profileInfo.id])
 
-  useEffect(()=>{
-    getMeals()
-  },[chosenNutrients])
-
-  useEffect(()=>{
-    if(profileInfo) setChosenNutrients(profileInfo.chosenNutrients);
-  },[profileInfo]);
       
 
   return (
     <div className='Homepage'>
 
-      <mealsForOneDate.Provider value={{meals,nutrientsByMeal}}>
+      <mealsForOneDate.Provider value={{meals,nutrients}}>
         
         <Day dateObj={{day,setDay}}/>
 
         <hr style={{width:"80%",borderWidth:"0.5px", marginTop:"0",marginBottom:"15px"}}/>
 
         {!noMealsForThisDate && <>
-            <BarGraph/>
+            <BarGraph/> 
             <MealCards />
         </>}
 

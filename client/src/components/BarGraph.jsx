@@ -28,18 +28,17 @@ export default function BarGraph({}) {
 
     function calculatePercentage(){
 
-      if(!nutrients) return
+      if(!nutrients) return null;
 
-      console.log("nutrients",nutrients);
 
       const percentageArray = [];
       const totalNutrients = {[chosenNutrients[0]]:0,[chosenNutrients[1]]:0,[chosenNutrients[2]]:0};
 
-      console.log("totalNutrients",totalNutrients);
+      // console.log("totalNutrients",totalNutrients);
 
 
       Object.keys(nutrients).map((item,index)=>{
-        const nutrient = nutrients[item][index+1];
+        const nutrient = nutrients[item];
         Object.keys(nutrient).filter(n=>chosenNutrients.includes(n)).map(n=>{
           totalNutrients[n]+=nutrient[n];
         })
@@ -54,7 +53,7 @@ export default function BarGraph({}) {
         percentageArray.push({name:nutName,percentage,total:totalNutrients[nutName]})
       }
 
-      console.log("percentageArray",percentageArray)
+      // console.log("percentageArray",percentageArray)
 
       setNutrientPercentage(percentageArray);
     }
@@ -70,7 +69,7 @@ export default function BarGraph({}) {
         <h2 style={{textAlign:"center",margin:"0"}}>Your nutrients</h2>
         <div className = "BarGraph">
           
-        {nutrients && profileInfo.chosenNutrients && nutrientPercentage && nutrientPercentage.map((nut,index)=>(
+        {nutrients && profileInfo.chosenNutrients && nutrientPercentage && nutrientPercentage.sort((a,b)=>a.name.localeCompare(b.name)).map((nut,index)=>(
 
           <div key={index}>
           <div className='pie' style={{
@@ -87,7 +86,7 @@ export default function BarGraph({}) {
           </div>
 
           {profileInfo.chosenNutrients &&
-            <p> {nut.total} / {Object.values(profileInfo.chosenNutrients).filter(item=>item.name===nut.name)[0].amount}
+            <p> {Math.round(nut.total)} / {Object.values(profileInfo.chosenNutrients).filter(item=>item.name===nut.name)[0].amount}
             {unitNutrients[nut.name]}
             </p>
           }

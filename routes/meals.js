@@ -39,13 +39,16 @@ router.get("/:profile_id/:date", async(req, res)=>{
       [profile_id,date]
     )
 
-    const meals = mealsResult.data.map((m) => ({
-      [m.meal_id]: JSON.parse(m.ingredients)
-    }));
+    // const meals = mealsResult.data.map((m) => ({
+    //   [m.meal_id]: JSON.parse(m.ingredients)
+    // }));
 
-    const nutrients = mealsResult.data.map((m)=> ({
-      [m.meal_id] : JSON.parse(m.nutrients)
-    }));
+    // const nutrients = mealsResult.data.map((m)=> ({
+    //   [m.meal_id] : JSON.parse(m.nutrients)
+    // }));
+
+    const meals = mealsResult.data.map((m)=>JSON.parse(m.ingredients));
+    const nutrients = mealsResult.data.map(m=>JSON.parse(m.nutrients));
   
 
     res.status(200).json({message:"Successful meal retrieval.",meals,nutrients});

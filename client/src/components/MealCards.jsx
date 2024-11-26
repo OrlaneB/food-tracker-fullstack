@@ -46,6 +46,10 @@ export default function MealCards() {
       
     // },[nutrients])
 
+    // useEffect(()=>{
+    //   if(nutrients) console.log("useEffect : ",nutrients)
+    // },[nutrients])
+
 
     return (
      <div className='Meals'>
@@ -65,9 +69,8 @@ export default function MealCards() {
                 
                 { openedMeals.includes(index) &&
                   <ul>
-                    {Object.keys(meals[index][index+1]).map((item,j)=>(
-                      <li key={j}>{item} {meals[index][index+1][item]}g</li>
-
+                    {Object.keys(meals[index]).map((item,j)=>(
+                      <li key={j}>{item} {meals[index][item]}g</li>
                     ))}
                   </ul>}
 
@@ -76,40 +79,16 @@ export default function MealCards() {
              <div className='mealNutrients'>
 
               {nutrients && 
-                  Object.keys(nutrients[index][index+1]).filter(n=>chosenNutrients.includes(n)).map((item,k)=>(
+                  Object.keys(nutrients[index]).sort((a,b)=>a>b).filter(n=>chosenNutrients.includes(n)).map((item,k)=>(
                   <p key={k}
                     style={{backgroundColor:colors[k]}}>
-                      <span className='amount'>{nutrients[index][index+1][item]||""} {unitNutrients[item]||""}</span> <br/>
-                      {item||""}
+                      <span className='amount'>{nutrients[index][item]||""} {unitNutrients[item]||""}</span> <br/>
+                      {userFriendlyNutrientNames[item]||""}
                   </p>
-                ))}
+                ))
+              }
 
               </div>
-
-             {/* {nutrients[index][0] && <div className='mealNutrients'>
-              
-               <p style={{backgroundColor:colors[0]}}>
-                <span className='amount'>
-                  {nutrients[index][0]?nutrients[index][0].nutrient_number_amount+unitNutrients[nutrients[index][0].nutrient_name]:""} 
-                </span><br/>
-                  {nutrients[index][0]?userFriendlyNutrientNames[nutrients[index][0].nutrient_name]:""}
-               </p>
-
-               <p style={{backgroundColor:colors[1]}}>
-                <span className='amount'>
-                  {nutrients[index][1]?nutrients[index][1].nutrient_number_amount+unitNutrients[nutrients[index][1].nutrient_name]:""} 
-                </span><br/>
-                    {nutrients[index][1]?userFriendlyNutrientNames[nutrients[index][1].nutrient_name]:""}
-                </p>
-
-               <p style={{backgroundColor:colors[2]}}> 
-                <span className='amount'>
-                  {nutrients[index][2]?nutrients[index][2].nutrient_number_amount+unitNutrients[nutrients[index][2].nutrient_name]:""} 
-                </span> <br/>
-                  {nutrients[index][2]?userFriendlyNutrientNames[nutrients[index][2].nutrient_name]:""}
-                </p>
-
-             </div>}*/}
              
            </div>
 

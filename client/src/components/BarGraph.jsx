@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+
 import { useContext, useEffect, useState } from 'react';
 import '../styles/BarGraph.css'
 import mealsForOneDate from '../context/mealsForOneDate';
@@ -34,8 +34,6 @@ export default function BarGraph({}) {
       const percentageArray = [];
       const totalNutrients = {[chosenNutrients[0]]:0,[chosenNutrients[1]]:0,[chosenNutrients[2]]:0};
 
-      // console.log("totalNutrients",totalNutrients);
-
 
       Object.keys(nutrients).map((item,index)=>{
         const nutrient = nutrients[item];
@@ -53,7 +51,6 @@ export default function BarGraph({}) {
         percentageArray.push({name:nutName,percentage,total:totalNutrients[nutName]})
       }
 
-      // console.log("percentageArray",percentageArray)
 
       setNutrientPercentage(percentageArray);
     }

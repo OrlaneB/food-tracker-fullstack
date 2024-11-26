@@ -40,8 +40,8 @@ export default function Homepage() {
         console.log(response.data.message);
         setMeals(response.data.meals);
         setNutrients(response.data.nutrients);
-        console.log("meals : ",response.data.meals)
-        console.log("nutrients : ",response.data.nutrients)
+        // console.log("meals : ",response.data.meals)
+        // console.log("nutrients : ",response.data.nutrients)
       }
 
       if(response.data.meals.length===0) {

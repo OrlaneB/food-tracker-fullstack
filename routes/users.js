@@ -95,7 +95,6 @@ const pool = require("../model/pool");
         [user_id]
       );
 
-      console.log(profile);
 
       // Check `profile[0]`
       if (Array.isArray(profile[0]) && profile[0].length > 0 && profile[0][0].chosenNutrients) {

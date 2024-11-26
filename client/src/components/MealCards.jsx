@@ -35,21 +35,6 @@ export default function MealCards() {
       setOpenedMeals(newList);
     }
 
-    // useEffect(()=>{
-    //   if(nutrients) {
-    //     Object.keys(nutrients[0][1]).filter(n=>chosenNutrients.includes(n)).map(item=>{
-    //       console.log(item)
-    //       console.log(nutrients[0][1][item])
-    //       console.log(unitNutrients[item])
-    //     })
-    //   }
-      
-    // },[nutrients])
-
-    // useEffect(()=>{
-    //   if(nutrients) console.log("useEffect : ",nutrients)
-    // },[nutrients])
-
 
     return (
      <div className='Meals'>

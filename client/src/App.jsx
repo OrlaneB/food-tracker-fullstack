@@ -15,6 +15,7 @@ import SurveyLink from './components/SurveyLink.jsx';
 import ReportAnIssue from './components/ReportAnIssue.jsx';
 
 import profileInfoContext from './context/profileInfo.jsx';
+import LearnAboutProject from './components/LearnAboutProject.jsx'
 
 
 function App() {
@@ -88,6 +89,7 @@ function App() {
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
           <Route path='/report-issue' element={<ReportAnIssue />} />
+          <Route path="/about-project" element={<LearnAboutProject />} />
         </Routes>
       </profileInfoContext.Provider>
       

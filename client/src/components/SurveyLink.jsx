@@ -8,7 +8,7 @@ export default function SurveyLink() {
   return (
     <div id='surveyLink'>
         <button className='textButton' onClick={()=>navigate("/report-issue")}>Report an issue</button>
-        <button className='importantTextButton'>Learn about the project</button>
+        <button className='importantTextButton' onClick={()=>navigate("/about-project")}>Learn about the project</button>
     </div>
   )
 }

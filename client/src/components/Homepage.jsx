@@ -33,15 +33,14 @@ export default function Homepage() {
 
       const date = new Date(day).toLocaleDateString('en-CA');
 
-
       const response = await axios.get(`${import.meta.env.VITE_URL_REQUESTS}/api/meals/${profileInfo.id}/${date}`);
-
+	
       if(response.status===200){
         console.log(response.data.message);
         setMeals(response.data.meals);
         setNutrients(response.data.nutrients);
-        // console.log("meals : ",response.data.meals)
-        // console.log("nutrients : ",response.data.nutrients)
+        //console.log("meals : ",response.data.meals)
+        //console.log("nutrients : ",response.data.nutrients)
       }
 
       if(response.data.meals.length===0) {

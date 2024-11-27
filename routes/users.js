@@ -95,6 +95,7 @@ const pool = require("../model/pool");
         [user_id]
       );
 
+	console.log("In route, profile is : ",profile);
 
       // Check `profile[0]`
       if (Array.isArray(profile[0]) && profile[0].length > 0 && profile[0][0].chosenNutrients) {
@@ -109,6 +110,8 @@ const pool = require("../model/pool");
           nutrient3:{name:"Vitamin D (D2 + D3)",amount:600,goal:"More than"}
         }
       }
+
+	console.log("In route, chosenNutrients is : ",chosenNutrients);
 
       const profileInfo = {
         id:user_id,
@@ -145,7 +148,26 @@ router.post("/token", async(req,res)=>{
       return res.status(404).json({ message: "Profile not found" });
     }
 
-    const chosenNutrients = profile.data[0].chosenNutrients? JSON.parse(profile.data[0].chosenNutrients) : {};
+	console.log("token profile :",profile);
+
+    // Check `profile[0]`
+      if (Array.isArray(profile[0]) && profile[0].length > 0 && profile[0][0].chosenNutrients) {
+        chosenNutrients = profile[0][0].chosenNutrients;
+      }// Fallback to `profile[1]`
+      else if (Array.isArray(profile[1]) && profile[1].length > 0 && typeof profile[1][0] === 'string') {
+        chosenNutrients = JSON.parse(profile[1][0]);
+      } else if (profile.data[0] && profile.data[0].chosenNutrients){
+	chosenNutrients=JSON.parse(profile.data[0].chosenNutrients)
+
+	} else {
+        chosenNutrients = {
+          nutrient1:{name:"Sodium, Na",amount:2300,goal:"Less than"},
+          nutrient2:{name:"Vitamin E (alpha-tocopherol)",amount:15,goal:"Equals"},
+          nutrient3:{name:"Vitamin D (D2 + D3)",amount:600,goal:"More than"}
+        }
+      }
+
+	console.log("token chosenNutrients : ",chosenNutrients);
 
     const profileInfo = {
       id : decoded.user_id,

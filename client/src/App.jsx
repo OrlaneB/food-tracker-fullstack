@@ -39,6 +39,7 @@ function App() {
 
         if(response.statusText==="OK") {
           console.log(response.data.message);
+		//console.log(response.data);
           setProfileInfo(response.data.profileInfo);
         } else {
           console.log("Token is uncorrect")

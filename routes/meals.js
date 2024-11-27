@@ -35,7 +35,7 @@ router.get("/:profile_id/:date", async(req, res)=>{
     if(result.data[0].profile_count !== 1) return res.status(404).json({message:"This profile does not exists."});
 
     const mealsResult = await db(
-      "SELECT meal_id, nutrients, ingredients FROM MEALS WHERE profile_id= ? AND date = ? ;",
+      "SELECT meal_id, nutrients, ingredients FROM meals WHERE profile_id= ? AND date = ? ;",
       [profile_id,date]
     )
 

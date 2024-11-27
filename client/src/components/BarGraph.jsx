@@ -34,7 +34,9 @@ export default function BarGraph({}) {
       const percentageArray = [];
       const totalNutrients = {[chosenNutrients[0]]:0,[chosenNutrients[1]]:0,[chosenNutrients[2]]:0};
 
-
+	//console.log(nutrients);
+	//console.log("chosennutrients :",chosenNutrients);
+	//console.log("init total nut : ", totalNutrients);
       Object.keys(nutrients).map((item,index)=>{
         const nutrient = nutrients[item];
         Object.keys(nutrient).filter(n=>chosenNutrients.includes(n)).map(n=>{
@@ -42,6 +44,7 @@ export default function BarGraph({}) {
         })
       })
 
+	//console.log("totalNutrient",totalNutrients);
 
       for(let key in profileInfo.chosenNutrients){
         const nutName = profileInfo.chosenNutrients[key].name;
@@ -53,6 +56,7 @@ export default function BarGraph({}) {
 
 
       setNutrientPercentage(percentageArray);
+	//console.log(percentageArray);
     }
 
 

@@ -39,7 +39,7 @@ export default function Homepage() {
         console.log(response.data.message);
         setMeals(response.data.meals);
         setNutrients(response.data.nutrients);
-        //console.log("meals : ",response.data.meals)
+        console.log("meals : ",response.data.meals)
         //console.log("nutrients : ",response.data.nutrients)
       }
 

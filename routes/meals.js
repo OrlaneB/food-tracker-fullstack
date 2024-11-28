@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const db = require('../model/helper');
+const pool = require("../model/pool");
 
 const nutrientNames = [ "Energy","Protein", "Carbohydrate, by difference","Total lipid (fat)","Fiber, total dietary","Total Sugars","Calcium, Ca","Iron, Fe","Potassium, K","Sodium, Na","Vitamin A, RAE","Vitamin C, total ascorbic acid","Vitamin D (D2 + D3)","Vitamin E (alpha-tocopherol)","Vitamin K (phylloquinone)","Magnesium, Mg","Zinc, Zn","Cholesterol","Folate, DFE","Fatty acids, total polyunsaturated" ]
 
@@ -82,30 +83,32 @@ router.delete("/:profile_id/:date", async (req,res)=>{
 
   try {
 
-    const response = await db(
+    const [mealIds] = await pool.execute(
       "SELECT meal_id FROM meals WHERE profile_id= ? AND date= ? ;",
       [profile_id,date]
     )
 
-    if(response.data.length<index){
+    if(mealIds.length<=index){
       //The index is not in
       return res.status(404).json({message:"The index is incorrect."});
     }
 
-    const id = response.data[index].meal_id;
+    const id = mealIds[index].meal_id;
 
-    await db(
+    await pool.execute(
       "DELETE FROM meals WHERE meal_id= ?;",
       [id]
     )
 
-    const mealsResult = await db(
+    const [mealsResult] = await pool.execute(
       "SELECT meal_id, nutrients, ingredients FROM meals WHERE profile_id= ? AND date = ? ;",
       [profile_id,date]
     )
 
-    const meals = mealsResult.data.map((m)=>JSON.parse(m.ingredients));
-    const nutrients = mealsResult.data.map(m=>JSON.parse(m.nutrients));
+    console.log(mealsResult);
+
+    const meals = mealsResult.map((m)=>m.ingredients);
+    const nutrients = mealsResult.map(m=>m.nutrients);
   
 
     res.status(200).json({message:"Successfuly deleted meal.",meals,nutrients});
@@ -127,33 +130,33 @@ router.put("/:profile_id/:date", async (req,res)=>{
     if(!checkObjectFormat(nutrients,"nutrients")) return res.status(400).json({message:"Invalid nutrients format."});
     if(!checkObjectFormat(ingredients,"ingredients")) return res.status(400).json({message:"Invalid ingredients format."});
 
-    const response = await db(
+    const [mealIds] = await pool.execute(
       "SELECT meal_id FROM meals WHERE profile_id= ? AND date= ? ;",
       [profile_id,date]
     )
 
-    if(response.data.length<index){
+    if(mealIds.length<=index){
       //The index is not in
       return res.status(404).json({message:"The index is incorrect."});
     }
 
-    const id = response.data[index].meal_id;
+    const id = mealIds[index].meal_id;
 
-    await db(
+    await pool.execute(
       "UPDATE meals SET nutrients = ?, ingredients = ? WHERE meal_id=?;",
       [JSON.stringify(nutrients),JSON.stringify(ingredients), id]
     )
 
-    const mealsResult = await db(
+    const [mealsResult] = await pool.execute(
       "SELECT meal_id, nutrients, ingredients FROM meals WHERE profile_id= ? AND date = ? ;",
       [profile_id,date]
     )
 
-    const meals = mealsResult.data.map((m)=>JSON.parse(m.ingredients));
-    const MealNutrients = mealsResult.data.map(m=>JSON.parse(m.nutrients));
+    const meals = mealsResult.map((m)=>m.ingredients);
+    const MealNutrients = mealsResult.map(m=>m.nutrients);
   
 
-    res.status(200).json({message:"Successful meal updating.",meals,nutrients:MealNutrients});
+    res.status(200).json({message:"Successfully updated meal.",meals,nutrients:MealNutrients});
 
 
 

@@ -39,7 +39,7 @@ export default function Homepage() {
         console.log(response.data.message);
         setMeals(response.data.meals);
         setNutrients(response.data.nutrients);
-        console.log("meals : ",response.data.meals)
+        //console.log("meals : ",response.data.meals)
         //console.log("nutrients : ",response.data.nutrients)
       }
 
@@ -64,20 +64,20 @@ export default function Homepage() {
   return (
     <div className='Homepage'>
 
-      <mealsForOneDate.Provider value={{meals,nutrients}}>
+      <mealsForOneDate.Provider value={{meals,nutrients,setMeals,setNutrients,day}}>
         
         <Day dateObj={{day,setDay}}/>
 
         <hr style={{width:"80%",borderWidth:"0.5px", marginTop:"0",marginBottom:"15px"}}/>
 
-        {!noMealsForThisDate && <>
+        {meals && meals.length!==0 && <>
             <BarGraph/> 
             <MealCards />
         </>}
 
       </mealsForOneDate.Provider>
 
-      {noMealsForThisDate && <div id='noMealWarning'>
+      {meals && meals.length===0 && <div id='noMealWarning'>
           <p>There are no meals for this date.</p>
           <button onClick={()=>navigate("/add-meal")} className='textButton'>Add one here</button>
       </div>}

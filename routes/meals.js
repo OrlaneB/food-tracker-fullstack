@@ -77,9 +77,8 @@ router.post('/:profile_id', async(req, res) => {
 })
 
 /* DELETE meal*/
-router.delete("/:profile_id/:date", async (req,res)=>{
-  const {index} = req.body;
-  const {profile_id,date} = req.params;
+router.delete("/:profile_id/:date/:index", async (req,res)=>{
+  const {profile_id,date,index} = req.params;
 
   try {
 

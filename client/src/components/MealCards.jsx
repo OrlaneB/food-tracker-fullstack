@@ -7,10 +7,12 @@ import userFriendlyNutrientNames from "../utilities/userFriendlyNutrientNames"
 import unitNutrients from '../utilities/measurmentUnitNutrients';
 import profileInfoContext from '../context/profileInfo';
 
+import axios from 'axios';
+
 export default function MealCards() {
  
     const {profileInfo} = useContext(profileInfoContext);
-    let {meals,nutrients} = useContext(mealsForOneDate);
+    let {meals,nutrients,setMeals,setNutrients,day} = useContext(mealsForOneDate);
 
     const colors = ["#EA5F3A","#F79285","#FBC46C"];
 
@@ -35,6 +37,25 @@ export default function MealCards() {
       setOpenedMeals(newList);
     }
 
+    async function deleteMeal(event,index){
+      event.preventDefault();
+
+      try {
+
+        const date = new Date(day).toLocaleDateString('en-CA');
+
+        const response = await axios.delete(`${import.meta.env.VITE_URL_REQUESTS}/api/meals/${profileInfo.id}/${date}/${index}`)
+
+        if(response.status===200){
+          setMeals(response.data.meals);
+          setNutrients(response.data.nutrients);
+        }
+
+      } catch(err){
+        console.log(err)
+      }
+    } 
+
 
     return (
      <div className='Meals'>
@@ -52,8 +73,13 @@ export default function MealCards() {
 
                 <h3 style={{display:"inline",marginLeft:"10px"}}>Meal #{index+1}</h3>
 
-                <button className='roundButton' style={{height:"25px",width:"25px",fontSize:"0.8em"}}><i class="fi fi-rr-pencil"></i></button>
-                <button className='roundButton' style={{height:"25px",width:"25px",fontSize:"0.8em"}}><i class="fi fi-rr-cross-small"></i></button>
+                <button className='roundButton' style={{height:"25px",width:"25px",fontSize:"0.8em"}}><i className="fi fi-rr-pencil"></i></button>
+
+                <button className='roundButton' 
+                style={{height:"25px",width:"25px",fontSize:"0.8em"}}
+                onClick={(event)=>deleteMeal(event,index)}>
+                  <i className="fi fi-rr-cross-small"></i>
+                </button>
                 
                 { openedMeals.includes(index) &&
                   <ul>

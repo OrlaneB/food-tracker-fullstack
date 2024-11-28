@@ -76,6 +76,45 @@ router.post('/:profile_id', async(req, res) => {
 })
 
 /* DELETE meal*/
+router.delete("/:profile_id/:date", async (req,res)=>{
+  const {index} = req.body;
+  const {profile_id,date} = req.params;
+
+  try {
+
+    const response = await db(
+      "SELECT meal_id FROM meals WHERE profile_id= ? AND date= ? ;",
+      [profile_id,date]
+    )
+
+    if(response.data.length<index){
+      //The index is not in
+      return res.status(404).json({message:"The index is incorrect."});
+    }
+
+    const id = response.data[index].meal_id;
+
+    await db(
+      "DELETE FROM meals WHERE meal_id= ?;",
+      [id]
+    )
+
+    const mealsResult = await db(
+      "SELECT meal_id, nutrients, ingredients FROM meals WHERE profile_id= ? AND date = ? ;",
+      [profile_id,date]
+    )
+
+    const meals = mealsResult.data.map((m)=>JSON.parse(m.ingredients));
+    const nutrients = mealsResult.data.map(m=>JSON.parse(m.nutrients));
+  
+
+    res.status(200).json({message:"Successfuly deleted meal.",meals,nutrients});
+
+  } catch(err){
+    console.error("Error deleting meal : ",err);
+    res.status(500).json({message:"An error occured during deleting meal.",err});
+  }
+})
 
 
 /* PUT meal */
@@ -99,8 +138,7 @@ router.put("/:profile_id/:date", async (req,res)=>{
     }
 
     const id = response.data[index].meal_id;
-    console.log(typeof id);
-    console.log(id);
+
     await db(
       "UPDATE meals SET nutrients = ?, ingredients = ? WHERE meal_id=?;",
       [JSON.stringify(nutrients),JSON.stringify(ingredients), id]

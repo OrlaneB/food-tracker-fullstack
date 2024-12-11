@@ -16,7 +16,7 @@ function checkObjectFormat(obj, type) {
       keys.every((key) => nutrientNames.includes(key) && typeof obj[key] === "number")
     );
   } else if (type === "ingredients") {
-    return Object.entries(obj).every(
+    return Object.entries(obj).filter(e=>e).every(
       ([key, value]) => typeof key === "string" && typeof value === "number"
     );
   }
@@ -124,6 +124,7 @@ router.put("/:profile_id/:date", async (req,res)=>{
     const {ingredients, nutrients ,index} = req.body;
     const {profile_id,date} = req.params;
 
+
   try {
 
     if(!checkObjectFormat(nutrients,"nutrients")) return res.status(400).json({message:"Invalid nutrients format."});
@@ -133,6 +134,9 @@ router.put("/:profile_id/:date", async (req,res)=>{
       "SELECT meal_id FROM meals WHERE profile_id= ? AND date= ? ;",
       [profile_id,date]
     )
+
+    console.log(mealIds.length);
+    console.log(index);
 
     if(mealIds.length<=index){
       //The index is not in

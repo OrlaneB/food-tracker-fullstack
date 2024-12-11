@@ -75,6 +75,23 @@
     font-size: 1em;
     cursor: pointer;
 }
+.mealContainer .modified {
+    flex: 100%;
+}
+.mealContainer form {
+    width: 100%;
+}
+
+.mealContainer form .ingName {
+    width: 50%;
+    box-sizing: border-box;
+}
+
+.mealContainer form .ingAmount {
+    width: 20%;
+    box-sizing: border-box;
+    margin:0 15px;
+}
 
 
 

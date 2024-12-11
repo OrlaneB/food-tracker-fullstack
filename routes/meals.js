@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const db = require('../model/helper');
+const pool = require("../model/pool");
 
 const nutrientNames = [ "Energy","Protein", "Carbohydrate, by difference","Total lipid (fat)","Fiber, total dietary","Total Sugars","Calcium, Ca","Iron, Fe","Potassium, K","Sodium, Na","Vitamin A, RAE","Vitamin C, total ascorbic acid","Vitamin D (D2 + D3)","Vitamin E (alpha-tocopherol)","Vitamin K (phylloquinone)","Magnesium, Mg","Zinc, Zn","Cholesterol","Folate, DFE","Fatty acids, total polyunsaturated" ]
 
@@ -15,7 +16,7 @@ function checkObjectFormat(obj, type) {
       keys.every((key) => nutrientNames.includes(key) && typeof obj[key] === "number")
     );
   } else if (type === "ingredients") {
-    return Object.entries(obj).every(
+    return Object.entries(obj).filter(e=>e).every(
       ([key, value]) => typeof key === "string" && typeof value === "number"
     );
   }
@@ -76,6 +77,96 @@ router.post('/:profile_id', async(req, res) => {
 })
 
 /* DELETE meal*/
+router.delete("/:profile_id/:date/:index", async (req,res)=>{
+  const {profile_id,date,index} = req.params;
+
+  try {
+
+    const [mealIds] = await pool.execute(
+      "SELECT meal_id FROM meals WHERE profile_id= ? AND date= ? ;",
+      [profile_id,date]
+    )
+
+    if(mealIds.length<=index){
+      //The index is not in
+      return res.status(404).json({message:"The index is incorrect."});
+    }
+
+    const id = mealIds[index].meal_id;
+
+    await pool.execute(
+      "DELETE FROM meals WHERE meal_id= ?;",
+      [id]
+    )
+
+    const [mealsResult] = await pool.execute(
+      "SELECT meal_id, nutrients, ingredients FROM meals WHERE profile_id= ? AND date = ? ;",
+      [profile_id,date]
+    )
+
+    console.log(mealsResult);
+
+    const meals = mealsResult.map((m)=>m.ingredients);
+    const nutrients = mealsResult.map(m=>m.nutrients);
+  
+
+    res.status(200).json({message:"Successfuly deleted meal.",meals,nutrients});
+
+  } catch(err){
+    console.error("Error deleting meal : ",err);
+    res.status(500).json({message:"An error occured during deleting meal.",err});
+  }
+})
+
+
 /* PUT meal */
+router.put("/:profile_id/:date", async (req,res)=>{
+    const {ingredients, nutrients ,index} = req.body;
+    const {profile_id,date} = req.params;
+
+
+  try {
+
+    if(!checkObjectFormat(nutrients,"nutrients")) return res.status(400).json({message:"Invalid nutrients format."});
+    if(!checkObjectFormat(ingredients,"ingredients")) return res.status(400).json({message:"Invalid ingredients format."});
+
+    const [mealIds] = await pool.execute(
+      "SELECT meal_id FROM meals WHERE profile_id= ? AND date= ? ;",
+      [profile_id,date]
+    )
+
+    console.log(mealIds.length);
+    console.log(index);
+
+    if(mealIds.length<=index){
+      //The index is not in
+      return res.status(404).json({message:"The index is incorrect."});
+    }
+
+    const id = mealIds[index].meal_id;
+
+    await pool.execute(
+      "UPDATE meals SET nutrients = ?, ingredients = ? WHERE meal_id=?;",
+      [JSON.stringify(nutrients),JSON.stringify(ingredients), id]
+    )
+
+    const [mealsResult] = await pool.execute(
+      "SELECT meal_id, nutrients, ingredients FROM meals WHERE profile_id= ? AND date = ? ;",
+      [profile_id,date]
+    )
+
+    const meals = mealsResult.map((m)=>m.ingredients);
+    const MealNutrients = mealsResult.map(m=>m.nutrients);
+  
+
+    res.status(200).json({message:"Successfully updated meal.",meals,nutrients:MealNutrients});
+
+
+
+  } catch(err){
+    console.error("Error updating meal : ",err);
+    res.status(500).json({message:"An error occured during meal updating.",err});
+  }
+})
 
 module.exports = router;

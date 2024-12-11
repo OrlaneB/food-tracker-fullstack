@@ -10,6 +10,8 @@ import mealsForOneDate from '../context/mealsForOneDate'
 import { useNavigate } from 'react-router-dom'
 import profileInfoContext from '../context/profileInfo'
 
+import Meal from '../utilities/classes/mealClass'
+
 
 
 export default function Homepage() {
@@ -22,9 +24,7 @@ export default function Homepage() {
 
   const [meals,setMeals]=useState();
 
-  const [nutrients,setNutrients]=useState();
-
-  const [noMealsForThisDate,setNoMealsForThisDate]=useState(false);
+  // const [nutrients,setNutrients]=useState();
 
 
   async function getMeals(){
@@ -37,17 +37,22 @@ export default function Homepage() {
 	
       if(response.status===200){
         console.log(response.data.message);
-        setMeals(response.data.meals);
-        setNutrients(response.data.nutrients);
+
+        const mealsResponse = response.data.meals;
+        let meals = [];
+
+        mealsResponse.forEach((m,index)=>{
+          const meal = new Meal(m,response.data.nutrients[index]);
+          meals.push(meal);
+        })
+
+        setMeals(meals);
+        // setMeals(response.data.meals);
+        // setNutrients(response.data.nutrients);
         //console.log("meals : ",response.data.meals)
         //console.log("nutrients : ",response.data.nutrients)
       }
 
-      if(response.data.meals.length===0) {
-        setNoMealsForThisDate(true);
-      } else {
-        setNoMealsForThisDate(false);
-      }
 
     } catch(err) {
       console.log(err);
@@ -64,7 +69,7 @@ export default function Homepage() {
   return (
     <div className='Homepage'>
 
-      <mealsForOneDate.Provider value={{meals,nutrients,setMeals,setNutrients,day}}>
+      <mealsForOneDate.Provider value={{meals,setMeals,day}}>
         
         <Day dateObj={{day,setDay}}/>
 

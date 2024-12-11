@@ -135,8 +135,6 @@ router.put("/:profile_id/:date", async (req,res)=>{
       [profile_id,date]
     )
 
-    console.log(mealIds.length);
-    console.log(index);
 
     if(mealIds.length<=index){
       //The index is not in

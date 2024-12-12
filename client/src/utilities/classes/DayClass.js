@@ -1,10 +1,14 @@
 import userFriendlyNutrientNames from "../userFriendlyNutrientNames";
+import Meal from "./MealClass";
+
+import axios from 'axios'
 
 export default class Day {
     constructor(date){
         this.date=date;
         this.totalNutrients = null;
         this.percentageNutrients = null;
+        this.meals = [];
     }
 
     getDate(){
@@ -52,6 +56,31 @@ export default class Day {
         this.percentageNutrients = percentageNutrients;
         return percentageNutrients;
 
+    }
+
+
+    addMeals(ingredients){
+        ingredients.forEach(meal=>{
+            const m = new Meal(meal);
+            this.meals.push(m);
+        });
+
+        return this.meals;
+    }
+
+    async getMeals(profile_id, chosenNutrients){
+        const date = new Date(this.date).toLocaleDateString('en-CA');
+
+        try {
+            const response = await axios.get(`http://localhost:5000/api/meals/${profile_id}/${date}`);
+
+            this.addMeals(response.data.meals);
+            this.calculateTotalNutrients(response.data.nutrients);
+
+            if(chosenNutrients) this.calculatePercentage(chosenNutrients);
+        } catch(err){
+            console.log(err);
+        }
     }
 }
 

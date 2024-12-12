@@ -25,23 +25,28 @@ export default class Day {
             return {name:item,amount:0}
         });
 
-        nutList.flat().forEach(item=>{
-            totalNutrients[item.name]+=item.amount
+
+        nutList.flat(Infinity).forEach(item=>{
+            totalNutrients.find(e=>e.name===item.name).amount+=Number(item.amount);
         });
 
         this.totalNutrients = totalNutrients;
         return totalNutrients;
     }
 
-    calculagePercentage(chosenNutrients){
+    calculatePercentage(chosenNutrients){
 
         //chosenNutrients is meant to be formatted like : [{name:"Energy",goalAmount:1530},{name:"Protein",goalAmount:75},{name:"Carbs",goalAmount:80}]
 
+
+        const chosenNutrientNames = chosenNutrients.map(item=>item.name);
+
         const percentageNutrients = this.totalNutrients
-        .filter(item=>Object.keys(chosenNutrients).includes(item.name))
+        .filter(item=>chosenNutrientNames.includes(item.name))
         .map(item=>{
-            const goalAmount = chosenNutrients.filter(item=>Object.keys(this.totalNutrients).includes(item.name))[0].goalAmount;
-            return (item.amount * 100)/goalAmount;
+            const goalAmount = chosenNutrients.find(n=>n.name===item.name).goalAmount;
+            const percentage = (item.amount * 100)/goalAmount;
+            return {name:item.name,percentage}
         })
 
         this.percentageNutrients = percentageNutrients;
@@ -49,3 +54,5 @@ export default class Day {
 
     }
 }
+
+module.exports = Day;

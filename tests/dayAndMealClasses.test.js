@@ -238,3 +238,42 @@ describe("The getMeals() method", ()=>{
     })
 
 })
+
+
+describe("The deleteMeal function", ()=>{
+    beforeEach(()=>{
+        day = new Day("Fri Dec 13 2024 16:40:24 GMT+0100 (heure normale d’Europe centrale)");
+
+    })
+
+    test("Day should have one less meal after function calling", async()=>{
+        await day.getMeals(1);
+        const initialNumberOfMeals = day.meals.length;
+
+        await day.deleteMeal(1,0,null);
+
+        expect(day.meals.length).toBe(initialNumberOfMeals-1);
+    })
+
+    test("Should delete the correct meal", async()=>{
+        await day.getMeals(1,null)
+
+        const expected = [
+            [
+                {
+                    "name": "Falafel sandwich",
+                    "amount": 350
+                }
+            ],[
+                {
+                    "name": "Chocolate dip",
+                    "amount": 25
+                }
+            ]
+        ]
+
+        await day.deleteMeal(0,0,null);
+
+        expect(day.meals).toStrictEqual(expected);
+    })
+})

@@ -82,6 +82,22 @@ export default class Day {
             console.log(err);
         }
     }
+
+    async deleteMeal(profile_id,index, chosenNutrients){
+        const date = new Date(this.date).toLocaleDateString('en-CA');
+
+        try {
+            const response = axios.delete(`http://localhost:5000/api/meals/${profile_id}/${date}/${index}`)
+
+            this.meals = [];
+            this.addMeals((await response).data.meals);
+            this.calculateTotalNutrients((await response).data.nutrients);
+
+            if(chosenNutrients) this.calculatePercentage(chosenNutrients);
+        } catch(err){
+            console.log(err);
+        }
+    }
 }
 
 module.exports = Day;

@@ -123,7 +123,6 @@ router.delete("/:profile_id/:date/:index", async (req,res)=>{
       [profile_id,date]
     )
 
-    console.log(mealsResult);
 
     const meals = mealsResult.map((m)=>m.ingredients);
     const nutrients = mealsResult.map(m=>m.nutrients);
@@ -144,6 +143,7 @@ router.put("/:profile_id/:date", async (req,res)=>{
     const {profile_id,date} = req.params;
 
 
+
   try {
 
     if(!checkObjectFormat(nutrients,"nutrients")) return res.status(400).json({message:"Invalid nutrients format."});
@@ -154,8 +154,6 @@ router.put("/:profile_id/:date", async (req,res)=>{
       [profile_id,date]
     )
 
-    console.log(mealIds.length);
-    console.log(index);
 
     if(mealIds.length<=index){
       //The index is not in

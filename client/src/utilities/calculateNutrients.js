@@ -1,9 +1,10 @@
-const authKey = import.meta.env.VITE_APP_API_KEY;
+// const authKey = import.meta.env.VITE_APP_API_KEY;
 import userFriendlyNutrientNames from "./userFriendlyNutrientNames"
 import axios from "axios";
 
 
-export default async function calculateNutrients(listIng) {
+export default async function calculateNutrients(listIng,authKey) {
+
   
     // Create an array of axios GET requests
     const requests = listIng.map(ingredient =>
@@ -16,11 +17,14 @@ export default async function calculateNutrients(listIng) {
         })
     );
 
+
+
     try {
         // Wait for all requests to complete
         const responses = await axios.all(requests);
 
         const allNutrients = {};
+
         
         //Create object with 20 nutrient names
         Object.keys(userFriendlyNutrientNames).map(nut=>{
@@ -28,10 +32,11 @@ export default async function calculateNutrients(listIng) {
         })
 
 
+
         //For each ingredient, add nutrients to object
-        responses.forEach((res)=>{
+        responses.forEach((res,index)=>{
           const ing = res.data[0].description;
-          const ingAmount = listIng.filter(i=>i.name===ing)[0].amount;
+          const ingAmount = listIng[index].amount;
 
 
           res.data[0].foodNutrients
@@ -47,10 +52,11 @@ export default async function calculateNutrients(listIng) {
           allNutrients[key] = Math.round(allNutrients[key]*100)/100;
         }
 
+
         return allNutrients
 
     } catch (errors) {
         console.log(errors); // Handle errors
-        return "Did not work";
+        return new Error({message:"Error"});
     }
 }

@@ -74,6 +74,7 @@ export default class Day {
         try {
             const response = await axios.get(`http://localhost:5000/api/meals/${profile_id}/${date}`);
 
+            this.meals=[];
             this.addMeals(response.data.meals);
             this.calculateTotalNutrients(response.data.nutrients);
 

@@ -45,6 +45,8 @@ export default class Day {
 
         const chosenNutrientNames = chosenNutrients.map(item=>item.name);
 
+        // console.log("TN : ",this.totalNutrients)
+
         const percentageNutrients = this.totalNutrients
         .filter(item=>chosenNutrientNames.includes(item.name))
         .map(item=>{
@@ -59,9 +61,9 @@ export default class Day {
     }
 
 
-    addMeals(ingredients){
-        ingredients.forEach(meal=>{
-            const m = new Meal(meal);
+    addMeals(ingredients,nutrients){
+        ingredients.forEach((meal,index)=>{
+            const m = new Meal(meal,nutrients[index]);
             this.meals.push(m);
         });
 
@@ -69,38 +71,42 @@ export default class Day {
     }
 
     async getMeals(profile_id, chosenNutrients){
-        const date = new Date(this.date).toLocaleDateString('en-CA');
+        // const date = new Date(this.date).toLocaleDateString('en-CA');
 
         try {
-            const response = await axios.get(`http://localhost:5000/api/meals/${profile_id}/${date}`);
+            const response = await axios.get(`http://localhost:5000/api/meals/${profile_id}/${this.date}`);
 
             this.meals=[];
-            this.addMeals(response.data.meals);
+            this.addMeals(response.data.meals,response.data.nutrients);
             this.calculateTotalNutrients(response.data.nutrients);
 
             if(chosenNutrients) this.calculatePercentage(chosenNutrients);
+
+            // return new Day(this.date)
         } catch(err){
             console.log(err);
         }
     }
 
     async deleteMeal(profile_id,index, chosenNutrients){
-        const date = new Date(this.date).toLocaleDateString('en-CA');
+        // const date = new Date(this.date).toLocaleDateString('en-CA');
 
-        console.log(profile_id,date,index)
+        console.log(profile_id,this.date,index)
 
         try {
-            const response = axios.delete(`http://localhost:5000/api/meals/${profile_id}/${date}/${index}`)
+            const response = axios.delete(`http://localhost:5000/api/meals/${profile_id}/${this.date}/${index}`)
 
-            this.meals = [];
-            this.addMeals((await response).data.meals);
-            this.calculateTotalNutrients((await response).data.nutrients);
+            console.log((await response).data.message);
 
-            if(chosenNutrients) this.calculatePercentage(chosenNutrients);
+            // this.meals = [];
+            // this.addMeals((await response).data.meals,(await response).data.nutrients);
+            // this.calculateTotalNutrients((await response).data.nutrients);
+
+            // if(chosenNutrients) this.calculatePercentage(chosenNutrients);
         } catch(err){
             console.log(err);
         }
     }
 }
 
-module.exports = Day;
+// module.exports = Day;

@@ -146,4 +146,4 @@ export default class MealConstruction extends Meal{
 
 }
 
-module.exports = MealConstruction;
+// module.exports = MealConstruction;

@@ -60,10 +60,6 @@ export default function BarGraph({currentDay}) {
   //   }
 
 
-    // useEffect(()=>{
-    //   calculatePercentage();
-    // },[nutrients]);
-
 
     return (
       <>

@@ -50,13 +50,16 @@ export default class Day {
         const percentageNutrients = this.totalNutrients
         .filter(item=>chosenNutrientNames.includes(item.name))
         .map(item=>{
-            const goalAmount = chosenNutrients.find(n=>n.name===item.name).goalAmount;
+            
+            const goalAmount = chosenNutrients.find(n=>n.name===item.name).amount;
+            
             const percentage = (item.amount * 100)/goalAmount;
             return {name:item.name,percentage}
         })
 
         this.percentageNutrients = percentageNutrients;
         return percentageNutrients;
+
 
     }
 

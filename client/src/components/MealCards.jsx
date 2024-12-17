@@ -14,7 +14,7 @@ import calculateNutrients from '../utilities/calculateNutrients';
 
 import axios from 'axios';
 
-export default function MealCards({currentDay,setCurrentDay,trigger,setTrigger}) {
+export default function MealCards({currentDay,setCurrentDay}) {
  
     const {profileInfo} = useContext(profileInfoContext);
     // let {meals,nutrients,setMeals,setNutrients,day} = useContext(mealsForOneDate);
@@ -155,30 +155,8 @@ export default function MealCards({currentDay,setCurrentDay,trigger,setTrigger})
     }
 
     function deleteMeals(event,index){
-      // event.preventDefault();
-
-      // const updateDay = Object.assign(
-      //   Object.create(Object.getPrototypeOf(currentDay)),
-      //   currentDay
-      // );
-
-      // updateDay.deleteMeal(profileInfo.id,index,profileInfo.chosenNutrients);
-      // updateDay.getMeals(profileInfo.id,profileInfo.chosenNutrients);
-
-      // setCurrentDay(updateDay);
 
       event.preventDefault();
-
-      // const updatedDay = Object.assign(
-      //     Object.create(Object.getPrototypeOf(currentDay)), // Keep the class prototype
-      //     currentDay                                        // Copy properties
-      // );
-  
-      // updatedDay.deleteMeal(profileInfo.id, index, profileInfo.chosenNutrients);
-      // updatedDay.getMeals(profileInfo.id, profileInfo.chosenNutrients);
-  
-      // setCurrentDay(updatedDay); // Update state with new reference
-      // setTrigger(prev => prev + 1);
 
       const updatedDay = currentDay;
       setCurrentDay(null);
@@ -187,10 +165,9 @@ export default function MealCards({currentDay,setCurrentDay,trigger,setTrigger})
       updatedDay.getMeals(profileInfo.id, profileInfo.chosenNutrients);
 
       setCurrentDay(updatedDay);
-    let newRemoved = [...removed];
-    newRemoved.push(index);
-    setRemoved(newRemoved);
-
+      let newRemoved = [...removed];
+      newRemoved.push(index);
+      setRemoved(newRemoved);
      
     }
 

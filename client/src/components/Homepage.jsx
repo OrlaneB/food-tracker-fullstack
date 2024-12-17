@@ -19,7 +19,6 @@ export default function Homepage() {
   const {profileInfo} = useContext(profileInfoContext);
   const [daysArray,setDaysArray] = useState([]);
   const [currentDay,setCurrentDay] = useState(null);
-  const [trigger,setTrigger] = useState(0);
   // const [day,setDay]=useState(new Date())
 
 
@@ -69,7 +68,7 @@ export default function Homepage() {
     const day = new Day(today.toLocaleDateString('en-CA'));
     daysArray.push(day);
 
-    await day.getMeals(profileInfo.id);
+    await day.getMeals(profileInfo.id,profileInfo.chosenNutrients);
 
     if(day.percentageNutrients===null && !profileInfo.chosenNutrients){
       day.percentageNutrients=[{name:"Protein",amount:100}, {name:"Vitamin A, RAE",amount:100},{name:"Vitamin C, total ascorbic acid",amount:100}]
@@ -103,7 +102,7 @@ export default function Homepage() {
 
         {currentDay && currentDay.meals.length!==0 && <>
             <BarGraph currentDay={currentDay}/> 
-            <MealCards currentDay={currentDay} setCurrentDay={setCurrentDay} trigger={trigger} setTrigger={setTrigger} />
+            <MealCards currentDay={currentDay} setCurrentDay={setCurrentDay} />
         </>}
 
       </mealsForOneDate.Provider>

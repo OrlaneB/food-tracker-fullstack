@@ -13,52 +13,6 @@ export default function BarGraph({currentDay}) {
 
     const colors = ["#EA5F3A","#F79285","#FBC46C"];
 
-    // const chosenNutrients = [];
-
-    // for(let key in profileInfo.chosenNutrients){
-    //   const nutrient = profileInfo.chosenNutrients[key];
-
-    //   chosenNutrients.push(nutrient.name);
-    // }
-
-
-    // const {nutrients} = useContext(mealsForOneDate);
-    // const [nutrientPercentage,setNutrientPercentage] = useState(null);
-
-
-  //   function calculatePercentage(){
-
-  //     if(!nutrients) return null;
-
-
-  //     const percentageArray = [];
-  //     const totalNutrients = {[chosenNutrients[0]]:0,[chosenNutrients[1]]:0,[chosenNutrients[2]]:0};
-
-	// //console.log(nutrients);
-	// //console.log("chosennutrients :",chosenNutrients);
-	// //console.log("init total nut : ", totalNutrients);
-  //     Object.keys(nutrients).map((item,index)=>{
-  //       const nutrient = nutrients[item];
-  //       Object.keys(nutrient).filter(n=>chosenNutrients.includes(n)).map(n=>{
-  //         totalNutrients[n]+=nutrient[n];
-  //       })
-  //     })
-
-	// //console.log("totalNutrient",totalNutrients);
-
-  //     for(let key in profileInfo.chosenNutrients){
-  //       const nutName = profileInfo.chosenNutrients[key].name;
-  //       const nutGoal = profileInfo.chosenNutrients[key].amount;
-
-  //       const percentage = Math.round((totalNutrients[nutName] * 100)/nutGoal);
-  //       percentageArray.push({name:nutName,percentage,total:totalNutrients[nutName]})
-  //     }
-
-
-  //     setNutrientPercentage(percentageArray);
-	// //console.log(percentageArray);
-  //   }
-
 
 
     return (
@@ -67,7 +21,6 @@ export default function BarGraph({currentDay}) {
         <div className = "BarGraph">
           
         {
-        // nutrients && profileInfo.chosenNutrients && nutrientPercentage && nutrientPercentage.sort((a,b)=>a.name.localeCompare(b.name))
         currentDay && currentDay.percentageNutrients && profileInfo.chosenNutrients &&
         currentDay.percentageNutrients.map((nut,index)=>(
 

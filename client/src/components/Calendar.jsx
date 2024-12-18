@@ -5,13 +5,13 @@ import '../styles/Day.css'
 import { DateTime } from "luxon";
 import profileInfoContext from '../context/profileInfo'
 import Day from "../utilities/classes/DayClass";
+import mealsForOneDate from "../context/mealsForOneDate";
 
-// import Day from "../utilities/classes/DayClass";
 
-
-export default function Calendar({currentDay,setCurrentDay,daysArray,setDaysArray}) {
+export default function Calendar() {
 
     const {profileInfo} = useContext(profileInfoContext);
+    const {currentDay,setCurrentDay,daysArray,setDaysArray} = useContext(mealsForOneDate)
 
     const [displayedDates, setDisplayedDates] = useState([]);
 
@@ -19,7 +19,7 @@ export default function Calendar({currentDay,setCurrentDay,daysArray,setDaysArra
     const month = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
 
     function createDisplayedDates(){
-        // let startDate = DateTime.local(dateObj.day.getFullYear(),dateObj.day.getMonth()+1,dateObj.day.getDate());
+        
         const dateObj = new Date(currentDay.date);
         let startDate = DateTime.local(dateObj.getFullYear(),dateObj.getMonth()+1,dateObj.getDate());
 
@@ -44,6 +44,10 @@ export default function Calendar({currentDay,setCurrentDay,daysArray,setDaysArra
             newDay = new Day(date);
             await newDay.getMeals(profileInfo.id,profileInfo.chosenNutrients);
             newDay = Object.assign(Object.create(Object.getPrototypeOf(newDay)), newDay);
+            
+            const newArray = [...daysArray];
+            newArray.push(newDay);
+            setDaysArray(newArray);
 
         }
 

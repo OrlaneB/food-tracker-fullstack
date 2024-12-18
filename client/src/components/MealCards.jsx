@@ -7,17 +7,19 @@ const authKey = import.meta.env.VITE_APP_API_KEY;
 
 import userFriendlyNutrientNames from "../utilities/userFriendlyNutrientNames"
 import profileInfoContext from '../context/profileInfo';
+import mealsForOneDate from '../context/mealsForOneDate';
 
 
-export default function MealCards({currentDay,setCurrentDay}) {
+export default function MealCards() {
  
     const {profileInfo} = useContext(profileInfoContext);
+    const {currentDay,setCurrentDay,meals,setMeals,setTotalNutrients,setPercentageNutrients} = useContext(mealsForOneDate)
   
     const colors = ["#EA5F3A","#F79285","#FBC46C"];
 
     const [openedMeals,setOpenedMeals]=useState([]);
     const [modifiedMeal,setModifiedMeal]=useState();
-    const [removed, setRemoved]=useState([]);
+    // const [removed, setRemoved]=useState([]);
     
     const [onFocusInput,setOnFocusInput]=useState(null);
 
@@ -76,21 +78,17 @@ export default function MealCards({currentDay,setCurrentDay}) {
       setOnFocusInput(null);
     }
 
-    function deleteMeals(event,index){
-
+    async function deleteMeals(event,index){
       event.preventDefault();
 
       const updatedDay = currentDay;
       setCurrentDay(null);
 
-      updatedDay.deleteMeal(profileInfo.id, index, profileInfo.chosenNutrients);
-      updatedDay.getMeals(profileInfo.id, profileInfo.chosenNutrients);
+      await updatedDay.deleteMeal(profileInfo.id, index, profileInfo.chosenNutrients);
+      await updatedDay.getMeals(profileInfo.id, profileInfo.chosenNutrients);
 
       setCurrentDay(updatedDay);
-      let newRemoved = [...removed];
-      newRemoved.push(index);
-      setRemoved(newRemoved);
-     
+    
     }
 
 
@@ -99,7 +97,7 @@ export default function MealCards({currentDay,setCurrentDay}) {
      <div className='Meals'>
          { currentDay.meals &&
          
-         currentDay.meals.filter((m,index)=>!removed.includes(index)).map((meal, index) =>(
+         currentDay.meals.map((meal, index) =>(
 
            <div key={index} className='mealContainer'>
 

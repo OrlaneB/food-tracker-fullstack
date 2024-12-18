@@ -1,14 +1,15 @@
 
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import '../styles/BarGraph.css'
-// import mealsForOneDate from '../context/mealsForOneDate';
 import userFriendlyNutrientNames from '../utilities/userFriendlyNutrientNames';
 import unitNutrients from '../utilities/measurmentUnitNutrients';
 import profileInfoContext from '../context/profileInfo';
+import mealsForOneDate from '../context/mealsForOneDate';
 
 
-export default function BarGraph({currentDay}) {
+export default function BarGraph() {
 
+    const {currentDay} = useContext(mealsForOneDate)
     const {profileInfo} = useContext(profileInfoContext);
 
     const colors = ["#EA5F3A","#F79285","#FBC46C"];

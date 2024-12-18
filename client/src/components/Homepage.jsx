@@ -55,13 +55,13 @@ export default function Homepage() {
 
       <mealsForOneDate.Provider value={{currentDay,setCurrentDay,daysArray,setDaysArray}}>
         
-        {currentDay && <Calendar currentDay={currentDay} daysArray={daysArray} setCurrentDay={setCurrentDay}/>}
+        {currentDay && <Calendar />}
 
         <hr style={{width:"80%",borderWidth:"0.5px", marginTop:"0",marginBottom:"15px"}}/>
 
         {currentDay && currentDay.meals.length!==0 && <>
-            <BarGraph currentDay={currentDay}/> 
-            <MealCards currentDay={currentDay} setCurrentDay={setCurrentDay} />
+            <BarGraph /> 
+            <MealCards />
         </>}
 
       </mealsForOneDate.Provider>

@@ -2,6 +2,7 @@ import Meal from "./MealClass";
 
 import calculateNutrients from "../calculateNutrients";
 import axios from "axios";
+const requestPath = import.meta.env.VITE_URL_REQUESTS;
 
 export default class MealConstruction extends Meal{
     constructor(ingredients,functionnality){
@@ -63,7 +64,7 @@ export default class MealConstruction extends Meal{
 
     async updateMeal(profile_id,index,date,ingredients,nutrients){
 
-        await axios.put(`http://localhost:5000/api/meals/${profile_id}/${date}`,{
+        await axios.put(`${requestPath}/api/meals/${profile_id}/${date}`,{
             ingredients:ingredients,
             nutrients:nutrients,
             index
@@ -80,7 +81,7 @@ export default class MealConstruction extends Meal{
 
     async createMeal(date,nutrients,ingredients,profile_id){
 
-        await axios.post(`http://localhost:5000/api/meals/${profile_id}`,{
+        await axios.post(`${requestPath}/api/meals/${profile_id}`,{
             date,
             nutrients,
             ingredients

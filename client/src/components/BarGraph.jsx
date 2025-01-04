@@ -40,7 +40,7 @@ export default function BarGraph() {
           </div>
 
           {profileInfo.chosenNutrients && currentDay.totalNutrients &&
-            <p> {currentDay.totalNutrients.find(n=>n.name===nut.name).amount}/ {profileInfo.chosenNutrients.find(n=>n.name===nut.name).amount}{unitNutrients[nut.name]}</p>
+            <p> {Math.round(currentDay.totalNutrients.find(n=>n.name===nut.name).amount*100)/100}/ {profileInfo.chosenNutrients.find(n=>n.name===nut.name).amount}{unitNutrients[nut.name]}</p>
           }
          
           </div>

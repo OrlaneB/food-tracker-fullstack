@@ -3,6 +3,8 @@ import Meal from "./MealClass";
 
 import axios from 'axios'
 
+const requestPath = import.meta.env.VITE_URL_REQUESTS;
+
 export default class Day {
     constructor(date){
         this.date=date;
@@ -77,7 +79,7 @@ export default class Day {
         // const date = new Date(this.date).toLocaleDateString('en-CA');
 
         try {
-            const response = await axios.get(`http://localhost:5000/api/meals/${profile_id}/${this.date}`);
+            const response = await axios.get(`${requestPath}/api/meals/${profile_id}/${this.date}`);
 
             this.meals=[];
             this.addMeals(response.data.meals,response.data.nutrients);
@@ -95,7 +97,7 @@ export default class Day {
         
 
         try {
-            const response = axios.delete(`http://localhost:5000/api/meals/${profile_id}/${this.date}/${index}`)
+            const response = axios.delete(`${requestPath}/api/meals/${profile_id}/${this.date}/${index}`)
 
             console.log((await response).data.message);
 

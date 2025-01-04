@@ -14,28 +14,41 @@ export default function Profile() {
     const {profileInfo,setProfileInfo}=useContext(profileInfoContext);
     const navigate = useNavigate();
 
-    const [chosenNutrients,setChosenNutrients] = useState({
-        nutrient1:{name:"",amount:0,goal:""},
-        nutrient2:{name:"",amount:0,goal:""},
-        nutrient3:{name:"",amount:0,goal:""}
-    })
+    const [chosenNutrients,setChosenNutrients] = useState([
+        {name:"",amount:0,goal:""},
+        {name:"",amount:0,goal:""},
+        {name:"",amount:0,goal:""}
+    ])
     const [unsavedChanges,setUnsavedChanges] = useState(false);
+    const goalButtons = [{name:"Less than",sign:"<"},{name:"Equals",sign:"="},{name:"More than",sign:">"}];
 
     const nutrientNamesArray = Object.values(userFriendlyNutrientNames);
 
+    function compareObjects(obj1,obj2){
+        if(obj1.name===obj2.name &&
+            obj1.amount===obj2.amount &&
+            obj1.goal===obj2.goal
+        ) {
+            return true
+        } else {
+            return false
+        }
+    }
+
 
     function checkUnsavedChanges(){
+        console.log(profileInfo.chosenNutrients)
  
-        const {nutrient1,nutrient2,nutrient3} = profileInfo.chosenNutrients
-        const nutrient1State = chosenNutrients.nutrient1;
-        const nutrient2State = chosenNutrients.nutrient2;
-        const nutrient3State = chosenNutrients.nutrient3;
+        const [nutrient1,nutrient2,nutrient3] = profileInfo.chosenNutrients
+        const [nutrient1State,nutrient2State,nutrient3State] = chosenNutrients
+
+        console.log(nutrient1,nutrient1State)
 
 
         if(
-            nutrient1State.name === nutrient1.name && nutrient1State.amount === nutrient1.amount && nutrient1State.goal === nutrient1.goal &&
-            nutrient2State.name === nutrient2.name && nutrient2State.amount === nutrient2.amount && nutrient2State.goal === nutrient2.goal &&
-            nutrient3State.name === nutrient3.name && nutrient3State.amount === nutrient3.amount && nutrient3State.goal === nutrient3.goal
+            compareObjects(nutrient1,nutrient1State) &&
+            compareObjects(nutrient2,nutrient2State) &&
+            compareObjects(nutrient3,nutrient3State)
         ) {
             return false
             
@@ -160,18 +173,16 @@ export default function Profile() {
                 
                     <div id='flexGoalNutrients'>
 
-                    {Object.entries(chosenNutrients || {}).map(([key,nutrient],i)=>(
+                    {chosenNutrients.map((nutrient,i)=>(
                         <div className='nutrientDiv' key={i}>
                             <div>
-                                <button className={getButtonClass("Less than",nutrient.goal)}
-                                        onClick={()=>handleChangeButtons("Less than",i)}
-                                >&lt;</button>
-                                <button className={getButtonClass("Equals",nutrient.goal)}
-                                        onClick={()=>handleChangeButtons("Equals",i)}
-                                >&#61;</button>
-                                <button className={getButtonClass("More than",nutrient.goal)}
-                                        onClick={()=>handleChangeButtons("More than",i)}
-                                >&gt;</button>
+                                {goalButtons.map((g,j)=>(
+                                    <button className={getButtonClass(g.name,nutrient.goal)}
+                                        onClick={()=>handleChangeButtons(g.name,i)}
+                                        key={j}>
+                                        {g.sign}
+                                    </button>
+                                ))}
                             </div>
 
                             <input
@@ -180,6 +191,7 @@ export default function Profile() {
                                 type='number'
                                 onChange={(event)=>handleChangeInputs(event,i)}
                             />
+
                             <p>{unitNutrients[nutrient.name]}</p>
 
                             <select
@@ -194,6 +206,8 @@ export default function Profile() {
                             </select>
                         </div>
                     ))}
+
+                    
                     
                 </div>}
 

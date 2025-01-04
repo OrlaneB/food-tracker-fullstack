@@ -14,15 +14,11 @@ export default class MealConstruction extends Meal{
             this.functionnality = functionnality;
         }
 
-        this.suggestions = [];
     }
 
     //Ingredients is an array of objects like that :
     // {name:"Potato",amount : 20}
 
-    getSuggestions(){
-        return this.suggestions;
-    }
 
     addIngredient(){
         this.ingredients.push({name:"",amount:0});
@@ -38,49 +34,7 @@ export default class MealConstruction extends Meal{
         return this.ingredients;
     }
 
-    debounce(func,delay){
-        let timeoutId;
-        return function(...args) {
-            if (timeoutId) clearTimeout(timeoutId);
-            timeoutId = setTimeout(() => {
-                func.apply(this, args);
-            }, delay);
-        };
-    }
 
-    // async getSuggestionsFromAPI(inputValue,authKey){
-
-    //     const debouncedFetch = this.debounce(
-            
-    //         async()=>{
-    //             if(inputValue) {
-                    
-    //                 try {
-    //                     const response = await axios.get(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${authKey}`, {
-    //                         params : {
-    //                             query: inputValue,
-    //                             dataType: "Survey (FNDDS)",
-    //                             pageSize: 5
-    //                         },
-    //                     });
-
-    //                     if(response.data.foods){
-    //                         // this.suggestions = response.data.foods.map(s=>s.description);
-    //                         // console.log(this.suggestions)
-    //                         // return this.suggestions;
-    //                         return response.data.foods.map(s=>s.description);
-    //                     }
-    //                 } catch(err){
-    //                     console.log(err);
-    //                 }
-    //             }
-    //             return [];
-    //         },500);
-    //     // }
-
-    //     return await debouncedFetch();
-    //     // console.log(this.suggestions)
-    // }
 
     async getSuggestionsFromAPI(inputValue, authKey) {
         console.log(inputValue);

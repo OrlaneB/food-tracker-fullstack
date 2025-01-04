@@ -59,6 +59,14 @@ export default function MealForm({mealIndex=null,ing=null}) {
       setOnFocusInput(null);
     }
 
+    function deleteAnIngredient(event,index){
+      event.preventDefault();
+
+      const newIngredients = meal.deleteIngredient(index);
+      const newMeal = new MealConstruction(newIngredients);
+      setMeal(newMeal);
+    }
+
     useEffect(()=>{
         createMealObject()
     },[])
@@ -85,7 +93,7 @@ export default function MealForm({mealIndex=null,ing=null}) {
 
                     <button 
                       className='roundButton' 
-                      onClick={()=>meal.deleteIngredient(index)}>
+                      onClick={(event)=>deleteAnIngredient(event,index)}>
                         <i className='fi fi-rr-cross-small'></i>
                     </button>
 

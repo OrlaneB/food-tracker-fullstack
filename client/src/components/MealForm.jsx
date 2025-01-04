@@ -9,8 +9,7 @@ import "../styles/MealForm.css"
 
 export default function MealForm({mealIndex=null,ing=null,setModifiedMeal=null,date=null,functionnality}) {
 
-    const {profileInfo} = useContext(profileInfoContext)
-    // const {currentDay} = useContext(mealsForOneDate);
+    const {profileInfo} = useContext(profileInfoContext);
     const navigate = useNavigate();
 
     const authKey = import.meta.env.VITE_APP_API_KEY;

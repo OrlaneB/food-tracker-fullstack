@@ -95,7 +95,6 @@ const pool = require("../model/pool");
         [user_id]
       );
 
-	    // console.log("In route, profile is : ",profile);
 
       // Check `profile[0]`
       if (Array.isArray(profile[0]) && profile[0].length > 0 && profile[0][0].chosenNutrients) {
@@ -111,7 +110,6 @@ const pool = require("../model/pool");
         }
       }
 
-	// console.log("In route, chosenNutrients is : ",chosenNutrients);
       chosenNutrientsInArray = [];
 
       for(let key in chosenNutrients){
@@ -153,7 +151,6 @@ router.post("/token", async(req,res)=>{
       return res.status(404).json({ message: "Profile not found" });
     }
 
-	// console.log("token profile :",profile);
 
     // Check `profile[0]`
       if (Array.isArray(profile[0]) && profile[0].length > 0 && profile[0][0].chosenNutrients) {
@@ -178,7 +175,6 @@ router.post("/token", async(req,res)=>{
         chosenNutrientsInArray.push(chosenNutrients[key])
       }
 
-	// console.log("token chosenNutrients : ",chosenNutrients);
 
     const profileInfo = {
       id : decoded.user_id,

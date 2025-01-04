@@ -59,8 +59,6 @@ router.get("/:profile_id/:date", async(req, res)=>{
       return allNutrients;
     })
 
-    // const meals = mealsResult.data.map((m)=>JSON.parse(m.ingredients));
-    // const nutrients = mealsResult.data.map(m=>JSON.parse(m.nutrients));
   
 
     res.status(200).json({message:"Successful meal retrieval.",meals,nutrients});
@@ -156,7 +154,6 @@ router.put("/:profile_id/:date", async (req,res)=>{
 
 
     if(mealIds.length<=index){
-      //The index is not in
       return res.status(404).json({message:"The index is incorrect."});
     }
 

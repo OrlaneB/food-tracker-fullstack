@@ -47,7 +47,6 @@ export default class Day {
 
         const chosenNutrientNames = chosenNutrients.map(item=>item.name);
 
-        // console.log("TN : ",this.totalNutrients)
 
         const percentageNutrients = this.totalNutrients
         .filter(item=>chosenNutrientNames.includes(item.name))
@@ -76,7 +75,6 @@ export default class Day {
     }
 
     async getMeals(profile_id, chosenNutrients){
-        // const date = new Date(this.date).toLocaleDateString('en-CA');
 
         try {
             const response = await axios.get(`${requestPath}/api/meals/${profile_id}/${this.date}`);
@@ -87,7 +85,6 @@ export default class Day {
 
             if(chosenNutrients) this.calculatePercentage(chosenNutrients);
 
-            // return new Day(this.date)
         } catch(err){
             console.log(err);
         }
@@ -101,11 +98,6 @@ export default class Day {
 
             console.log((await response).data.message);
 
-            // this.meals = [];
-            // this.addMeals((await response).data.meals,(await response).data.nutrients);
-            // this.calculateTotalNutrients((await response).data.nutrients);
-
-            // if(chosenNutrients) this.calculatePercentage(chosenNutrients);
         } catch(err){
             console.log(err);
         }

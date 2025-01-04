@@ -2,14 +2,16 @@ import React, { useContext, useEffect, useState } from 'react'
 import MealConstruction from '../utilities/classes/MealConstructionClass';
 import profileInfoContext from '../context/profileInfo';
 import mealsForOneDate from '../context/mealsForOneDate';
+import { useNavigate } from 'react-router-dom';
 
 import "../styles/MealForm.css"
 
 
-export default function MealForm({mealIndex=null,ing=null,setModifiedMeal}) {
+export default function MealForm({mealIndex=null,ing=null,setModifiedMeal=null,date=null,functionnality}) {
 
     const {profileInfo} = useContext(profileInfoContext)
-    const {currentDay} = useContext(mealsForOneDate)
+    // const {currentDay} = useContext(mealsForOneDate);
+    const navigate = useNavigate();
 
     const authKey = import.meta.env.VITE_APP_API_KEY;
 
@@ -18,14 +20,14 @@ export default function MealForm({mealIndex=null,ing=null,setModifiedMeal}) {
     const [suggestions,setSuggestions] = useState([]);
 
     function createMealObject(){
-        const newMeal = new MealConstruction(ing);
+        const newMeal = new MealConstruction(ing,functionnality);
         setMeal(newMeal);
     }
 
     function addAnIngredient(event){
       event.preventDefault();
 
-      const newMeal = new MealConstruction(meal.addIngredient())
+      const newMeal = new MealConstruction(meal.addIngredient(),functionnality)
       setMeal(newMeal)
       
     }
@@ -33,7 +35,7 @@ export default function MealForm({mealIndex=null,ing=null,setModifiedMeal}) {
     async function handleChange(event,index){
       const {name,value} = event.target;
 
-      const newMeal = new MealConstruction(meal.ingredients);
+      const newMeal = new MealConstruction(meal.ingredients,functionnality);
       newMeal.ingredients[index][name]=value;
 
       setMeal(newMeal);
@@ -50,7 +52,7 @@ export default function MealForm({mealIndex=null,ing=null,setModifiedMeal}) {
     }
 
     function clickSuggestion(index,suggestion){
-      const newMeal = new MealConstruction(meal.ingredients);
+      const newMeal = new MealConstruction(meal.ingredients,functionnality);
       newMeal.ingredients[index].name = suggestion;
       setMeal(newMeal);
       setSuggestions([]);
@@ -61,17 +63,21 @@ export default function MealForm({mealIndex=null,ing=null,setModifiedMeal}) {
       event.preventDefault();
 
       const newIngredients = meal.deleteIngredient(index);
-      const newMeal = new MealConstruction(newIngredients);
+      const newMeal = new MealConstruction(newIngredients,functionnality);
       setMeal(newMeal);
     }
 
     async function sendToDB(event){
       event.preventDefault();
 
-      meal.sendToDB(currentDay.date,profileInfo.id,mealIndex);
+      await meal.sendToDB(date,profileInfo.id,mealIndex);
 
-      setModifiedMeal(null)
-
+      if(meal.functionnality==="update"){
+        setModifiedMeal(null)
+      } else {
+        navigate("/")
+      }
+      
     }
 
     useEffect(()=>{

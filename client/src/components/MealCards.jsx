@@ -124,7 +124,7 @@ export default function MealCards() {
 
             {modifiedMeal===index && 
               <>
-                <MealForm mealIndex={index} ing={meal.getIngredients()} setModifiedMeal={setModifiedMeal} />
+                <MealForm mealIndex={index} ing={meal.getIngredients()} setModifiedMeal={setModifiedMeal} date={currentDay.date} functionnality={"update"}/>
               </>
             
             }

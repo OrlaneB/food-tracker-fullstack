@@ -92,9 +92,7 @@ export default class Day {
     }
 
     async deleteMeal(profile_id,index, chosenNutrients){
-        // const date = new Date(this.date).toLocaleDateString('en-CA');
-
-        console.log(profile_id,this.date,index)
+        
 
         try {
             const response = axios.delete(`http://localhost:5000/api/meals/${profile_id}/${this.date}/${index}`)

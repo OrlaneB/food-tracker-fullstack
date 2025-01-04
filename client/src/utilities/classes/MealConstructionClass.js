@@ -4,15 +4,15 @@ import calculateNutrients from "../calculateNutrients";
 import axios from "axios";
 
 export default class MealConstruction extends Meal{
-    constructor(ingredients,functionnality="update"){
+    constructor(ingredients,functionnality){
 
         if(!ingredients){
             super([{name:"",amount:0}]);
-            this.functionnality = functionnality==="create"? "create" : "update";
         } else {
             super(ingredients);
-            this.functionnality = functionnality;
         }
+
+        this.functionnality = functionnality;
 
     }
 
@@ -79,8 +79,6 @@ export default class MealConstruction extends Meal{
     }
 
     async createMeal(date,nutrients,ingredients,profile_id){
-
-
 
         await axios.post(`http://localhost:5000/api/meals/${profile_id}`,{
             date,

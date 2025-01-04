@@ -6,7 +6,7 @@ import mealsForOneDate from '../context/mealsForOneDate';
 import "../styles/MealForm.css"
 
 
-export default function MealForm({mealIndex=null,ing=null}) {
+export default function MealForm({mealIndex=null,ing=null,setModifiedMeal}) {
 
     const {profileInfo} = useContext(profileInfoContext)
     const {currentDay} = useContext(mealsForOneDate)
@@ -18,10 +18,8 @@ export default function MealForm({mealIndex=null,ing=null}) {
     const [suggestions,setSuggestions] = useState([]);
 
     function createMealObject(){
-        console.log(ing);
         const newMeal = new MealConstruction(ing);
         setMeal(newMeal);
-        console.log(newMeal)
     }
 
     function addAnIngredient(event){
@@ -65,6 +63,15 @@ export default function MealForm({mealIndex=null,ing=null}) {
       const newIngredients = meal.deleteIngredient(index);
       const newMeal = new MealConstruction(newIngredients);
       setMeal(newMeal);
+    }
+
+    async function sendToDB(event){
+      event.preventDefault();
+
+      meal.sendToDB(currentDay.date,profileInfo.id,mealIndex);
+
+      setModifiedMeal(null)
+
     }
 
     useEffect(()=>{
@@ -114,7 +121,7 @@ export default function MealForm({mealIndex=null,ing=null}) {
 
                 <button
                   className='importantTextButton'
-                  onClick={()=>meal.sendToDB(currentDay.date,profileInfo.id,authKey,mealIndex)}
+                  onClick={(event)=>sendToDB(event)}
                 >
                     {meal ? meal.functionnality[0].toUpperCase()+meal.functionnality.slice(1) : ""}
                 </button>

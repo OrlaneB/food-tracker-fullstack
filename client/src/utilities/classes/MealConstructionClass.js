@@ -37,10 +37,8 @@ export default class MealConstruction extends Meal{
 
 
     async getSuggestionsFromAPI(inputValue, authKey) {
-        console.log(inputValue);
     
         if (inputValue) {
-            console.log("A");
     
             try {
                 const response = await axios.get(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${authKey}`, {
@@ -97,8 +95,8 @@ export default class MealConstruction extends Meal{
         })
     }
 
-    async sendToDB(day,profile_id,authKey,index){
-        const {date,ingredients,nutrients} = await this.formatInfo(day,authKey);
+    async sendToDB(day,profile_id,index){
+        const {date,ingredients,nutrients} = await this.formatInfo(day);
 
         if(this.functionnality==="create"){
             await this.createMeal(date,nutrients,ingredients,profile_id);
@@ -109,15 +107,16 @@ export default class MealConstruction extends Meal{
         }
     }
 
-    async formatInfo(day,authKey){
+    async formatInfo(day){
         let nutrients;
 
-        await calculateNutrients(this.ingredients,authKey)
+        await calculateNutrients(this.ingredients)
         .then(result=>{
             nutrients=result;
         }).catch(err=>{
             console.log(err);
         })
+
 
 
         let ingredients = {};

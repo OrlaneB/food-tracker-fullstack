@@ -33,8 +33,15 @@ export default async function calculateNutrients(listIng) {
 
         //For each ingredient, add nutrients to object
         responses.forEach((res,index)=>{
+
+          let ingAmount;
           
-          const ingAmount = listIng[index].numberAmount;
+          
+          if("numberAmount" in listIng[index]) {
+            ingAmount = listIng[index].numberAmount;
+          } else if("amount" in listIng[index]){
+            ingAmount = listIng[index].amount;
+          }
 
 
           res.data[0].foodNutrients

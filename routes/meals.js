@@ -160,6 +160,7 @@ router.put("/:profile_id/:date", async (req,res)=>{
       return res.status(404).json({message:"The index is incorrect."});
     }
 
+
     const id = mealIds[index].meal_id;
 
     await pool.execute(

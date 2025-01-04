@@ -19,8 +19,13 @@ export default function Profile() {
         {name:"",amount:0,goal:""},
         {name:"",amount:0,goal:""}
     ])
+
     const [unsavedChanges,setUnsavedChanges] = useState(false);
-    const goalButtons = [{name:"Less than",sign:"<"},{name:"Equals",sign:"="},{name:"More than",sign:">"}];
+    const goalButtons = [
+        {name:"Less than",sign:"<"},
+        {name:"Equals",sign:"="},
+        {name:"More than",sign:">"}
+    ];
 
     const nutrientNamesArray = Object.values(userFriendlyNutrientNames);
 
@@ -37,12 +42,9 @@ export default function Profile() {
 
 
     function checkUnsavedChanges(){
-        console.log(profileInfo.chosenNutrients)
  
         const [nutrient1,nutrient2,nutrient3] = profileInfo.chosenNutrients
         const [nutrient1State,nutrient2State,nutrient3State] = chosenNutrients
-
-        console.log(nutrient1,nutrient1State)
 
 
         if(
@@ -70,17 +72,23 @@ export default function Profile() {
     async function updateNutrientChanges(){
         let user_id = profileInfo.id;
 
+        const newChosenNutrients = {
+            nutrient1 : chosenNutrients[0],
+            nutrient2 : chosenNutrients[1],
+            nutrient3 : chosenNutrients[2]
+        }
+
         if(user_id){
             try{
                 const response = await axios.put(`${import.meta.env.VITE_URL_REQUESTS}/api/profiles/${user_id}`, {
-                    chosenNutrients
+                    chosenNutrients:newChosenNutrients
                 });
 
                 if(response.status===201){
                     console.log(response.data);
-			let newProfileInfo = {...profileInfo};
-			newProfileInfo.chosenNutrients=chosenNutrients;
-			setProfileInfo(newProfileInfo);
+			        let newProfileInfo = {...profileInfo};
+			        newProfileInfo.chosenNutrients=chosenNutrients;
+			        setProfileInfo(newProfileInfo);
                     setUnsavedChanges(false);
                 }
         
@@ -117,20 +125,17 @@ export default function Profile() {
         if(name==="amount") value=Number(value);
         if(name==="name") value=getScientificName(value)
         
-        const nutrient = `nutrient${index+1}`
 
-        const newNutrient = {...chosenNutrients};
-        newNutrient[nutrient][name] = value;
+        const newNutrient = [...chosenNutrients];
+        newNutrient[index][name] = value;
 
         setChosenNutrients(newNutrient);
     }
 
     function handleChangeButtons(type,index){
 
-        let newNutrients = {...chosenNutrients}
-        const nutrient = `nutrient${index+1}`
-
-        newNutrients[nutrient].goal = type;
+        let newNutrients = [...chosenNutrients]
+        newNutrients[index].goal = type;
 
         setChosenNutrients(newNutrients)
     }

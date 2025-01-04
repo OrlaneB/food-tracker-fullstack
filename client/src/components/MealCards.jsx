@@ -8,6 +8,7 @@ const authKey = import.meta.env.VITE_APP_API_KEY;
 import userFriendlyNutrientNames from "../utilities/userFriendlyNutrientNames"
 import profileInfoContext from '../context/profileInfo';
 import mealsForOneDate from '../context/mealsForOneDate';
+import MealForm from './MealForm';
 
 
 export default function MealCards() {
@@ -56,15 +57,15 @@ export default function MealCards() {
 
       setModifiedMeal(index);
 
-      const ingredientArray = [];
+      // const ingredientArray = [];
 
-      for(let ing in meals[index]){
-        const ingredient = {name:ing,amount:meals[index][ing]}
-        ingredientArray.push(ingredient)
-      }
+      // for(let ing in meals[index]){
+      //   const ingredient = {name:ing,amount:meals[index][ing]}
+      //   ingredientArray.push(ingredient)
+      // }
       
 
-      setIngredientLists(ingredientArray);
+      // setIngredientLists(ingredientArray);
 
     }
 
@@ -158,60 +159,66 @@ export default function MealCards() {
             }
 
             {modifiedMeal===index && 
-            <div className='modified'>
-
-              <h3 style={{display:"inline",marginLeft:"10px"}}>
+              <>
+                {/* <h3 style={{display:"inline",marginLeft:"10px"}}>
                 Meal #{index+1}
-              </h3>
+                </h3> */}
+                <MealForm mealIndex={index} ing={meal.getIngredients()} />
+              </>
+            // <div className='modified'>
 
-              <form onSubmit={(event)=>event.preventDefault()}>
-                {ingredientLists.map((ing,j)=>(
-                  <div key={j}>
+            //   <h3 style={{display:"inline",marginLeft:"10px"}}>
+            //     Meal #{index+1}
+            //   </h3>
 
-                    <input 
-                      className='ingName' 
-                      value={ing.name} 
-                      onChange={(event)=>onChangeMealInputs(event,j)} 
-                      placeholder='Name of ingredient'
-                      name='name' 
-                      type='text'/>
+            //   <form onSubmit={(event)=>event.preventDefault()}>
+            //     {ingredientLists.map((ing,j)=>(
+            //       <div key={j}>
 
-                    <input 
-                      className='ingAmount' 
-                      value={ing.amount} 
-                      onChange={(event)=>onChangeMealInputs(event,j)} 
-                      name='amount' 
-                      type='number'/>g
+            //         <input 
+            //           className='ingName' 
+            //           value={ing.name} 
+            //           onChange={(event)=>onChangeMealInputs(event,j)} 
+            //           placeholder='Name of ingredient'
+            //           name='name' 
+            //           type='text'/>
 
-                    <button 
-                      className='roundButton' 
-                      onClick={()=>deleteAnIngredient(j)}>
-                        <i className='fi fi-rr-cross-small'></i>
-                    </button>
+            //         <input 
+            //           className='ingAmount' 
+            //           value={ing.amount} 
+            //           onChange={(event)=>onChangeMealInputs(event,j)} 
+            //           name='amount' 
+            //           type='number'/>g
 
-                    {onFocusInput===j && suggestions && suggestions.map((s,index)=>(
-                      <p key={index} onClick={()=>handleClickSuggestion(j,s)}>{s}</p>
-                    ))}
+            //         <button 
+            //           className='roundButton' 
+            //           onClick={()=>deleteAnIngredient(j)}>
+            //             <i className='fi fi-rr-cross-small'></i>
+            //         </button>
 
-                  </div>
-                ))}
+            //         {onFocusInput===j && suggestions && suggestions.map((s,index)=>(
+            //           <p key={index} onClick={()=>handleClickSuggestion(j,s)}>{s}</p>
+            //         ))}
 
-                <button 
-                  className='textButton' 
-                  onClick={(event)=>addAnIngredient(event)}>
-                    Add an ingredient
-                </button>
+            //       </div>
+            //     ))}
 
-                <button
-                  className='importantTextButton'
-                  onClick={(event)=>updateMeal(event,index)}
-                >
-                    Update the meal
-                </button>
+            //     <button 
+            //       className='textButton' 
+            //       onClick={(event)=>addAnIngredient(event)}>
+            //         Add an ingredient
+            //     </button>
 
-              </form>
+            //     <button
+            //       className='importantTextButton'
+            //       onClick={(event)=>updateMeal(event,index)}
+            //     >
+            //         Update the meal
+            //     </button>
+
+            //   </form>
                 
-            </div>
+            // </div>
             }
              
            </div>

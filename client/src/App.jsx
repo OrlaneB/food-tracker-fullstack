@@ -40,7 +40,7 @@ function App() {
 
         if(response.statusText==="OK") {
           console.log(response.data.message);
-          console.log("profile info : ",response.data.profileInfo);
+          // console.log("profile info : ",response.data.profileInfo);
           setProfileInfo(response.data.profileInfo);
         } else {
           console.log("Token is uncorrect")

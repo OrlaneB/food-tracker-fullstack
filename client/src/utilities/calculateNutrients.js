@@ -1,9 +1,9 @@
-// const authKey = import.meta.env.VITE_APP_API_KEY;
+const authKey = import.meta.env.VITE_APP_API_KEY;
 import userFriendlyNutrientNames from "./userFriendlyNutrientNames"
 import axios from "axios";
 
 
-export default async function calculateNutrients(listIng,authKey) {
+export default async function calculateNutrients(listIng) {
 
   
     // Create an array of axios GET requests
@@ -31,12 +31,10 @@ export default async function calculateNutrients(listIng,authKey) {
           allNutrients[nut]=0;
         })
 
-
-
         //For each ingredient, add nutrients to object
         responses.forEach((res,index)=>{
-          const ing = res.data[0].description;
-          const ingAmount = listIng[index].amount;
+          
+          const ingAmount = listIng[index].numberAmount;
 
 
           res.data[0].foodNutrients

@@ -7,13 +7,15 @@ import { useNavigate } from 'react-router-dom';
 import userFriendlyNutrientNames from '../utilities/userFriendlyNutrientNames';
 import profileInfoContext from '../context/profileInfo';
 
+import calculateNutrients from '../utilities/calculateNutrients';
+
 export default function AddMeal() {
 
     const [listIngredients, setListIngredients] = useState([]);
     const [suggestions,setSuggestions] = useState([]);
     const [onFocusInput, setOnFocusInput] = useState(null);
 
-    let today = `${new Date().getFullYear()}-${new Date().getMonth()+1<10?"0"+String(new Date().getMonth()+1):new Date().getMonth()+1}-${new Date().getDate()}`;
+    let today = `${new Date().getFullYear()}-${new Date().getMonth()+1<10?"0"+String(new Date().getMonth()+1):new Date().getMonth()+1}-${new Date().getDate().length===2?new Date().getDate():"0"+new Date().getDate()}`;
 
     const [dateInput,setDateInput]=useState(today);
 
@@ -56,54 +58,54 @@ export default function AddMeal() {
     }
 
 
-    async function calculateNutrients(listIng) {
+  //   async function calculateNutrients(listIng) {
   
-      // Create an array of axios GET requests
-      const requests = listIng.map(ingredient =>
-          axios.get(`https://api.nal.usda.gov/fdc/v1/foods/list?api_key=${authKey}`, {
-              params: {
-                  query: ingredient.name,
-                  dataType: "Survey (FNDDS)",
-                  pageSize: 1, // Limit the number of results per page if necessary
-              },
-          })
-      );
+  //     // Create an array of axios GET requests
+  //     const requests = listIng.map(ingredient =>
+  //         axios.get(`https://api.nal.usda.gov/fdc/v1/foods/list?api_key=${authKey}`, {
+  //             params: {
+  //                 query: ingredient.name,
+  //                 dataType: "Survey (FNDDS)",
+  //                 pageSize: 1, // Limit the number of results per page if necessary
+  //             },
+  //         })
+  //     );
   
-      try {
-          // Wait for all requests to complete
-          const responses = await axios.all(requests);
+  //     try {
+  //         // Wait for all requests to complete
+  //         const responses = await axios.all(requests);
 
-          const allNutrients = {};
+  //         const allNutrients = {};
           
-          //Create object with 20 nutrient names
-          Object.keys(userFriendlyNutrientNames).map(nut=>{
-            allNutrients[nut]=0;
-          })
+  //         //Create object with 20 nutrient names
+  //         Object.keys(userFriendlyNutrientNames).map(nut=>{
+  //           allNutrients[nut]=0;
+  //         })
 
-          //For each ingredient, add nutrients to object
-          responses.forEach((res)=>{
-            const ing = res.data[0].description;
-            const ingAmount = listIngredients.filter(i=>i.name===ing)[0].numberAmount;
+  //         //For each ingredient, add nutrients to object
+  //         responses.forEach((res)=>{
+  //           const ing = res.data[0].description;
+  //           const ingAmount = listIngredients.filter(i=>i.name===ing)[0].numberAmount;
 
-            res.data[0].foodNutrients
-            .filter(nut=>Object.keys(userFriendlyNutrientNames).includes(nut.name))
-            .forEach(nut=>{
-              allNutrients[nut.name]+=((nut.amount/100)*ingAmount);
-            })
-          })
+  //           res.data[0].foodNutrients
+  //           .filter(nut=>Object.keys(userFriendlyNutrientNames).includes(nut.name))
+  //           .forEach(nut=>{
+  //             allNutrients[nut.name]+=((nut.amount/100)*ingAmount);
+  //           })
+  //         })
 
-          //Round nutrients to 2nd decimal
-          for(let key in allNutrients){
-            allNutrients[key] = Math.round(allNutrients[key]*100)/100;
-          }
+  //         //Round nutrients to 2nd decimal
+  //         for(let key in allNutrients){
+  //           allNutrients[key] = Math.round(allNutrients[key]*100)/100;
+  //         }
 
-          return allNutrients
+  //         return allNutrients
   
-      } catch (errors) {
-          console.log(errors); // Handle errors
-          return "Did not work";
-      }
-  }
+  //     } catch (errors) {
+  //         console.log(errors); // Handle errors
+  //         return "Did not work";
+  //     }
+  // }
   
 
     function deleteIngredient(event,index){

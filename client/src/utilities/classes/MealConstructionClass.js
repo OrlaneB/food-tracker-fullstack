@@ -4,14 +4,14 @@ import calculateNutrients from "../calculateNutrients";
 import axios from "axios";
 
 export default class MealConstruction extends Meal{
-    constructor(ingredients){
+    constructor(ingredients,functionnality="update"){
 
         if(!ingredients){
             super([{name:"",amount:0}]);
-            this.functionnality = "create";
+            this.functionnality = functionnality==="create"? "create" : "update";
         } else {
             super(ingredients);
-            this.functionnality = "update";
+            this.functionnality = functionnality;
         }
 
         this.suggestions = [];
@@ -48,32 +48,66 @@ export default class MealConstruction extends Meal{
         };
     }
 
-    async getSuggestionsFromAPI(inputValue,authKey){
+    // async getSuggestionsFromAPI(inputValue,authKey){
 
-        this.debounce(
+    //     const debouncedFetch = this.debounce(
             
-            async()=>{
-                if(inputValue) {
+    //         async()=>{
+    //             if(inputValue) {
                     
-                    try {
-                        const response = await axios.get(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${authKey}`, {
-                            params : {
-                                query: inputValue,
-                                dataType: "Survey (FNDDS)",
-                                pageSize: 5
-                            },
-                        });
+    //                 try {
+    //                     const response = await axios.get(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${authKey}`, {
+    //                         params : {
+    //                             query: inputValue,
+    //                             dataType: "Survey (FNDDS)",
+    //                             pageSize: 5
+    //                         },
+    //                     });
 
-                        if(response.data.foods){
-                            this.suggestions = response.data.foods.map(s=>s.description);
-                        }
-                    } catch(err){
-                        console.log(err);
-                    }
+    //                     if(response.data.foods){
+    //                         // this.suggestions = response.data.foods.map(s=>s.description);
+    //                         // console.log(this.suggestions)
+    //                         // return this.suggestions;
+    //                         return response.data.foods.map(s=>s.description);
+    //                     }
+    //                 } catch(err){
+    //                     console.log(err);
+    //                 }
+    //             }
+    //             return [];
+    //         },500);
+    //     // }
+
+    //     return await debouncedFetch();
+    //     // console.log(this.suggestions)
+    // }
+
+    async getSuggestionsFromAPI(inputValue, authKey) {
+        console.log(inputValue);
+    
+        if (inputValue) {
+            console.log("A");
+    
+            try {
+                const response = await axios.get(`https://api.nal.usda.gov/fdc/v1/foods/search?api_key=${authKey}`, {
+                    params: {
+                        query: inputValue,
+                        dataType: "Survey (FNDDS)",
+                        pageSize: 5,
+                    },
+                });
+    
+                if (response.data.foods) {
+                    return response.data.foods.map((s) => s.description);
                 }
-            },500);
-        // }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+    
+        return [];
     }
+    
 
     async updateMeal(profile_id,index,date,ingredients,nutrients){
 

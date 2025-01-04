@@ -1,5 +1,27 @@
+#MealForm {
+  text-align: left;
+}
+
 #MealForm .suggestions {
   cursor: pointer; 
   font-size: 0.8em; 
-  margin-left: 15px;
+  margin: 4px 0 4px 15px;
+  padding:6px 6px;
+  text-align: left;
+  background-color: transparent;
+  width:fit-content;
+  border-radius: 4px;
+}
+
+#MealForm .suggestions:hover {
+  background-color: #951327;
+  color: white;
+}
+
+#MealForm input[name="name"] {
+  width: 45%;
+}
+
+#MealForm input[name="amount"]{
+  width : 20%;
 }

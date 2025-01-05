@@ -4,6 +4,7 @@ import axios from "axios";
 
 
 export default async function calculateNutrients(listIng) {
+
   
     // Create an array of axios GET requests
     const requests = listIng.map(ingredient =>
@@ -16,22 +17,31 @@ export default async function calculateNutrients(listIng) {
         })
     );
 
+
+
     try {
         // Wait for all requests to complete
         const responses = await axios.all(requests);
 
         const allNutrients = {};
+
         
         //Create object with 20 nutrient names
         Object.keys(userFriendlyNutrientNames).map(nut=>{
           allNutrients[nut]=0;
         })
 
-
         //For each ingredient, add nutrients to object
-        responses.forEach((res)=>{
-          const ing = res.data[0].description;
-          const ingAmount = listIng.filter(i=>i.name===ing)[0].amount;
+        responses.forEach((res,index)=>{
+
+          let ingAmount;
+          
+          
+          if("numberAmount" in listIng[index]) {
+            ingAmount = listIng[index].numberAmount;
+          } else if("amount" in listIng[index]){
+            ingAmount = listIng[index].amount;
+          }
 
 
           res.data[0].foodNutrients
@@ -47,10 +57,11 @@ export default async function calculateNutrients(listIng) {
           allNutrients[key] = Math.round(allNutrients[key]*100)/100;
         }
 
+
         return allNutrients
 
     } catch (errors) {
         console.log(errors); // Handle errors
-        return "Did not work";
+        return new Error({message:"Error"});
     }
 }

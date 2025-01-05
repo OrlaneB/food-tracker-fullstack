@@ -16,17 +16,7 @@
     padding: 8px 0;
 }
 
-/* #register form label input {
-    display: block;
-    margin: 8px auto;
-    padding:10px 15px;
-    border-radius: 20px;
-    box-shadow: 5px 5px 8px #0d275037
-    , -3px -3px 8px rgba(255, 255, 255, 0.205)
-    ;
-    border:none;
-    
-} */
+
 #register input {
     display: block;
 }

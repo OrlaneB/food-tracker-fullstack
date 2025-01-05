@@ -6,6 +6,8 @@ import { DateTime } from "luxon";
 import profileInfoContext from '../context/profileInfo'
 import Day from "../utilities/classes/DayClass";
 import mealsForOneDate from "../context/mealsForOneDate";
+import Title from "./calendar/Title";
+import Buttons from "./calendar/Buttons";
 
 
 export default function Calendar() {
@@ -56,30 +58,6 @@ export default function Calendar() {
     }
 
 
-    function moveSelectedDates(event,type){
-        event.preventDefault();
-
-        let newDates = [...displayedDates];
-
-        if(type==="down"){
-
-            let copiedDate = new Date(newDates[0]);
-            let addedDate = DateTime.local(copiedDate.getFullYear(), copiedDate.getMonth()+1, copiedDate.getDate()).minus({days:1}).toISODate();
-            newDates.unshift(addedDate);
-            newDates.pop();
-
-        }else if(type==="up"){
-
-            let copiedDate = new Date(newDates[6]);
-            let addedDate = DateTime.local(copiedDate.getFullYear(), copiedDate.getMonth()+1, copiedDate.getDate()).plus({days:1}).toISODate();
-            newDates.push(addedDate);
-            newDates.shift();
-
-        }
-
-        setDisplayedDates(newDates)
-    }
-
     useEffect(()=>{
        if(currentDay && displayedDates.length===0) 
         createDisplayedDates()
@@ -89,16 +67,10 @@ export default function Calendar() {
     return (
         <>
         {currentDay && displayedDates && <div id="Day">
-            <h3 id="displayedDate">{new Date(currentDay.date).toLocaleDateString("en-US",{
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-            })}</h3>
+            
+            <Title />
 
-            <div id="datesContainer">
-                
-                <button className="roundButton" onClick={(event)=>moveSelectedDates(event,"down")}>←</button>
+            <Buttons displayedDates={displayedDates} setDisplayedDates={setDisplayedDates}>
 
                 {displayedDates.map((date,index)=>(
                     <div 
@@ -112,9 +84,8 @@ export default function Calendar() {
                     </div>
                 ))}
 
-                <button className="roundButton" onClick={(event)=>moveSelectedDates(event,"up")}>→</button>
+            </Buttons>
 
-            </div>
         </div>}
         </>
     )                                

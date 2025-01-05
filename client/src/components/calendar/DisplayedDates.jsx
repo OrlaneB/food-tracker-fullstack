@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import profileInfoContext from '../../context/profileInfo'
 import mealsForOneDate from '../../context/mealsForOneDate';
+import Day from "../../utilities/classes/DayClass"
 
 export default function displayedDates({displayedDates}) {
 

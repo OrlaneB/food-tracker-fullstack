@@ -11,11 +11,12 @@ import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-route
 import Register from './components/Register.jsx';
 import Login from './components/Login.jsx';
 import Profile from './components/Profile.jsx';
-import SurveyLink from './components/SurveyLink.jsx';
+import SurveyLink from './components/layout/SurveyLink.jsx';
 import ReportAnIssue from './components/ReportAnIssue.jsx';
 
 import profileInfoContext from './context/profileInfo.jsx';
 import LearnAboutProject from './components/LearnAboutProject.jsx'
+import Layout from './components/layout/Layout.jsx'
 
 
 function App() {
@@ -66,35 +67,25 @@ function App() {
 
   return (
     <> 
-
-    <header>
-      <h2 onClick={()=>navigate("/")}>Food Pulse</h2>
-
-      <nav>
-        <button className='roundButton' onClick={()=>navigate("/add-meal")}>
-          <i className="fi fi-rr-add"></i>
-        </button>
-        <button className='roundButton' onClick={()=> navigate("/profile")}>
-          <i className="fi fi-rr-user"></i>
-        </button>
-      </nav>
-      
-    </header>
       
       <profileInfoContext.Provider value={{profileInfo,setProfileInfo}}>
+        <Layout>
         <Routes>
+          
           <Route path="/" element={<Homepage />}/>
           <Route path="/profile" element={<Profile />}/>
           <Route path="/add-meal" element={<AddMeal />}/>
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
+          
+          
           <Route path='/report-issue' element={<ReportAnIssue />} />
           <Route path="/about-project" element={<LearnAboutProject />} />
+          
         </Routes>
+        </Layout>
       </profileInfoContext.Provider>
       
-
-    <SurveyLink />
       
     </>
   )

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import profileInfoContext from '../../context/profileInfo'
 import GoalButtons from './GoalButtons';
+import Inputs from './Inputs';
 
 export default function NutrientsForms() {
 
@@ -33,6 +34,8 @@ export default function NutrientsForms() {
             <div className='nutrientDiv' key={index}>
 
                 <GoalButtons nutrient={nutrient} chosenNutrientsForm={chosenNutrientsForm} setChosenNutrientsForm={setChosenNutrientsForm} index={index}/>
+
+                <Inputs nutrient={nutrient} index={index} chosenNutrientsForm={chosenNutrientsForm} setChosenNutrientsForm={setChosenNutrientsForm} />
 
             </div>
         ))}

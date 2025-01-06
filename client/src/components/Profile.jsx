@@ -30,7 +30,7 @@ export default function Profile() {
     //     {name:"More than",sign:">"}
     // ];
 
-    const nutrientNamesArray = Object.values(userFriendlyNutrientNames);
+    // const nutrientNamesArray = Object.values(userFriendlyNutrientNames);
 
     function compareObjects(obj1,obj2){
         if(obj1.name===obj2.name &&
@@ -122,30 +122,30 @@ export default function Profile() {
     }
 
 
-    function handleChangeInputs(event,index){
-        let {name,value} = event.target;
+    // function handleChangeInputs(event,index){
+    //     let {name,value} = event.target;
 
-        if(name==="amount") value=Number(value);
-        if(name==="name") value=getScientificName(value)
+    //     if(name==="amount") value=Number(value);
+    //     if(name==="name") value=getScientificName(value)
         
 
-        const newNutrient = [...chosenNutrients];
-        newNutrient[index][name] = value;
+    //     const newNutrient = [...chosenNutrients];
+    //     newNutrient[index][name] = value;
 
-        setChosenNutrients(newNutrient);
-    }
+    //     setChosenNutrients(newNutrient);
+    // }
 
-    function handleChangeButtons(type,index){
+    // function handleChangeButtons(type,index){
 
-        let newNutrients = [...chosenNutrients]
-        newNutrients[index].goal = type;
+    //     let newNutrients = [...chosenNutrients]
+    //     newNutrients[index].goal = type;
 
-        setChosenNutrients(newNutrients)
-    }
+    //     setChosenNutrients(newNutrients)
+    // }
 
-    useEffect(()=>{
-        if(profileInfo.chosenNutrients) setChosenNutrients(JSON.parse(JSON.stringify(profileInfo.chosenNutrients)))
-    },[profileInfo.id])
+    // useEffect(()=>{
+    //     if(profileInfo.chosenNutrients) setChosenNutrients(JSON.parse(JSON.stringify(profileInfo.chosenNutrients)))
+    // },[profileInfo.id])
 
     useEffect(()=>{
         if(profileInfo.chosenNutrients) setUnsavedChanges(checkUnsavedChanges());

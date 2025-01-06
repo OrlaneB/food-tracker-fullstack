@@ -8,6 +8,7 @@ import unitNutrients from '../utilities/measurmentUnitNutrients';
 
 import userFriendlyNutrientNames from '../utilities/userFriendlyNutrientNames';
 import profileInfoContext from '../context/profileInfo';
+import LogOutButton from './profile/LogOutButton';
 
 export default function Profile() {
 
@@ -103,16 +104,16 @@ export default function Profile() {
 
 
 
-    function logOut(){
-        localStorage.removeItem("token");
-        setProfileInfo({
-            id:null,
-            username:"",
-            chosenNutrients:null
-          });
+    // function logOut(){
+    //     localStorage.removeItem("token");
+    //     setProfileInfo({
+    //         id:null,
+    //         username:"",
+    //         chosenNutrients:null
+    //       });
 
-        navigate("/login");
-    }
+    //     navigate("/login");
+    // }
 
     function getScientificName(value){
         return Object.keys(userFriendlyNutrientNames).find(key => userFriendlyNutrientNames[key]===value);
@@ -163,8 +164,10 @@ export default function Profile() {
                 </div>
                 
                 <h1>{profileInfo.username}</h1>
+
+                <LogOutButton />
                 
-                <button className='logout textButton' onClick={()=>logOut()}>Log Out</button>
+                {/* <button className='logout textButton' onClick={()=>logOut()}>Log Out</button> */}
                 <button className='importantTextButton' style={{marginLeft:"0"}} >Edit profile</button>
 
                 <hr style={{margin:"50px 0"}} />   

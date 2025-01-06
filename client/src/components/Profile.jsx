@@ -11,6 +11,7 @@ import profileInfoContext from '../context/profileInfo';
 import LogOutButton from './profile/LogOutButton';
 import EditProfileButton from './profile/EditProfileButton';
 import NutrientsForms from './profile/NutrientsForms';
+import UnsavedChangesButton from './profile/UnsavedChangesButton';
 
 export default function Profile() {
 
@@ -225,7 +226,9 @@ export default function Profile() {
                 </div>} */}
 
                 
-                {unsavedChanges && <button className='textButton' onClick={()=>updateNutrientChanges()} >Update changes</button>}
+                {/* {unsavedChanges && <button className='textButton' onClick={()=>updateNutrientChanges()} >Update changes</button>} */}
+
+                
                 </div>}
 
 

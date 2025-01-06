@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import profileInfoContext from '../../context/profileInfo'
 import GoalButtons from './GoalButtons';
 import Inputs from './Inputs';
+import UnsavedChangesButton from './UnsavedChangesButton';
 
 export default function NutrientsForms() {
 
@@ -40,6 +41,8 @@ export default function NutrientsForms() {
             </div>
         ))}
         </div>
+
+        <UnsavedChangesButton chosenNutrientsForm={chosenNutrientsForm} />
     </>
   )
 }

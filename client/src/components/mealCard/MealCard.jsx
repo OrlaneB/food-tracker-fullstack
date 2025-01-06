@@ -4,6 +4,7 @@ import ToggleButton from './ToggleButton';
 import DropdownList from './DropdownList';
 import ModifyButton from './ModifyButton';
 import DeleteButton from './DeleteButton';
+import MealNutrients from './MealNutrients';
 
 export default function MealCard({openedMeals,setOpenedMeals, setModifiedMeal, index,meal}) {
 
@@ -32,6 +33,8 @@ export default function MealCard({openedMeals,setOpenedMeals, setModifiedMeal, i
                 <DropdownList meal={meal}/>
             }
         </div>
+
+        <MealNutrients meal={meal} />
     </>
   )
 }

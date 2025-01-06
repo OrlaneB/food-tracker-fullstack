@@ -16,7 +16,7 @@ export default function MealCards() {
     // const {profileInfo} = useContext(profileInfoContext);
     const {currentDay,setCurrentDay} = useContext(mealsForOneDate)
   
-    const colors = ["#EA5F3A","#F79285","#FBC46C"];
+    // const colors = ["#EA5F3A","#F79285","#FBC46C"];
 
     const [openedMeals,setOpenedMeals]=useState([]);
     const [modifiedMeal,setModifiedMeal]=useState();    

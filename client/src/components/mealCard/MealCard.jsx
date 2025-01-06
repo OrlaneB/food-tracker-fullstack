@@ -3,6 +3,7 @@ import profileInfoContext from '../../context/profileInfo'
 import ToggleButton from './ToggleButton';
 import DropdownList from './DropdownList';
 import ModifyButton from './ModifyButton';
+import DeleteButton from './DeleteButton';
 
 export default function MealCard({openedMeals,setOpenedMeals, setModifiedMeal, index,meal}) {
 
@@ -24,6 +25,8 @@ export default function MealCard({openedMeals,setOpenedMeals, setModifiedMeal, i
             </h3>
 
             <ModifyButton setModifiedMeal={setModifiedMeal} index={index}/>
+
+            <DeleteButton index={index}/>
 
             {isOpen &&
                 <DropdownList meal={meal}/>

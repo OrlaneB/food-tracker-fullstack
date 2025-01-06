@@ -13,7 +13,7 @@ import MealCard from './mealCard/MealCard';
 
 export default function MealCards() {
  
-    const {profileInfo} = useContext(profileInfoContext);
+    // const {profileInfo} = useContext(profileInfoContext);
     const {currentDay,setCurrentDay} = useContext(mealsForOneDate)
   
     const colors = ["#EA5F3A","#F79285","#FBC46C"];
@@ -35,27 +35,27 @@ export default function MealCards() {
     // }
 
 
-    function turnIntoForm(event,index){
-      event.preventDefault();
+    // function turnIntoForm(event,index){
+    //   event.preventDefault();
 
-      setModifiedMeal(index);
+    //   setModifiedMeal(index);
 
-    }
+    // }
 
     
 
-    async function deleteMeals(event,index){
-      event.preventDefault();
+    // async function deleteMeals(event,index){
+    //   event.preventDefault();
 
-      const updatedDay = currentDay;
-      setCurrentDay(null);
+    //   const updatedDay = currentDay;
+    //   setCurrentDay(null);
 
-      await updatedDay.deleteMeal(profileInfo.id, index, profileInfo.chosenNutrients);
-      await updatedDay.getMeals(profileInfo.id, profileInfo.chosenNutrients);
+    //   await updatedDay.deleteMeal(profileInfo.id, index, profileInfo.chosenNutrients);
+    //   await updatedDay.getMeals(profileInfo.id, profileInfo.chosenNutrients);
 
-      setCurrentDay(updatedDay);
+    //   setCurrentDay(updatedDay);
     
-    }
+    // }
 
 
 

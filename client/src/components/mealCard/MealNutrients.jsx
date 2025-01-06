@@ -1,8 +1,10 @@
 import React, { useContext } from 'react'
 import profileInfoContext from '../../context/profileInfo'
 import userFriendlyNutrientNames from '../../utilities/userFriendlyNutrientNames';
+import mealCardContext from '../../context/mealCard';
 
-export default function MealNutrients({meal}) {
+export default function MealNutrients() {
+    const {meal} = useContext(mealCardContext);
     const {chosenNutrients} = useContext(profileInfoContext).profileInfo;
 
     const colors = ["#EA5F3A","#F79285","#FBC46C"];

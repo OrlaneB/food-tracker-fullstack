@@ -1,6 +1,15 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import mealCardContext from '../../context/mealCard';
 
-export default function ToggleButton({openedMeals,isOpen,setOpenedMeals,index}) {
+export default function ToggleButton() {
+
+    const {openedMeals,setOpenedMeals,index} = useContext(mealCardContext);
+
+    const [isOpen,setIsOpen] = useState(false);
+
+    useEffect(()=>{
+        setIsOpen(openedMeals.includes(index))
+    },[openedMeals])
 
     function handleToggleOpen(){
         let newList;
@@ -15,7 +24,7 @@ export default function ToggleButton({openedMeals,isOpen,setOpenedMeals,index}) 
       }
 
   return (
-    
+
         <button
             style={isOpen? {transform:"rotate(90deg)",dipslay:"inline"} : {display:"inline"}} 
             className='roundButton'

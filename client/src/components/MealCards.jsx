@@ -6,14 +6,22 @@ import mealsForOneDate from '../context/mealsForOneDate';
 import MealForm from './MealForm';
 import MealCard from './mealCard/MealCard';
 
+import mealCardContext from '../context/mealCard';
+
 
 export default function MealCards() {
 
-    const {currentDay} = useContext(mealsForOneDate)
+    const {currentDay} = useContext(mealsForOneDate);
 
 
     const [openedMeals,setOpenedMeals]=useState([]);
-    const [modifiedMeal,setModifiedMeal]=useState();    
+    const [modifiedMeal,setModifiedMeal]=useState(null); 
+    
+    // const mealCardsStates = {
+    //   openedMeals,
+    //   setOpenedMeals,
+    //   setModifiedMeal
+    // }
 
 
 
@@ -26,7 +34,11 @@ export default function MealCards() {
            <div key={index} className='mealContainer'>
 
             {modifiedMeal!==index && 
-              <MealCard openedMeals={openedMeals} setOpenedMeals={setOpenedMeals} index={index} meal={meal} setModifiedMeal={setModifiedMeal}/>
+              <mealCardContext.Provider value={{openedMeals,setOpenedMeals,setModifiedMeal,index,meal}}>
+                <MealCard 
+                // openedMeals={openedMeals} setOpenedMeals={setOpenedMeals} index={index} meal={meal} setModifiedMeal={setModifiedMeal}
+                />
+              </mealCardContext.Provider>
             }
 
             {modifiedMeal===index && 

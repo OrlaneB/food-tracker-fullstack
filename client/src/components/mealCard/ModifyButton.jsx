@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import mealCardContext from '../../context/mealCard';
 
-export default function ModifyButton({setModifiedMeal,index}) {
+export default function ModifyButton() {
+
+    const {setModifiedMeal,index} = useContext(mealCardContext);
 
     function turnIntoForm(event){
         event.preventDefault();

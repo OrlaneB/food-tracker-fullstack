@@ -1,8 +1,11 @@
 import React, { useContext } from 'react'
 import mealsForOneDate from '../../context/mealsForOneDate';
 import profileInfoContext from '../../context/profileInfo';
+import mealCardContext from '../../context/mealCard';
 
-export default function DeleteButton({index}) {
+export default function DeleteButton() {
+
+    const {index} = useContext(mealCardContext)
 
     const {currentDay,setCurrentDay} = useContext(mealsForOneDate)
     const {id,chosenNutrients} = useContext(profileInfoContext).profileInfo

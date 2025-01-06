@@ -8,9 +8,7 @@ import MealNutrients from './MealNutrients';
 
 export default function MealCard({openedMeals,setOpenedMeals, setModifiedMeal, index,meal}) {
 
-    const {profileInfo} = useContext(profileInfoContext);
     const [isOpen,setIsOpen] = useState(false);
-
 
     useEffect(()=>{
         setIsOpen(openedMeals.includes(index));

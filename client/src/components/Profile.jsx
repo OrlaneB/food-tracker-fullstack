@@ -10,6 +10,7 @@ import userFriendlyNutrientNames from '../utilities/userFriendlyNutrientNames';
 import profileInfoContext from '../context/profileInfo';
 import LogOutButton from './profile/LogOutButton';
 import EditProfileButton from './profile/EditProfileButton';
+import NutrientsForms from './profile/NutrientsForms';
 
 export default function Profile() {
 
@@ -173,8 +174,10 @@ export default function Profile() {
                 {/* <button className='importantTextButton' style={{marginLeft:"0"}} >Edit profile</button> */}
 
                 <hr style={{margin:"50px 0"}} />   
+
+                <NutrientsForms />
                 
-                <h3>Nutrients to track</h3>
+                {/* <h3>Nutrients to track</h3>
 
                 <p style={{marginBottom:"30px",fontStyle:"italic"}}>Please, get your recommendations from experts.</p>
 
@@ -219,7 +222,7 @@ export default function Profile() {
 
                     
                     
-                </div>}
+                </div>} */}
 
                 
                 {unsavedChanges && <button className='textButton' onClick={()=>updateNutrientChanges()} >Update changes</button>}

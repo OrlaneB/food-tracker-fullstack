@@ -5,7 +5,7 @@ import profileInfoContext from '../../context/profileInfo';
 export default function DeleteButton({index}) {
 
     const {currentDay,setCurrentDay} = useContext(mealsForOneDate)
-    const {profileInfo} = useContext(profileInfoContext)
+    const {id,chosenNutrients} = useContext(profileInfoContext).profileInfo
 
     async function deleteMeal(event){
         event.preventDefault();
@@ -13,9 +13,9 @@ export default function DeleteButton({index}) {
         const updatedDay = currentDay;
         setCurrentDay(null);
 
-        await updatedDay.deleteMeal(profileInfo.id,index, profileInfo.chosenNutrients);
+        await updatedDay.deleteMeal(id, index, chosenNutrients);
 
-        await updatedDay.getMeals(profileInfo.id,profileInfo.chosenNutrients);
+        await updatedDay.getMeals(id,chosenNutrients);
 
         setCurrentDay(updatedDay);
     }

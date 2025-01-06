@@ -9,6 +9,7 @@ import unitNutrients from '../utilities/measurmentUnitNutrients';
 import userFriendlyNutrientNames from '../utilities/userFriendlyNutrientNames';
 import profileInfoContext from '../context/profileInfo';
 import LogOutButton from './profile/LogOutButton';
+import EditProfileButton from './profile/EditProfileButton';
 
 export default function Profile() {
 
@@ -166,9 +167,10 @@ export default function Profile() {
                 <h1>{profileInfo.username}</h1>
 
                 <LogOutButton />
+                <EditProfileButton />
                 
                 {/* <button className='logout textButton' onClick={()=>logOut()}>Log Out</button> */}
-                <button className='importantTextButton' style={{marginLeft:"0"}} >Edit profile</button>
+                {/* <button className='importantTextButton' style={{marginLeft:"0"}} >Edit profile</button> */}
 
                 <hr style={{margin:"50px 0"}} />   
                 

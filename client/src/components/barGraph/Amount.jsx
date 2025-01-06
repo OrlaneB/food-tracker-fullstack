@@ -13,18 +13,38 @@ export default function Amount({nut,currentDay,chosenNutrients}) {
             (goal==="More than" && totalNutrientsAmount>chosenNutrientsAmount) ||
             (goal==="Equals" && (Math.abs(totalNutrientsAmount - chosenNutrientsAmount) <= 0.08 * chosenNutrientsAmount))
         ) {
-            return <span>&#10003;</span>;
+            return <span>Great job &#10003;</span>;
+
+        } else if(goal==="Less than" ||
+            (goal==="Equals" && chosenNutrientsAmount<totalNutrientsAmount)
+        ){
+
+            const difference = Math.round(totalNutrientsAmount-chosenNutrientsAmount);
+
+            return <span>Over by {difference}{unitNutrients[nut.name]}</span>
+
+        } else if(goal==="More than" ||
+            (goal==="Equals" && chosenNutrientsAmount>totalNutrientsAmount)){
+
+            const difference = Math.round(chosenNutrientsAmount-totalNutrientsAmount);
+
+            return <span>You're {difference}{unitNutrients[nut.name]} short</span>
+
         } else {
             return "";
         }
     }
 
   return (
-        <p>
+        <>
+            <p>
             {Math.round(totalNutrientsAmount*100)/100}/
             {chosenNutrientsAmount}
-            {unitNutrients[nut.name]} {checkGoal()}
-        </p>
+            {unitNutrients[nut.name]}
+            </p>
+
+            <p style={{color:"#951327",fontStyle:"italic",margin:0}}>{checkGoal()}</p>
+        </>
 
   )
 }

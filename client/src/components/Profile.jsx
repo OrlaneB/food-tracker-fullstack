@@ -12,6 +12,7 @@ import LogOutButton from './profile/LogOutButton';
 import EditProfileButton from './profile/EditProfileButton';
 import NutrientsForms from './profile/NutrientsForms';
 import UnsavedChangesButton from './profile/UnsavedChangesButton';
+import ProfilePicture from './profile/ProfilePicture';
 
 export default function Profile() {
 
@@ -159,12 +160,8 @@ export default function Profile() {
         <div id="profile">
             
             { profileInfo && <div>
-                <div id='profileImage'>
-                    
-                    <img src="/avatar-default.jpg" alt="User image default picture"/>
-                    {/* <button className='roundButton'><i class="fi fi-rr-refresh"></i></button> */}
-
-                </div>
+                
+                <ProfilePicture />
                 
                 <h1>{profileInfo.username}</h1>
 

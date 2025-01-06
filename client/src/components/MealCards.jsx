@@ -16,12 +16,6 @@ export default function MealCards() {
 
     const [openedMeals,setOpenedMeals]=useState([]);
     const [modifiedMeal,setModifiedMeal]=useState(null); 
-    
-    // const mealCardsStates = {
-    //   openedMeals,
-    //   setOpenedMeals,
-    //   setModifiedMeal
-    // }
 
 
 
@@ -34,10 +28,11 @@ export default function MealCards() {
            <div key={index} className='mealContainer'>
 
             {modifiedMeal!==index && 
-              <mealCardContext.Provider value={{openedMeals,setOpenedMeals,setModifiedMeal,index,meal}}>
-                <MealCard 
-                // openedMeals={openedMeals} setOpenedMeals={setOpenedMeals} index={index} meal={meal} setModifiedMeal={setModifiedMeal}
-                />
+              <mealCardContext.Provider 
+                value={{openedMeals,setOpenedMeals,setModifiedMeal,index,meal}}>
+
+                <MealCard />
+                
               </mealCardContext.Provider>
             }
 

@@ -8,6 +8,7 @@ import userFriendlyNutrientNames from "../utilities/userFriendlyNutrientNames"
 import profileInfoContext from '../context/profileInfo';
 import mealsForOneDate from '../context/mealsForOneDate';
 import MealForm from './MealForm';
+import MealCard from './mealCard/MealCard';
 
 
 export default function MealCards() {
@@ -22,16 +23,16 @@ export default function MealCards() {
 
  
 
-    function handleToggleOpen(index){
-      let newList;
-      if(openedMeals.includes(index)) { 
-        newList = openedMeals.filter(m=>m!==index);
-      } else { 
-        newList = [...openedMeals,index];
-      }
+    // function handleToggleOpen(index){
+    //   let newList;
+    //   if(openedMeals.includes(index)) { 
+    //     newList = openedMeals.filter(m=>m!==index);
+    //   } else { 
+    //     newList = [...openedMeals,index];
+    //   }
 
-      setOpenedMeals(newList);
-    }
+    //   setOpenedMeals(newList);
+    // }
 
 
     function turnIntoForm(event,index){
@@ -67,59 +68,60 @@ export default function MealCards() {
            <div key={index} className='mealContainer'>
 
             {modifiedMeal!==index && 
-              <>
-              <div id="listContainer">
+              <MealCard openedMeals={openedMeals} setOpenedMeals={setOpenedMeals} index={index}/>
+            //   <>
+            //   <div id="listContainer">
 
-                <button 
-                  style=
-                    {openedMeals.includes(index)? {transform:"rotate(90deg)",display:"inline"}:{display:"inline"}} 
-                  className='roundButton'
-                  onClick={()=>handleToggleOpen(index)}>
-                    &gt;
-                </button>
+            //     <button 
+            //       style=
+            //         {openedMeals.includes(index)? {transform:"rotate(90deg)",display:"inline"}:{display:"inline"}} 
+            //       className='roundButton'
+            //       onClick={()=>handleToggleOpen(index)}>
+            //         &gt;
+            //     </button>
 
-                <h3 style={{display:"inline",marginLeft:"10px"}}>
-                  Meal #{index+1}
-                </h3>
+            //     <h3 style={{display:"inline",marginLeft:"10px"}}>
+            //       Meal #{index+1}
+            //     </h3>
 
-                <button 
-                  className='roundButton' 
-                  style={{height:"25px",width:"25px",fontSize:"0.8em"}}
-                  onClick={(event)=>turnIntoForm(event,index)}>
-                    <i className="fi fi-rr-pencil"></i>
-                </button>
+            //     <button 
+            //       className='roundButton' 
+            //       style={{height:"25px",width:"25px",fontSize:"0.8em"}}
+            //       onClick={(event)=>turnIntoForm(event,index)}>
+            //         <i className="fi fi-rr-pencil"></i>
+            //     </button>
 
-                <button 
-                  className='roundButton' 
-                  style={{height:"25px",width:"25px",fontSize:"0.8em"}}
-                  onClick={(event)=>deleteMeals(event,index)}>
-                    <i className="fi fi-rr-cross-small"></i>
-                </button>
+            //     <button 
+            //       className='roundButton' 
+            //       style={{height:"25px",width:"25px",fontSize:"0.8em"}}
+            //       onClick={(event)=>deleteMeals(event,index)}>
+            //         <i className="fi fi-rr-cross-small"></i>
+            //     </button>
                 
-                { openedMeals.includes(index) &&
-                  <ul>
-                    {meal.getIngredients().map((item,j)=>(
-                      <li key={j}>{item.name} {item.amount}g</li>
-                    ))}
-                  </ul>}
+            //     { openedMeals.includes(index) &&
+            //       <ul>
+            //         {meal.getIngredients().map((item,j)=>(
+            //           <li key={j}>{item.name} {item.amount}g</li>
+            //         ))}
+            //       </ul>}
 
-             </div>
+            //  </div>
 
-             <div className='mealNutrients'>
+            //  <div className='mealNutrients'>
 
-              {meal.getNutrients(profileInfo.chosenNutrients).map((nut,k)=>(
-                <p key={k} style={{backgroundColor:colors[k]}}>
-                  <span className='amount'>
-                    {nut.amount}
-                  </span> <br/>
-                    {userFriendlyNutrientNames[nut.name]}
-                </p>
-              ))}
+            //   {meal.getNutrients(profileInfo.chosenNutrients).map((nut,k)=>(
+            //     <p key={k} style={{backgroundColor:colors[k]}}>
+            //       <span className='amount'>
+            //         {nut.amount}
+            //       </span> <br/>
+            //         {userFriendlyNutrientNames[nut.name]}
+            //     </p>
+            //   ))}
 
               
 
-              </div>
-              </>
+            //   </div>
+            //   </>
             }
 
             {modifiedMeal===index && 

@@ -68,7 +68,7 @@ export default function MealCards() {
            <div key={index} className='mealContainer'>
 
             {modifiedMeal!==index && 
-              <MealCard openedMeals={openedMeals} setOpenedMeals={setOpenedMeals} index={index}/>
+              <MealCard openedMeals={openedMeals} setOpenedMeals={setOpenedMeals} index={index} meal={meal}/>
             //   <>
             //   <div id="listContainer">
 

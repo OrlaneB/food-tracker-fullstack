@@ -1,7 +1,13 @@
 import React from 'react'
 
-export default function DropdownList() {
+export default function DropdownList({meal}) {
   return (
-    <div>DropdownList</div>
+    <ul>
+        {meal.getIngredients().map((item,index)=>(
+            <li key={index}>
+                {item.name} {item.amount}g
+            </li>
+        ))}
+    </ul>
   )
 }

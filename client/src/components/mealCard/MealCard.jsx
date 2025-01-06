@@ -2,8 +2,9 @@ import React, { useContext, useEffect, useState } from 'react'
 import profileInfoContext from '../../context/profileInfo'
 import ToggleButton from './ToggleButton';
 import DropdownList from './DropdownList';
+import ModifyButton from './ModifyButton';
 
-export default function MealCard({openedMeals,setOpenedMeals,index,meal}) {
+export default function MealCard({openedMeals,setOpenedMeals, setModifiedMeal, index,meal}) {
 
     const {profileInfo} = useContext(profileInfoContext);
     const [isOpen,setIsOpen] = useState(false);
@@ -21,6 +22,8 @@ export default function MealCard({openedMeals,setOpenedMeals,index,meal}) {
             <h3 style={{display:"inline",marginLeft:"10px"}}>
                 Meal #{index+1}
             </h3>
+
+            <ModifyButton setModifiedMeal={setModifiedMeal} index={index}/>
 
             {isOpen &&
                 <DropdownList meal={meal}/>

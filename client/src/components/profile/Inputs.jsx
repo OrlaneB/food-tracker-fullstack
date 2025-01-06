@@ -1,6 +1,7 @@
 import React from 'react'
 import unitNutrients from '../../utilities/measurmentUnitNutrients';
 import userFriendlyNutrientNames from '../../utilities/userFriendlyNutrientNames';
+import getScientificName from '../../utilities/getScientificName';
 
 export default function Inputs({nutrient,index,chosenNutrientsForm, setChosenNutrientsForm}) {
 
@@ -11,7 +12,7 @@ export default function Inputs({nutrient,index,chosenNutrientsForm, setChosenNut
         let {name,value} = event.target;
 
         if(name==="amount") value = Number(value)
-        if(name==="name") value = Object.keys(userFriendlyNutrientNames).find(key => userFriendlyNutrientNames[key]===value)
+        if(name==="name") value = getScientificName(value)
 
         const newNutrient = [...chosenNutrientsForm];
         newNutrient[index][name] = value;

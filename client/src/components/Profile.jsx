@@ -16,15 +16,15 @@ import UnsavedChangesButton from './profile/UnsavedChangesButton';
 export default function Profile() {
 
     const {profileInfo,setProfileInfo}=useContext(profileInfoContext);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
-    const [chosenNutrients,setChosenNutrients] = useState([
-        {name:"",amount:0,goal:""},
-        {name:"",amount:0,goal:""},
-        {name:"",amount:0,goal:""}
-    ])
+    // const [chosenNutrients,setChosenNutrients] = useState([
+    //     {name:"",amount:0,goal:""},
+    //     {name:"",amount:0,goal:""},
+    //     {name:"",amount:0,goal:""}
+    // ])
 
-    const [unsavedChanges,setUnsavedChanges] = useState(false);
+    // const [unsavedChanges,setUnsavedChanges] = useState(false);
     // const goalButtons = [
     //     {name:"Less than",sign:"<"},
     //     {name:"Equals",sign:"="},
@@ -33,36 +33,36 @@ export default function Profile() {
 
     // const nutrientNamesArray = Object.values(userFriendlyNutrientNames);
 
-    function compareObjects(obj1,obj2){
-        if(obj1.name===obj2.name &&
-            obj1.amount===obj2.amount &&
-            obj1.goal===obj2.goal
-        ) {
-            return true
-        } else {
-            return false
-        }
-    }
+    // function compareObjects(obj1,obj2){
+    //     if(obj1.name===obj2.name &&
+    //         obj1.amount===obj2.amount &&
+    //         obj1.goal===obj2.goal
+    //     ) {
+    //         return true
+    //     } else {
+    //         return false
+    //     }
+    // }
 
 
-    function checkUnsavedChanges(){
+    // function checkUnsavedChanges(){
  
-        const [nutrient1,nutrient2,nutrient3] = profileInfo.chosenNutrients
-        const [nutrient1State,nutrient2State,nutrient3State] = chosenNutrients
+    //     const [nutrient1,nutrient2,nutrient3] = profileInfo.chosenNutrients
+    //     const [nutrient1State,nutrient2State,nutrient3State] = chosenNutrients
 
 
-        if(
-            compareObjects(nutrient1,nutrient1State) &&
-            compareObjects(nutrient2,nutrient2State) &&
-            compareObjects(nutrient3,nutrient3State)
-        ) {
-            return false
+    //     if(
+    //         compareObjects(nutrient1,nutrient1State) &&
+    //         compareObjects(nutrient2,nutrient2State) &&
+    //         compareObjects(nutrient3,nutrient3State)
+    //     ) {
+    //         return false
             
-        } else {
-            return true
-        }
+    //     } else {
+    //         return true
+    //     }
 
-    }
+    // }
 
 
     // function getButtonClass(type,goal){
@@ -73,37 +73,37 @@ export default function Profile() {
     //     }
     // }
 
-    async function updateNutrientChanges(){
-        let user_id = profileInfo.id;
+    // async function updateNutrientChanges(){
+    //     let user_id = profileInfo.id;
 
-        const newChosenNutrients = {
-            nutrient1 : chosenNutrients[0],
-            nutrient2 : chosenNutrients[1],
-            nutrient3 : chosenNutrients[2]
-        }
+    //     const newChosenNutrients = {
+    //         nutrient1 : chosenNutrients[0],
+    //         nutrient2 : chosenNutrients[1],
+    //         nutrient3 : chosenNutrients[2]
+    //     }
 
-        if(user_id){
-            try{
-                const response = await axios.put(`${import.meta.env.VITE_URL_REQUESTS}/api/profiles/${user_id}`, {
-                    chosenNutrients:newChosenNutrients
-                });
+    //     if(user_id){
+    //         try{
+    //             const response = await axios.put(`${import.meta.env.VITE_URL_REQUESTS}/api/profiles/${user_id}`, {
+    //                 chosenNutrients:newChosenNutrients
+    //             });
 
-                if(response.status===201){
-                    console.log(response.data);
-			        let newProfileInfo = {...profileInfo};
-			        newProfileInfo.chosenNutrients=chosenNutrients;
-			        setProfileInfo(newProfileInfo);
-                    setUnsavedChanges(false);
-                }
+    //             if(response.status===201){
+    //                 console.log(response.data);
+	// 		        let newProfileInfo = {...profileInfo};
+	// 		        newProfileInfo.chosenNutrients=chosenNutrients;
+	// 		        setProfileInfo(newProfileInfo);
+    //                 setUnsavedChanges(false);
+    //             }
         
-            }
-            catch(err){
-                console.log(err.response.data.message)
-                console.error(err.response.data.err)
-            }
-        }
+    //         }
+    //         catch(err){
+    //             console.log(err.response.data.message)
+    //             console.error(err.response.data.err)
+    //         }
+    //     }
         
-    }
+    // }
 
 
 
@@ -118,9 +118,9 @@ export default function Profile() {
     //     navigate("/login");
     // }
 
-    function getScientificName(value){
-        return Object.keys(userFriendlyNutrientNames).find(key => userFriendlyNutrientNames[key]===value);
-    }
+    // function getScientificName(value){
+    //     return Object.keys(userFriendlyNutrientNames).find(key => userFriendlyNutrientNames[key]===value);
+    // }
 
 
     // function handleChangeInputs(event,index){
@@ -148,9 +148,9 @@ export default function Profile() {
     //     if(profileInfo.chosenNutrients) setChosenNutrients(JSON.parse(JSON.stringify(profileInfo.chosenNutrients)))
     // },[profileInfo.id])
 
-    useEffect(()=>{
-        if(profileInfo.chosenNutrients) setUnsavedChanges(checkUnsavedChanges());
-    },[chosenNutrients])
+    // useEffect(()=>{
+    //     if(profileInfo.chosenNutrients) setUnsavedChanges(checkUnsavedChanges());
+    // },[chosenNutrients])
 
 
 

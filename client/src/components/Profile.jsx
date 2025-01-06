@@ -24,11 +24,11 @@ export default function Profile() {
     ])
 
     const [unsavedChanges,setUnsavedChanges] = useState(false);
-    const goalButtons = [
-        {name:"Less than",sign:"<"},
-        {name:"Equals",sign:"="},
-        {name:"More than",sign:">"}
-    ];
+    // const goalButtons = [
+    //     {name:"Less than",sign:"<"},
+    //     {name:"Equals",sign:"="},
+    //     {name:"More than",sign:">"}
+    // ];
 
     const nutrientNamesArray = Object.values(userFriendlyNutrientNames);
 
@@ -64,13 +64,13 @@ export default function Profile() {
     }
 
 
-    function getButtonClass(type,goal){
-        if(type===goal){
-            return "selectedType roundButton"
-        } else {
-            return "roundButton"
-        }
-    }
+    // function getButtonClass(type,goal){
+    //     if(type===goal){
+    //         return "selectedType roundButton"
+    //     } else {
+    //         return "roundButton"
+    //     }
+    // }
 
     async function updateNutrientChanges(){
         let user_id = profileInfo.id;

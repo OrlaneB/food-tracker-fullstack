@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import profileInfoContext from '../../context/profileInfo'
+import GoalButtons from './GoalButtons';
 
 export default function NutrientsForms() {
 
@@ -26,6 +27,16 @@ export default function NutrientsForms() {
         >
             Please, get your recommendations from experts.
         </p>
+
+        <div id="flexGoalNutrients">
+        {chosenNutrientsForm.map((nutrient,index)=>(
+            <div className='nutrientDiv' key={index}>
+
+                <GoalButtons nutrient={nutrient} chosenNutrientsForm={chosenNutrientsForm} setChosenNutrientsForm={setChosenNutrientsForm} index={index}/>
+
+            </div>
+        ))}
+        </div>
     </>
   )
 }

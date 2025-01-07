@@ -1,13 +1,13 @@
 #Footer {
     display: flex;
-    padding:10px 10%;
+    padding:0px 10% 20px 10%;
     width:80%;
     position: fixed;
     bottom: 0;
     height:10px;
     margin:0;
-    color: black;
-    background-color: rgb(232, 232, 232);
+    color: #951327;
+    background-color: #FBC46C;
     justify-content: space-between;
 }
 

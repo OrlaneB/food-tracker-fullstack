@@ -1,5 +1,7 @@
 # :apple: Food Pulse
 
+See the app here : [Food Pulse](https://foodpulse.orlanebdesign.com/)
+
 Food Pulse is a full-stack app designed to empower users who need to track nutrient intake. The key difference between this tracker and others on the market is its focus on health rather than weight loss. Calorie intake is optional and not prominently displayed, with the choice to hide it if it's a trigger. While we aim to support all bodies in meeting their goals, we are not medical providers, and the application is not an authoritative source for medical nutrition counseling.
 
 The inspiration for Food Pulse came from one of the app developers [Laura Castro](#Laura-Castro). Her friend's daughter had been diagnosed with anemia. This sparked a deep dive into iron deficiency, during which she came across an article discussing how pairing certain foods can maximize nutrient absorption. And voilà! She brought the idea to her classmate, [Orlane Brun](#Orlane-Brun), who enthusiastically joined her in creating this helpful tool.

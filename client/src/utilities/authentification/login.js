@@ -14,7 +14,7 @@ export default async function login(credentials) {
 
         const {token,profileInfo} = response.data;
 
-        console.log("response : ",response);
+        console.log("Successful login");
         localStorage.setItem("token", token);
         // setProfileInfo(profileInfo)
 

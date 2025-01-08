@@ -7,8 +7,6 @@ import './App.css'
 
 import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 
-import Register from './components/Register.jsx';
-import Login from './components/Login.jsx';
 import Profile from './components/Profile.jsx';
 import ReportAnIssue from './components/ReportAnIssue.jsx';
 

@@ -15,7 +15,7 @@ const dbHost = process.env.DB_HOST;
 const jwtSecret = process.env.JWT_SECRET;
 
 
-console.log("1-Beginning of app.js...");
+// console.log("1-Beginning of app.js...");
 
 //app.get('/', (req, res) => {
  // res.render('index', { title: 'Food Pulse' });
@@ -60,7 +60,7 @@ app.get("/api", (req,res) => {
 app.use('/api/users', usersRouter);
 app.use('/api/profiles', profilesRouter);
 app.use('/api/meals', mealsRouter);
-console.log("2-Router was imported...");
+// console.log("2-Router was imported...");
 
 
 
@@ -83,7 +83,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
 });
 
-console.log("3-Static files were served...");
+// console.log("3-Static files were served...");
 
 app.get("/", function(req, res, next) {
   res.send("Access the API at path /api");
@@ -92,7 +92,7 @@ app.get("/", function(req, res, next) {
 // Middleware to create a database connection for each request
 //connectToDatabase();
 
-console.log("5-Connection with db...");
+// console.log("5-Connection with db...");
 
 
 
@@ -101,7 +101,7 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname + "client","dist", "index.html"));
 });
 
-console.log("6- Send to index.html...");
+// console.log("6- Send to index.html...");
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -122,7 +122,7 @@ app.use(function(err, req, res, next) {
   });
 });
 
-console.log("7- End of app.js...");
+// console.log("7- End of app.js...");
 
 // Set up server to listen on port
 const port = 5000;

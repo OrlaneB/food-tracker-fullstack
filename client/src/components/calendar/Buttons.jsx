@@ -2,30 +2,16 @@ import React from 'react'
 import { DateTime } from "luxon";
 
 
-export default function Buttons({displayedDates,setDisplayedDates,children}) {
+export default function Buttons({setDisplayedDates,children,list}) {
 
     function moveSelectedDates(event,type){
             event.preventDefault();
+
+            if(type!=="down" && type!=="up") throw new Error("The type of the button is uncorrect.")
     
-            let newDates = [...displayedDates];
+            type==="down" ? list.addDateBefore() : list.addDateAfter();
     
-            if(type==="down"){
-    
-                let copiedDate = new Date(newDates[0]);
-                let addedDate = DateTime.local(copiedDate.getFullYear(), copiedDate.getMonth()+1, copiedDate.getDate()).minus({days:1}).toISODate();
-                newDates.unshift(addedDate);
-                newDates.pop();
-    
-            }else if(type==="up"){
-    
-                let copiedDate = new Date(newDates[6]);
-                let addedDate = DateTime.local(copiedDate.getFullYear(), copiedDate.getMonth()+1, copiedDate.getDate()).plus({days:1}).toISODate();
-                newDates.push(addedDate);
-                newDates.shift();
-    
-            }
-    
-            setDisplayedDates(newDates)
+            setDisplayedDates(list.getDates());
         }
 
   return (

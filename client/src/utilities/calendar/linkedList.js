@@ -26,6 +26,8 @@ export default class linkedList{
             currentNode = currentNode.next;
         }
 
+        dateArray.push(currentNode.date);
+
         return dateArray;
     }
 

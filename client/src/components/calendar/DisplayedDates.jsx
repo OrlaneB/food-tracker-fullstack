@@ -21,12 +21,9 @@ export default function displayedDates({displayedDates}) {
                 // console.log(date);
                 newDay = new Day(date);
                 await newDay.getMeals(profileInfo.id,profileInfo.chosenNutrients);
-                newDay = Object.assign(Object.create(Object.getPrototypeOf(newDay)), newDay);
+                // newDay = Object.assign(Object.create(Object.getPrototypeOf(newDay)), newDay);
                 
-                const newArray = [...daysArray];
-                newArray.push(newDay);
-                setDaysArray(newArray);
-    
+                setDaysArray([...daysArray, newDay]);
             }
     
             setCurrentDay(newDay);

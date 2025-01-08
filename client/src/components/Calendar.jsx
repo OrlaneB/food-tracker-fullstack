@@ -6,19 +6,21 @@ import mealsForOneDate from "../context/mealsForOneDate";
 import Title from "./calendar/Title";
 import Buttons from "./calendar/Buttons";
 import DisplayedDates from "./calendar/DisplayedDates"
-import createDisplayedDates from "../utilities/calendar/createDisplayedDates";
+import linkedList from "../utilities/calendar/linkedList";
 
 export default function Calendar() {
 
     const {currentDay} = useContext(mealsForOneDate)
 
     const [displayedDates, setDisplayedDates] = useState([]);
+    const [linkedListDates,setLinkedListDates] = useState(null);
 
 
     useEffect(()=>{
        if(currentDay && displayedDates.length===0){
-        const newDates = createDisplayedDates(currentDay.date);
-        setDisplayedDates(newDates);
+        const display = new linkedList(currentDay.date,3);
+        setLinkedListDates(display);
+        setDisplayedDates(display.getDates());
        }
         
     },[currentDay])
@@ -30,7 +32,7 @@ export default function Calendar() {
             
             <Title />
 
-            <Buttons displayedDates={displayedDates} setDisplayedDates={setDisplayedDates}>
+            <Buttons setDisplayedDates={setDisplayedDates} list={linkedListDates}>
 
                 <DisplayedDates displayedDates={displayedDates}/>
 

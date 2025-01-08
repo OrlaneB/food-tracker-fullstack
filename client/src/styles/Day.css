@@ -1,38 +1,4 @@
 /* Div */
-
-.Day {
-    display: flex;
-    justify-content: center;
-    gap:45px;
-    margin: 20px 0;
-    padding: 5px;
-}
-
-
-/* Buttons */
-
-.Day button {
-    width: 20px;
-    border:none;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-.Day button:hover {
-    color:white;
-    background-color: darkgrey;
-}
-
-.Day p {
-    margin: 0;
-    text-align: center;
-}
-
-.Day p:first-child {
-    font-family: Shrimp;
-    text-transform: uppercase;
-}
-
 #Day {
     background-color: #951327;
     padding: 20px;
@@ -51,6 +17,11 @@
     padding:0 20px;
 }
 
+#Day  #datesContainer main {
+    display: flex;
+    width:60%;
+}
+
 
 
 #Day #datesContainer button {
@@ -64,7 +35,7 @@
 }
 
 #Day .dateBlock{
-    width:6%;
+    width:15%;
     background-color: rgb(255, 255, 255);
     padding: 8px;
     text-align: center;
@@ -111,12 +82,15 @@
     .dateBlock .greyText{
         font-size: 0.6em;
     }
+    #Day #datesContainer main{
+        width: 100%;
+    }
     #Day .dateBlock {
         padding: 3px;
         min-width:8%;
     }
     #Day #datesContainer button {
-        width:30px;
-        height: 30px;
+        width:25px;
+        height: 25px;
     }
 }

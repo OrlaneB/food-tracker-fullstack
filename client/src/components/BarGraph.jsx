@@ -5,16 +5,14 @@ import userFriendlyNutrientNames from '../utilities/userFriendlyNutrientNames';
 import unitNutrients from '../utilities/measurmentUnitNutrients';
 import profileInfoContext from '../context/profileInfo';
 import mealsForOneDate from '../context/mealsForOneDate';
+import Pie from './barGraph/Pie';
+import Amount from './barGraph/Amount';
 
 
 export default function BarGraph() {
 
     const {currentDay} = useContext(mealsForOneDate)
     const {profileInfo} = useContext(profileInfoContext);
-
-    const colors = ["#EA5F3A","#F79285","#FBC46C"];
-
-
 
     return (
       <>
@@ -26,22 +24,14 @@ export default function BarGraph() {
         currentDay.percentageNutrients.map((nut,index)=>(
 
           <div key={index}>
-          <div className='pie' style={{
-            backgroundImage: `conic-gradient(
-              transparent 0deg ${360 - nut.percentage * 3.6}deg,
-              ${colors[index]} ${360 - nut.percentage * 3.6}deg 360deg
-            )`
-          }}>
+          
+            <Pie nut={nut} index={index}/>
 
-            <div className='text'>
-              <p>{userFriendlyNutrientNames[nut.name]}</p>
-            </div>
 
-          </div>
+          <Amount nut={nut}
+            currentDay={currentDay}
+            chosenNutrients={profileInfo.chosenNutrients}/>
 
-          {profileInfo.chosenNutrients && currentDay.totalNutrients &&
-            <p> {Math.round(currentDay.totalNutrients.find(n=>n.name===nut.name).amount*100)/100}/ {profileInfo.chosenNutrients.find(n=>n.name===nut.name).amount}{unitNutrients[nut.name]}</p>
-          }
          
           </div>
 

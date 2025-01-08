@@ -5,7 +5,7 @@
     display: flex;
     justify-content: center;
     position: fixed;
-    bottom: 0;
+    bottom: 30px;
 }
 
 #surveyLink button {

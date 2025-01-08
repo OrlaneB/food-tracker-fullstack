@@ -17,8 +17,7 @@
     border-radius: 50%;
     object-fit: cover;
     object-position: top;
-    overflow: hidden; 
-    margin-bottom: 20px;
+    overflow: hidden;
 }
 
 #profileImage button {

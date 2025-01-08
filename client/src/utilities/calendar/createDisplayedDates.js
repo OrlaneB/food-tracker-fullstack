@@ -1,8 +1,11 @@
 import { DateTime } from "luxon";
 
 export default function createDisplayedDates(currentDay){
-    const dateObj = new Date(currentDay);
-            let startDate = DateTime.local(dateObj.getFullYear(),dateObj.getMonth()+1,dateObj.getDate());
+    console.log(currentDay)
+    // const dateObj = new Date(currentDay);
+    //         let startDate = DateTime.local(dateObj.getFullYear(),dateObj.getMonth()+1,dateObj.getDate());
+    const startDate = DateTime.fromISO(currentDay);
+    console.log(startDate)
     
             return [
                 startDate.minus({days:3}).toISODate(),

@@ -12,11 +12,23 @@
 #Authentification form label{
     display: block;
     padding: 8px 0;
+    position: relative;
+    width: fit-content;
+    margin: auto;
 }
 
 #Authentification input {
     display: block;
 }
+
+#Authentification form label i{
+    position: absolute;
+    right: 8%;
+    top:52%;
+    cursor: pointer;
+    color: black;
+}
+
 
 #Authentification .textButton:hover{
     background-color: #F79285;

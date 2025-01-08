@@ -4,6 +4,7 @@ import SubmitButton from './SubmitButton'
 export default function AuthentificationForm({credentials,setCredentials,type}) {
 
     const [errorMessage,setErrorMessage] = useState("");
+    const [readPassword,setReadPassword] = useState(false);
 
     function handleChange(event){
         const {name,value} = event.target;
@@ -30,12 +31,17 @@ export default function AuthentificationForm({credentials,setCredentials,type}) 
             Your password
 
             <input 
-                type='password'
+                type= {readPassword?"text":"password"}
                 name='password'
                 value={credentials.password}
                 autoComplete='password'
                 onChange={(event)=>handleChange(event)}
+                
             />
+            <i className={readPassword?'fi fi-rr-eye-crossed'
+            :'fi fi-rr-eye'} 
+                onClick={()=>setReadPassword(!readPassword)}>
+            </i>
         </label>
 
         <p>{errorMessage}</p>

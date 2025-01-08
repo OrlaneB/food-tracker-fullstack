@@ -1,0 +1,27 @@
+#Authentification {
+    width:80%;
+    background-color: #931327;
+    padding:50px 0;
+    margin:40px auto;
+    text-align: center;
+    color: white;
+    margin-bottom: 100px;
+    border-radius: 8px;
+}
+
+#Authentification form label{
+    display: block;
+    padding: 8px 0;
+}
+
+#Authentification input {
+    display: block;
+}
+
+#Authentification .textButton:hover{
+    background-color: #F79285;
+}
+
+#Authentification .navigateToOtherType {
+    cursor: pointer;
+}

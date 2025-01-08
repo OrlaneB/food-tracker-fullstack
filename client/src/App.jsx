@@ -15,6 +15,7 @@ import ReportAnIssue from './components/ReportAnIssue.jsx';
 import profileInfoContext from './context/profileInfo.jsx';
 import LearnAboutProject from './components/LearnAboutProject.jsx'
 import Layout from './components/layout/Layout.jsx'
+import Authentification from './components/Authentification.jsx';
 
 import checkToken from "./utilities/authentification/checkToken.js"
 
@@ -55,8 +56,8 @@ function App() {
           <Route path="/" element={<Homepage />}/>
           <Route path="/profile" element={<Profile />}/>
           <Route path="/add-meal" element={<AddMeal />}/>
-          <Route path='/register' element={<Register />} />
-          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Authentification type={"register"} />} />
+          <Route path='/login' element={<Authentification type={"login"}/>} />
           
           
           <Route path='/report-issue' element={<ReportAnIssue />} />

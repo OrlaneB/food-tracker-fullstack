@@ -25,12 +25,12 @@ This application is built with an Express server, MySQL database, and React fron
 
 - Run `npm install` in project directory to install server-related dependencies
 - `cd client` and run `npm install` to install client dependencies
-- Other libraries include `npm install --save animate.css jquery popper react-spinners`
+
 
 ### Database Prep
 
 - Access the MySQL interface in your terminal by running `mysql -u root -p`
-- Create a new database called `how_to_life`
+- Create a new database called `food_pulse`
 - Add a `.env` file to the project folder of this repository containing the MySQL authentication information for MySQL user. For example:
 
 ```bash

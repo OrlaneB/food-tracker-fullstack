@@ -48,6 +48,8 @@ This application is built with an Express server, MySQL database, and React fron
 
 ## :rocket: Collaborators 
 
+Each developer played an important role in the development of Food Pulse. What started as a side project during a bootcamp became a deployed fullstack application. Below each contributors contact information you can read more about their involvement and contributions to the project.
+
 #### Orlane Brun
 :email: orlane.brun@free.com<br> 
 :octocat: [GitHub Profile](https://github.com/OrlaneB)<br> 

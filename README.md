@@ -36,7 +36,7 @@ This application is built with an Express server, MySQL database, and React fron
 ```bash
   DB_HOST=localhost
   DB_USER=root
-  DB_NAME=how_to_life
+  DB_NAME=food_pulse
   DB_PASS=YOURPASSWORD
 ```
 

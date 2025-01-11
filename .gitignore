@@ -2,4 +2,4 @@ node_modules/
 .env
 .DS_Store
 client/.env
-end_files/
+env_files/

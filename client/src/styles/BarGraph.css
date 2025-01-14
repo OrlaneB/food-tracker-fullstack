@@ -15,6 +15,14 @@
     box-shadow: inset -4px -4px 8px rgba(255, 255, 255, 0.364), inset 5px 5px 10px #470f0451;     
 }
 
+body[data-theme="light"] .pie {
+  box-shadow: inset -4px -4px 8px rgba(255, 255, 255, 0.364), inset 5px 5px 10px #470f0451; 
+}
+
+body[data-theme="dark"] .pie {
+  box-shadow: inset -4px -4px 8px rgba(255, 255, 255, 0.188), inset 5px 5px 10px #3c0c0362; 
+}
+
 .nutrientName {
    margin-top:30px
 }
@@ -28,18 +36,33 @@
     height:90px;
     top:15px;
     left:15px;
-    background-color:white;
     border-radius:50%;
     text-align:center;
+  }
+
+  body[data-theme="light"] .text {
+    background-color: white;
     box-shadow: 4px 4px 8px #58140530, -2px -2px 8px rgba(255, 255, 255, 0.499);
   }
 
+  body[data-theme="dark"] .text {
+    background-color: #2A2828;
+    box-shadow: 4px 4px 8px #2808016f, -2px -2px 8px rgba(255, 255, 255, 0.281);
+  }
 
 
 .BarGraph p {
     font-family:"segoe UI";
   font-size:1em;
   text-align:center;
+}
+
+body[data-theme="light"] .BarGraph .checkGoal {
+  color : #951327;
+}
+
+body[data-theme="dark"] .BarGraph .checkGoal {
+  color : #FBC46C;
 }
 
 @media screen and (max-width:850px){

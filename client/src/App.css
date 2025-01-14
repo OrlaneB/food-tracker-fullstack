@@ -18,12 +18,23 @@ h1,h2,h3,h4,h5,h6{
   aspect-ratio: 1;
   width:40px;
   height: 40px;
-  background-color: transparent;
   border:1px solid #951327;
-  color: #951327;
-  box-shadow: inset 2px 2px 4px #0d275024 ;
   cursor: pointer;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body[data-theme="light"] .roundButton {
+  color:#951327;
+  background-color: transparent;
+  border-color: #951327;
+  box-shadow: inset 2px 2px 4px #0d275024 ;
+}
+
+body[data-theme="dark"] .roundButton {
+  color: white;
+  background-color: transparent;
+  border-color: white;
+  box-shadow: inset 2px 2px 4px #0d27502e ;
 }
 
 .roundButton:hover {
@@ -32,12 +43,20 @@ h1,h2,h3,h4,h5,h6{
   box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.553);
 }
 
+body[data-theme="light"] .roundButton:hover {
+  background-color: #951327;
+  color: white;
+  box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.553);
+}
+
+body[data-theme="dark"] .roundButton:hover {
+  background-color: #951327;
+  box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.27);
+}
+
 .textButton {
-  background-color: white;
-  box-shadow: inset 3px 3px 5px #0d275024, inset -4px -4px 5px rgba(255, 255, 255, 0.31);
   border:2px solid #951327;
   border-radius: 5px;
-  color: #951327;
   padding: 15px;
   font-weight: 600;
   cursor: pointer;
@@ -45,25 +64,62 @@ h1,h2,h3,h4,h5,h6{
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.textButton:hover{
-  background-color: #951327;
+body[data-theme="light"] .textButton {
+  color: #951327;
+  border-color: #951327;
+  background-color: white;
+  box-shadow: inset 3px 3px 5px #0d275024, inset -4px -4px 5px rgba(255, 255, 255, 0.31);
+}
+
+body[data-theme="dark"] .textButton {
   color: white;
+  border-color: transparent;
+  background-color: #750e1d;
+  box-shadow: inset 3px 3px 5px #020c1c2e, inset -4px -4px 5px rgba(255, 255, 255, 0.088);
+}
+
+
+body[data-theme="light"] .textButton:hover{
+  background-color: #951327;
+  color:white;
+}
+
+body[data-theme="dark"] .textButton:hover{
+  background-color: #b0172e;
+  color:white;
+  border-color: transparent;
 }
 
 .importantTextButton {
-  background-color: #EA5F3A;
-  color: #951327;
   padding:15px;
   border:none;
-  color:white;
   font-weight: 600;
   border-radius: 5px;
   margin: 20px 8px;
   cursor: pointer;
 }
 
+body[data-theme="light"] .importantTextButton{
+  background-color: #EA5F3A;
+  color: white;
+}
+
+body[data-theme="dark"] .importantTextButton{
+  background-color: #EA5F3A;
+  color: white;
+  border-color: white;
+}
+
 .importantTextButton:hover{
   background-color: #F79285;
+}
+
+body[data-theme="light"] .importantTextButton:hover {
+  background-color: #F79285;
+}
+
+body[data-theme="dark"] .importantTextButton:hover {
+  background-color: #db4921;
 }
 
 .buttonLink:hover {
@@ -75,11 +131,15 @@ input, textarea {
     margin: 8px auto;
     padding:10px 15px;
     border-radius: 20px;
-    box-shadow: 5px 5px 8px #0d275037
-    , -3px -3px 8px rgba(255, 255, 255, 0.205)
-    ;
     border:none;
 }
+
+body[data-theme="light"] input, body[data-theme="light"] textarea{
+  box-shadow: 5px 5px 8px #0d275037
+    , -3px -3px 8px rgba(255, 255, 255, 0.205)
+    ;
+}
+
 
 
 
@@ -99,6 +159,10 @@ header h2 {
 }
 
 header h2:hover{
+  color: #F79285;
+}
+
+body[data-theme="dark"] header h2 {
   color: #F79285;
 }
 

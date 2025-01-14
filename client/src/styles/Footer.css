@@ -7,8 +7,15 @@
     height:10px;
     margin:0;
     color: #951327;
-    background-color: #FBC46C;
     justify-content: space-between;
+}
+
+body[data-theme="light"] #Footer {
+    background-color: #FBC46C;
+}
+
+body[data-theme="dark"] #Footer {
+    background-color: #f3b24a;
 }
 
 #Footer p{

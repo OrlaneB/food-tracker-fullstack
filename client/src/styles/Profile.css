@@ -62,6 +62,10 @@
     height:25px;
 }
 
+body[data-theme="dark"] .roundButton {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
 #flexGoalNutrients .selectedType {
     background-color: #951327;
     color: white;
@@ -80,6 +84,12 @@
     font-size: 1em;
     text-align: center;
     margin:10px 0
+}
+
+body[data-theme="dark"] #flexGoalNutrients select {
+    border-color:white;
+    color:white;
+    background-color: #2A2828;
 }
 
 @media screen and (max-width:600px) {

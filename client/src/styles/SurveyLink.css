@@ -8,6 +8,14 @@
     bottom: 30px;
 }
 
+body[data-theme="light"] #surveyLink {
+    background-color: #FBC46C;
+}
+
+body[data-theme="dark"] #surveyLink {
+    background-color: #f3b24a;
+}
+
 #surveyLink button {
     margin: 0 10px;
 }

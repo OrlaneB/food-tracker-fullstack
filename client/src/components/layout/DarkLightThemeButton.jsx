@@ -1,10 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 export default function DarkLightThemeButton() {
 
     const [theme,setTheme] = useState("light");
 
-    React.useEffect(() => {
+    function checkSystemPreferenceDark(){
+      if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
+          setTheme("dark");
+      }
+    }
+
+    useEffect(() => {
+      checkSystemPreferenceDark();
       document.body.dataset.theme = theme
     }, [theme])
 

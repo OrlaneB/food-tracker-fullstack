@@ -43,7 +43,8 @@ export default function Amount({nut,currentDay,chosenNutrients}) {
             {unitNutrients[nut.name]}
             </p>
 
-            <p style={{color:"#951327",fontStyle:"italic",margin:0}}>{checkGoal()}</p>
+            <p style={{fontStyle:"italic",margin:0}}
+            className='checkGoal'>{checkGoal()}</p>
         </>
 
   )

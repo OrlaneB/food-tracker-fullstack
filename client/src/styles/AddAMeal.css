@@ -6,72 +6,20 @@
 
 
 
-#AddAMeal #addIngButton{
-    background-color: grey;
-    color:white;
-    margin: 30px;
-    border: none;
-    padding : 5px;
-    cursor: pointer;
-}
-
-#AddAMeal #addIngButton:hover{
-    background-color: lightgrey;
-    color:black;
-}
-
-
-
-#AddAMeal h2 input {
+ #AddAMeal h2 input {
     margin-left: 8px;
     padding: 3px;
-}
+} 
 
-#AddAMeal form {
+ #AddAMeal form {
     padding: 10px 0;
     margin: auto;
     width:35%;
-}
+} 
 
 
 #AddAMeal form input {
     margin: 0 5px;
-}
-
-#AddAMeal #emptyIngList {
-    padding:20px;
-    border:2px dashed lightgrey;
-    width:60%;
-    margin: 10px auto;
-}
-
-#AddAMeal .roundButton {
-   width:30px;
-   height:30px;
-   margin-left: 10px;
-}
-
-
-
-#AddAMeal .suggestionsContainer {
-    text-align: left;
-    margin-left:8px;
-    margin-top: 5px;
-    padding: 4px;
-    border: 1px solid lightgrey ;
-    width: 50%;
-}
-
-#AddAMeal .suggestionsContainer p {
-    margin: 0;
-    font-size: 0.9em;
-    cursor: pointer;
-    padding:2px
-}
-
-#AddAMeal .suggestionsContainer p:hover {
-    background-color: grey;
-    color: white;
 }
 
 @media screen and (min-width:600px) and (max-width:1025px) {

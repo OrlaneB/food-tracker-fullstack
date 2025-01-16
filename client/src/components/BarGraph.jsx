@@ -16,7 +16,7 @@ export default function BarGraph() {
 
     return (
       <>
-        <h2 style={{textAlign:"center",margin:"0"}}>Your nutrients</h2>
+        <h2 style={{textAlign:"center",margin:"0",marginTop:"50px"}}>Your nutrients</h2>
         <div className = "BarGraph">
           
         {

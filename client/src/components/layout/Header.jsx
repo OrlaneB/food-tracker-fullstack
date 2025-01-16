@@ -1,5 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import DarkLightThemeButton from './DarkLightThemeButton';
 
 export default function Header() {
 
@@ -10,6 +11,9 @@ export default function Header() {
         <h2 onClick={()=>navigate("/")}>Food Pulse</h2>
 
         <nav>
+
+        <DarkLightThemeButton />
+
         <button className='roundButton' 
             onClick={()=>navigate("/add-meal")}>
           <i className="fi fi-rr-add"></i>

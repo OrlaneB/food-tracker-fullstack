@@ -1,5 +1,15 @@
 
 body {
   margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body[data-theme="light"] {
+  background-color: white;
+  color: black;
+}
+
+body[data-theme="dark"]{
+  background-color: #2A2828;
+  color: white;
 }

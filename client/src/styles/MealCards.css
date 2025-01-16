@@ -7,11 +7,20 @@
     padding:15px;
     border-radius: 5px;
     margin:15px 0;
-    box-shadow: inset 3px 3px 15px #0d275018;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+
+
+body[data-theme="light"] .mealContainer {
+    box-shadow: inset 3px 3px 15px #0d275018;
+}
+
+body[data-theme="dark"] .mealContainer {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
 
 .mealContainer #listContainer{
     width:65%;
@@ -59,6 +68,7 @@
     text-align: center;
 }
 
+
 .mealNutrients p .amount {
     /* color: white; */
     font-family: AnjaEliane;
@@ -69,11 +79,13 @@
 
 
 .mealContainer button {
-    border: none;
     font-weight: bold;
     font-size: 1em;
     cursor: pointer;
+    border:none;
 }
+
+
 .mealContainer .modified {
     flex: 100%;
 }

@@ -1,6 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import DarkLightThemeButton from './DarkLightThemeButton';
+import "../../styles/Header.css"
 
 export default function Header() {
 

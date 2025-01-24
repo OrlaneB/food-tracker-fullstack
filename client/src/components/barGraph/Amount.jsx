@@ -28,7 +28,7 @@ export default function Amount({nut,currentDay,chosenNutrients}) {
 
             const difference = Math.round(chosenNutrientsAmount-totalNutrientsAmount);
 
-            return <span>You're {difference}{unitNutrients[nut.name]} short</span>
+            return <span>{difference}{unitNutrients[nut.name]} short</span>
 
         } else {
             return "";

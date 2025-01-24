@@ -15,14 +15,34 @@ export default function Calendar() {
     const [displayedDates, setDisplayedDates] = useState([]);
     const [linkedListDates,setLinkedListDates] = useState(null);
 
+    function createCalendar(){
+        const daysNumber = window.innerWidth>600 ? 3 : 2;
+        const display = new linkedList(currentDay.date,daysNumber);
+        setLinkedListDates(display);
+        setDisplayedDates(display.getDates());
+    }
+
 
     useEffect(()=>{
        if(currentDay && displayedDates.length===0){
-        const display = new linkedList(currentDay.date,3);
-        setLinkedListDates(display);
-        setDisplayedDates(display.getDates());
+            createCalendar();
+
+            const handleResize = () => createCalendar();
+
+            window.addEventListener("resize",handleResize);
+
+            return()=> window.removeEventListener("resize",handleResize);
        }
-        
+
+       if(currentDay){
+            const handleResize = () => createCalendar();
+
+            window.addEventListener("resize",handleResize);
+
+            return()=> window.removeEventListener("resize",handleResize);
+       }
+
+
     },[currentDay])
     
    

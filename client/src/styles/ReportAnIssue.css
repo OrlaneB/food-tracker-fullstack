@@ -29,9 +29,12 @@
 
 @media screen and (max-width:600px){
     #reportAnIssue {
-        text-align: center;
         width : 80%;
-        margin-top: 80px;
+        margin: 40px auto 150px auto;
+    }
+
+    #reportAnIssue input {
+        width: 90%;
     }
 
     #reportAnIssue * {

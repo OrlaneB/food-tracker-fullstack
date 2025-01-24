@@ -25,3 +25,37 @@
 #MealForm input[name="amount"]{
   width : 20%;
 }
+
+@media screen and (max-width:600px) {
+  #MealForm div{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  #AddAMeal #MealForm {
+    max-width: 80%;
+  }
+
+  #MealForm input[name="name"] {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  #MealForm input[name="amount"]{
+    margin: 0;
+    margin-right: 5px;
+    width: fit-content;
+  }
+
+  #MealForm .roundButton {
+    width : 25px;
+    height: 25px;
+    margin-left: 10px;
+  }
+
+  .mealContainer #MealForm {
+    width: 100%;
+  }
+}

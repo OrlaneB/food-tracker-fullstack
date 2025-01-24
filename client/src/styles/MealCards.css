@@ -123,4 +123,9 @@ body[data-theme="dark"] .mealContainer {
     .mealContainer ul {
         display: block;
     }
+
+    .mealContainer #listContainer{
+        width:100%;
+        margin-bottom: 20px;
+    }
 }

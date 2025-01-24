@@ -5,6 +5,25 @@
     margin-bottom: 150px;
 }
 
+#aboutProject #gitHubLink {
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+}
+
+body[data-theme="light"] #aboutProject #gitHubLink {
+    color: #951327;
+}
+
+body[data-theme="dark"] #aboutProject #gitHubLink {
+    color: #be1730;
+}
+
+
+#aboutProject #introduction {
+    margin:40px 20%;
+}
+
 
 #aboutProject #techStack{
     background-color: #951327;
@@ -37,4 +56,26 @@
     border-radius: 50%;
     width: 350px;
     margin-bottom: 35px;
+}
+
+
+@media screen and (max-width:600px) {
+    
+    #aboutProject #introduction {
+        margin: 20px 0%;
+        text-align: left;
+    }
+
+    #aboutProject #contributors{
+        display: block;
+    }
+
+    #aboutProject #contributors div {
+        margin: 30px 0;
+    }
+
+    #aboutProject #contributors img {
+        width:70%;
+        margin-bottom: 0px ;
+    }
 }

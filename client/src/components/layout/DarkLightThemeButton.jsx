@@ -10,8 +10,12 @@ export default function DarkLightThemeButton() {
       }
     }
 
-    useEffect(() => {
+    useEffect(()=>{
       checkSystemPreferenceDark();
+      document.body.dataset.theme = theme
+    },[])
+
+    useEffect(() => {
       document.body.dataset.theme = theme
     }, [theme])
 

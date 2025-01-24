@@ -23,3 +23,18 @@ body[data-theme="dark"] #Footer {
     margin: 0;
     font-size: 0.8em;
 }
+
+#Footer a {
+    color: #951327;
+    margin:auto 3px;
+}
+
+@media screen and (max-width:600px){
+    
+    #Footer {
+        display: block;
+        height: 25px;
+        font-size: 0.75em;
+        height:12px;
+    }
+}

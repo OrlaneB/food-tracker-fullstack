@@ -26,8 +26,24 @@ export default function Calendar() {
     useEffect(()=>{
        if(currentDay && displayedDates.length===0){
             createCalendar();
+
+            const handleResize = () => createCalendar();
+
+            window.addEventListener("resize",handleResize);
+
+            return()=> window.removeEventListener("resize",handleResize);
        }
-    },[currentDay,window.innerWidth])
+
+       if(currentDay){
+            const handleResize = () => createCalendar();
+
+            window.addEventListener("resize",handleResize);
+
+            return()=> window.removeEventListener("resize",handleResize);
+       }
+
+
+    },[currentDay])
     
    
     return (
